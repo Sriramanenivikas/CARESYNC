@@ -9,6 +9,10 @@ import java.util.List;
 public interface Doctorservice {
     Doctor saveDoctor(Doctor doctor);
 
+    // DTO methods for CRUD operations (RECOMMENDED)
+    DoctorDto saveDoctorFromDto(DoctorDto doctorDto);
+    DoctorDto updateDoctorFromDto(DoctorDto doctorDto, Long id);
+
     // DTO methods to prevent lazy loading issues
     List<DoctorDto> getAllDoctorsDto();
     DoctorDetailDto getDoctorDetailDto(Long id);

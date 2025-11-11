@@ -36,15 +36,15 @@ public class DoctorController {
     // Create a new Doctor - Only ADMIN can create
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
-        return new ResponseEntity<>(doctorService.saveDoctor(doctor), HttpStatus.CREATED);
+    public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorDto) {
+        return new ResponseEntity<>(doctorService.saveDoctorFromDto(doctorDto), HttpStatus.CREATED);
     }
 
     // Update Doctor - ADMIN and DOCTOR (self) can update
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
-    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor, @PathVariable Long id) {
-        return new ResponseEntity<>(doctorService.updateDoctor(doctor, id), HttpStatus.OK);
+    public ResponseEntity<DoctorDto> updateDoctor(@RequestBody DoctorDto doctorDto, @PathVariable Long id) {
+        return new ResponseEntity<>(doctorService.updateDoctorFromDto(doctorDto, id), HttpStatus.OK);
     }
 
     // Delete Doctor - Only ADMIN can delete

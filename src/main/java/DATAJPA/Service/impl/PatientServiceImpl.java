@@ -31,6 +31,70 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public PatientDto savePatientFromDto(PatientDto patientDto) {
+        // Map DTO to Entity (only fields that exist in entity)
+        Patient patient = Patient.builder()
+                .patientCode(patientDto.getPatientCode())
+                .firstName(patientDto.getFirstName())
+                .lastName(patientDto.getLastName())
+                .email(patientDto.getEmail())
+                .gender(patientDto.getGender() != null ? Patient.Gender.valueOf(patientDto.getGender()) : null)
+                .bloodGroup(patientDto.getBloodGroup() != null ? Patient.BloodGroup.valueOf(patientDto.getBloodGroup()) : null)
+                .dateOfBirth(patientDto.getDateOfBirth())
+                .phonePrimary(patientDto.getPhonePrimary())
+                .phoneSecondary(patientDto.getPhoneSecondary())
+                .addressLine1(patientDto.getAddressLine1())
+                .addressLine2(patientDto.getAddressLine2())
+                .city(patientDto.getCity())
+                .state(patientDto.getState())
+                .postalCode(patientDto.getPostalCode())
+                .country(patientDto.getCountry())
+                .maritalStatus(patientDto.getMaritalStatus() != null ? Patient.MaritalStatus.valueOf(patientDto.getMaritalStatus()) : null)
+                .occupation(patientDto.getOccupation())
+                .registrationDate(patientDto.getRegistrationDate())
+                .allergies(patientDto.getAllergies())
+                .chronicConditions(patientDto.getChronicConditions())
+                .currentMedications(patientDto.getCurrentMedications())
+                .isActive(patientDto.getIsActive() != null ? patientDto.getIsActive() : true)
+                .build();
+
+        Patient savedPatient = patientRepository.save(patient);
+        return mapPatientToDto(savedPatient);
+    }
+
+    @Override
+    public PatientDto updatePatientFromDto(PatientDto patientDto, Long id) {
+        Patient patient = getPatientById(id);
+
+        // Update only fields that exist in entity
+        if (patientDto.getPatientCode() != null) patient.setPatientCode(patientDto.getPatientCode());
+        if (patientDto.getFirstName() != null) patient.setFirstName(patientDto.getFirstName());
+        if (patientDto.getLastName() != null) patient.setLastName(patientDto.getLastName());
+        if (patientDto.getEmail() != null) patient.setEmail(patientDto.getEmail());
+        if (patientDto.getGender() != null) patient.setGender(Patient.Gender.valueOf(patientDto.getGender()));
+        if (patientDto.getBloodGroup() != null) patient.setBloodGroup(Patient.BloodGroup.valueOf(patientDto.getBloodGroup()));
+        if (patientDto.getDateOfBirth() != null) patient.setDateOfBirth(patientDto.getDateOfBirth());
+        if (patientDto.getPhonePrimary() != null) patient.setPhonePrimary(patientDto.getPhonePrimary());
+        if (patientDto.getPhoneSecondary() != null) patient.setPhoneSecondary(patientDto.getPhoneSecondary());
+        if (patientDto.getAddressLine1() != null) patient.setAddressLine1(patientDto.getAddressLine1());
+        if (patientDto.getAddressLine2() != null) patient.setAddressLine2(patientDto.getAddressLine2());
+        if (patientDto.getCity() != null) patient.setCity(patientDto.getCity());
+        if (patientDto.getState() != null) patient.setState(patientDto.getState());
+        if (patientDto.getPostalCode() != null) patient.setPostalCode(patientDto.getPostalCode());
+        if (patientDto.getCountry() != null) patient.setCountry(patientDto.getCountry());
+        if (patientDto.getMaritalStatus() != null) patient.setMaritalStatus(Patient.MaritalStatus.valueOf(patientDto.getMaritalStatus()));
+        if (patientDto.getOccupation() != null) patient.setOccupation(patientDto.getOccupation());
+        if (patientDto.getRegistrationDate() != null) patient.setRegistrationDate(patientDto.getRegistrationDate());
+        if (patientDto.getAllergies() != null) patient.setAllergies(patientDto.getAllergies());
+        if (patientDto.getChronicConditions() != null) patient.setChronicConditions(patientDto.getChronicConditions());
+        if (patientDto.getCurrentMedications() != null) patient.setCurrentMedications(patientDto.getCurrentMedications());
+        if (patientDto.getIsActive() != null) patient.setIsActive(patientDto.getIsActive());
+
+        Patient updatedPatient = patientRepository.save(patient);
+        return mapPatientToDto(updatedPatient);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
@@ -183,5 +247,36 @@ public class PatientServiceImpl implements PatientService {
         }
 
         return dto;
+    }
+
+    // Helper method to map Patient entity to PatientDto (for CRUD operations)
+    private PatientDto mapPatientToDto(Patient patient) {
+        return PatientDto.builder()
+                .id(patient.getId())
+                .patientCode(patient.getPatientCode())
+                .firstName(patient.getFirstName())
+                .lastName(patient.getLastName())
+                .email(patient.getEmail())
+                .gender(patient.getGender() != null ? patient.getGender().toString() : null)
+                .bloodGroup(patient.getBloodGroup() != null ? patient.getBloodGroup().toString() : null)
+                .dateOfBirth(patient.getDateOfBirth())
+                .phonePrimary(patient.getPhonePrimary())
+                .phoneSecondary(patient.getPhoneSecondary())
+                .addressLine1(patient.getAddressLine1())
+                .addressLine2(patient.getAddressLine2())
+                .city(patient.getCity())
+                .state(patient.getState())
+                .postalCode(patient.getPostalCode())
+                .country(patient.getCountry())
+                .maritalStatus(patient.getMaritalStatus() != null ? patient.getMaritalStatus().toString() : null)
+                .occupation(patient.getOccupation())
+                .registrationDate(patient.getRegistrationDate())
+                .allergies(patient.getAllergies())
+                .chronicConditions(patient.getChronicConditions())
+                .currentMedications(patient.getCurrentMedications())
+                .createdAt(patient.getCreatedAt())
+                .updatedAt(patient.getUpdatedAt())
+                .isActive(patient.getIsActive())
+                .build();
     }
 }

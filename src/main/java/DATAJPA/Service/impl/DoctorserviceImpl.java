@@ -121,4 +121,58 @@ public class DoctorserviceImpl implements Doctorservice {
                 // Can be loaded separately if needed
                 .build();
     }
+
+    @Override
+    @Transactional
+    public DoctorDto saveDoctorFromDto(DoctorDto doctorDto) {
+        // Map DTO to Entity (only fields that exist in entity)
+        Doctor doctor = Doctor.builder()
+                .doctorCode(doctorDto.getDoctorCode())
+                .firstName(doctorDto.getFirstName())
+                .lastName(doctorDto.getLastName())
+                .email(doctorDto.getEmail())
+                .gender(doctorDto.getGender() != null ? Doctor.Gender.valueOf(doctorDto.getGender()) : null)
+                .dateOfBirth(doctorDto.getDateOfBirth())
+                .phonePrimary(doctorDto.getPhonePrimary())
+                .phoneSecondary(doctorDto.getPhoneSecondary())
+                .specialization(doctorDto.getSpecialization())
+                .qualification(doctorDto.getQualification())
+                .licenseNumber(doctorDto.getLicenseNumber())
+                .experienceYears(doctorDto.getExperienceYears())
+                .joiningDate(doctorDto.getJoiningDate())
+                .consultationFee(doctorDto.getConsultationFee())
+                .availabilityStatus(doctorDto.getAvailabilityStatus())
+                .isActive(doctorDto.getIsActive() != null ? doctorDto.getIsActive() : true)
+                .build();
+
+        Doctor savedDoctor = doctorRepository.save(doctor);
+        return mapToDoctorDto(savedDoctor);
+    }
+
+    @Override
+    @Transactional
+    public DoctorDto updateDoctorFromDto(DoctorDto doctorDto, Long id) {
+        Doctor doctor = getDoctorById(id);
+
+        // Update only fields that exist in entity
+        if (doctorDto.getDoctorCode() != null) doctor.setDoctorCode(doctorDto.getDoctorCode());
+        if (doctorDto.getFirstName() != null) doctor.setFirstName(doctorDto.getFirstName());
+        if (doctorDto.getLastName() != null) doctor.setLastName(doctorDto.getLastName());
+        if (doctorDto.getEmail() != null) doctor.setEmail(doctorDto.getEmail());
+        if (doctorDto.getGender() != null) doctor.setGender(Doctor.Gender.valueOf(doctorDto.getGender()));
+        if (doctorDto.getDateOfBirth() != null) doctor.setDateOfBirth(doctorDto.getDateOfBirth());
+        if (doctorDto.getPhonePrimary() != null) doctor.setPhonePrimary(doctorDto.getPhonePrimary());
+        if (doctorDto.getPhoneSecondary() != null) doctor.setPhoneSecondary(doctorDto.getPhoneSecondary());
+        if (doctorDto.getSpecialization() != null) doctor.setSpecialization(doctorDto.getSpecialization());
+        if (doctorDto.getQualification() != null) doctor.setQualification(doctorDto.getQualification());
+        if (doctorDto.getLicenseNumber() != null) doctor.setLicenseNumber(doctorDto.getLicenseNumber());
+        if (doctorDto.getExperienceYears() != null) doctor.setExperienceYears(doctorDto.getExperienceYears());
+        if (doctorDto.getJoiningDate() != null) doctor.setJoiningDate(doctorDto.getJoiningDate());
+        if (doctorDto.getConsultationFee() != null) doctor.setConsultationFee(doctorDto.getConsultationFee());
+        if (doctorDto.getAvailabilityStatus() != null) doctor.setAvailabilityStatus(doctorDto.getAvailabilityStatus());
+        if (doctorDto.getIsActive() != null) doctor.setIsActive(doctorDto.getIsActive());
+
+        Doctor updatedDoctor = doctorRepository.save(doctor);
+        return mapToDoctorDto(updatedDoctor);
+    }
 }

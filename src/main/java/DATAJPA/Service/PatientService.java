@@ -12,6 +12,10 @@ import java.util.List;
 public interface PatientService {
     Patient savePatient(Patient patient);
 
+    // DTO methods for CRUD operations (RECOMMENDED)
+    PatientDto savePatientFromDto(PatientDto patientDto);
+    PatientDto updatePatientFromDto(PatientDto patientDto, Long id);
+
     List<Patient> getAllPatients();
 
     // Optimized method for listing patients (without loading relationships)

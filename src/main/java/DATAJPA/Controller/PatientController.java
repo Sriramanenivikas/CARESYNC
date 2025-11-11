@@ -27,8 +27,8 @@ public class PatientController {
     // Create a new patient - ADMIN and RECEPTIONIST can create
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
-        return new ResponseEntity<>(patientService.savePatient(patient), HttpStatus.CREATED);
+    public ResponseEntity<PatientDto> createPatient(@RequestBody PatientDto patientDto) {
+        return new ResponseEntity<>(patientService.savePatientFromDto(patientDto), HttpStatus.CREATED);
     }
 
     // Get all patients - ADMIN, DOCTOR, RECEPTIONIST, NURSE can view all
@@ -77,8 +77,8 @@ public class PatientController {
     // Update patient - ADMIN and RECEPTIONIST can update
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
-        return new ResponseEntity<>(patientService.updatePatient(patient, id), HttpStatus.OK);
+    public ResponseEntity<PatientDto> updatePatient(@RequestBody PatientDto patientDto, @PathVariable Long id) {
+        return new ResponseEntity<>(patientService.updatePatientFromDto(patientDto, id), HttpStatus.OK);
     }
 
     // Delete patient - Only ADMIN can delete
