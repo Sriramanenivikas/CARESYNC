@@ -93,23 +93,23 @@ const NurseDashboard = () => {
           <StatCard
             title="Assigned Patients"
             value={stats.assignedPatients || 0}
-            icon={<FaUserInjured className="text-blue-600" />}
-            bgColor="bg-blue-50 dark:bg-blue-900/30"
-            textColor="text-blue-900 dark:text-blue-100"
+            icon={<FaUserInjured className="text-primary-600" />}
+            bgColor="bg-primary-50 dark:bg-primary-900/30"
+            textColor="text-primary-900 dark:text-primary-100"
           />
           <StatCard
             title="Vitals Checked Today"
             value={stats.vitalChecks || 0}
-            icon={<FaHeartbeat className="text-green-600" />}
-            bgColor="bg-green-50 dark:bg-green-900/30"
-            textColor="text-green-900 dark:text-green-100"
+            icon={<FaHeartbeat className="text-luxury-600" />}
+            bgColor="bg-luxury-50 dark:bg-luxury-900/30"
+            textColor="text-luxury-900 dark:text-luxury-100"
           />
           <StatCard
             title="Medications Given"
             value={stats.medications || 0}
-            icon={<FaSyringe className="text-purple-600" />}
-            bgColor="bg-purple-50 dark:bg-purple-900/30"
-            textColor="text-purple-900 dark:text-purple-100"
+            icon={<FaSyringe className="text-accent-600" />}
+            bgColor="bg-accent-50 dark:bg-accent-900/30"
+            textColor="text-accent-900 dark:text-accent-100"
           />
           <StatCard
             title="Emergencies"
@@ -130,7 +130,7 @@ const NurseDashboard = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`py-4 px-4 font-medium capitalize ${
                     activeTab === tab
-                      ? 'border-b-2 border-blue-600 text-blue-600'
+                      ? 'border-b-2 border-primary-600 text-primary-600 dark:border-primary-500 dark:text-primary-400'
                       : 'text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white'
                   }`}
                 >
@@ -154,7 +154,7 @@ const NurseDashboard = () => {
                           <span className="text-sm">{patient.firstName} {patient.lastName}</span>
                           <button
                             onClick={() => { setSelectedPatient(patient); setShowVitalsModal(true); }}
-                            className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded hover:bg-blue-200"
+                            className="text-xs bg-primary-100 text-primary-600 px-2 py-1 rounded hover:bg-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50"
                           >
                             Record Vitals
                           </button>
@@ -200,7 +200,7 @@ const NurseDashboard = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm">
                             <button
                               onClick={() => { setSelectedPatient(patient); setShowVitalsModal(true); }}
-                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mr-2"
+                              className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 mr-2"
                             >
                               Record Vitals
                             </button>
@@ -318,7 +318,7 @@ const NurseDashboard = () => {
                   >
                     Cancel
                   </button>
-                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                  <button type="submit" className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600">
                     Save Vitals
                   </button>
                 </div>

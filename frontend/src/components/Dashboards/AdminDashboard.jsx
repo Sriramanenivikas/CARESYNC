@@ -149,12 +149,29 @@ const AdminDashboard = () => {
     const doctorData = {
       doctorCode: formData.get('doctorCode'),
       firstName: formData.get('firstName'),
+      middleName: formData.get('middleName'),
       lastName: formData.get('lastName'),
-      specialization: formData.get('specialization'),
-      phoneNumber: formData.get('phoneNumber'),
+      dateOfBirth: formData.get('dateOfBirth'),
+      gender: formData.get('gender'),
       email: formData.get('email'),
-      experience: parseInt(formData.get('experience')),
-      consultationFee: parseFloat(formData.get('consultationFee')),
+      phonePrimary: formData.get('phonePrimary'),
+      phoneSecondary: formData.get('phoneSecondary'),
+      specialization: formData.get('specialization'),
+      qualification: formData.get('qualification'),
+      licenseNumber: formData.get('licenseNumber'),
+      experienceYears: parseInt(formData.get('experienceYears')) || 0,
+      joiningDate: formData.get('joiningDate'),
+      consultationFee: parseFloat(formData.get('consultationFee')) || 0,
+      roomNumber: formData.get('roomNumber'),
+      availabilityStatus: formData.get('availabilityStatus') || 'AVAILABLE',
+      emergencyContactName: formData.get('emergencyContactName'),
+      emergencyContactPhone: formData.get('emergencyContactPhone'),
+      addressLine1: formData.get('addressLine1'),
+      addressLine2: formData.get('addressLine2'),
+      city: formData.get('city'),
+      state: formData.get('state'),
+      postalCode: formData.get('postalCode'),
+      country: formData.get('country') || 'India',
       isActive: true
     };
 
@@ -219,34 +236,34 @@ const AdminDashboard = () => {
           <StatCard
             title="Total Patients"
             value={stats.totalPatients || 0}
-            icon={<FaUsers className="text-blue-600" />}
-            bgColor="bg-blue-50 dark:bg-blue-900/30"
-            textColor="text-blue-900 dark:text-blue-100"
-            iconBgColor="bg-blue-100 dark:bg-blue-800"
+            icon={<FaUsers className="text-primary-600" />}
+            bgColor="bg-primary-50 dark:bg-primary-900/30"
+            textColor="text-primary-900 dark:text-primary-100"
+            iconBgColor="bg-primary-100 dark:bg-primary-800"
           />
           <StatCard
             title="Total Doctors"
             value={stats.totalDoctors || 0}
-            icon={<FaUserMd className="text-green-600" />}
-            bgColor="bg-green-50 dark:bg-green-900/30"
-            textColor="text-green-900 dark:text-green-100"
-            iconBgColor="bg-green-100 dark:bg-green-800"
+            icon={<FaUserMd className="text-luxury-600" />}
+            bgColor="bg-luxury-50 dark:bg-luxury-900/30"
+            textColor="text-luxury-900 dark:text-luxury-100"
+            iconBgColor="bg-luxury-100 dark:bg-luxury-800"
           />
           <StatCard
             title="Total Appointments"
             value={stats.totalAppointments || 0}
-            icon={<FaCalendarAlt className="text-purple-600" />}
-            bgColor="bg-purple-50 dark:bg-purple-900/30"
-            textColor="text-purple-900 dark:text-purple-100"
-            iconBgColor="bg-purple-100 dark:bg-purple-800"
+            icon={<FaCalendarAlt className="text-accent-600" />}
+            bgColor="bg-accent-50 dark:bg-accent-900/30"
+            textColor="text-accent-900 dark:text-accent-100"
+            iconBgColor="bg-accent-100 dark:bg-accent-800"
           />
           <StatCard
             title="Today's Revenue"
             value={`$${stats.todayRevenue || 0}`}
-            icon={<FaDollarSign className="text-yellow-600" />}
-            bgColor="bg-yellow-50 dark:bg-yellow-900/30"
-            textColor="text-yellow-900 dark:text-yellow-100"
-            iconBgColor="bg-yellow-100 dark:bg-yellow-800"
+            icon={<FaDollarSign className="text-primary-700" />}
+            bgColor="bg-primary-100 dark:bg-primary-800/30"
+            textColor="text-primary-900 dark:text-primary-100"
+            iconBgColor="bg-primary-200 dark:bg-primary-700"
           />
         </div>
 
@@ -260,7 +277,7 @@ const AdminDashboard = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`py-4 px-4 font-medium capitalize ${
                     activeTab === tab
-                      ? 'border-b-2 border-blue-600 text-blue-600'
+                      ? 'border-b-2 border-primary-600 text-primary-600 dark:border-primary-500 dark:text-primary-400'
                       : 'text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white'
                   }`}
                 >
@@ -274,17 +291,17 @@ const AdminDashboard = () => {
             {/* Overview Tab */}
             {activeTab === 'overview' && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+                <h2 className="text-xl font-semibold mb-4 dark:text-white">Quick Actions</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   <button
                     onClick={() => { setEditingPatient(null); setShowPatientModal(true); }}
-                    className="p-4 border border-blue-300 rounded-lg hover:bg-blue-50 text-blue-600 font-medium flex items-center justify-center gap-2 dark:border-blue-900 dark:hover:bg-blue-900/20"
+                    className="p-4 border border-primary-300 rounded-lg hover:bg-primary-50 text-primary-600 font-medium flex items-center justify-center gap-2 dark:border-primary-700 dark:hover:bg-primary-900/20 dark:text-primary-400"
                   >
                     <FaPlus /> Add Patient
                   </button>
                   <button
                     onClick={() => { setEditingDoctor(null); setShowDoctorModal(true); }}
-                    className="p-4 border border-green-300 rounded-lg hover:bg-green-50 text-green-600 font-medium flex items-center justify-center gap-2 dark:border-green-900 dark:hover:bg-green-900/20"
+                    className="p-4 border border-luxury-300 rounded-lg hover:bg-luxury-50 text-luxury-600 font-medium flex items-center justify-center gap-2 dark:border-luxury-700 dark:hover:bg-luxury-900/20 dark:text-luxury-400"
                   >
                     <FaPlus /> Add Doctor
                   </button>
@@ -517,8 +534,8 @@ const AdminDashboard = () => {
                 </div>
                 <textarea name="address" defaultValue={editingPatient?.address} placeholder="Address" className="input-field w-full" rows="3" />
                 <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => { setShowPatientModal(false); setEditingPatient(null); }} className="px-4 py-2 border rounded hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save</button>
+                  <button type="button" onClick={() => { setShowPatientModal(false); setEditingPatient(null); }} className="px-4 py-2 border rounded hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-gray-200">Cancel</button>
+                  <button type="submit" className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600">Save</button>
                 </div>
               </form>
             </div>
@@ -527,23 +544,315 @@ const AdminDashboard = () => {
 
         {/* Doctor Modal */}
         {showDoctorModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900">
-              <h2 className="text-xl font-semibold mb-4">{editingDoctor ? 'Edit Doctor' : 'Add New Doctor'}</h2>
-              <form onSubmit={handleSaveDoctor} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input name="doctorCode" defaultValue={editingDoctor?.doctorCode} placeholder="Doctor Code" className="border rounded px-3 py-2" required />
-                  <input name="firstName" defaultValue={editingDoctor?.firstName} placeholder="First Name" className="border rounded px-3 py-2" required />
-                  <input name="lastName" defaultValue={editingDoctor?.lastName} placeholder="Last Name" className="border rounded px-3 py-2" required />
-                  <input name="specialization" defaultValue={editingDoctor?.specialization} placeholder="Specialization" className="border rounded px-3 py-2" required />
-                  <input name="phoneNumber" defaultValue={editingDoctor?.phoneNumber} placeholder="Phone Number" className="border rounded px-3 py-2" required />
-                  <input name="email" type="email" defaultValue={editingDoctor?.email} placeholder="Email" className="border rounded px-3 py-2" />
-                  <input name="experience" type="number" defaultValue={editingDoctor?.experience} placeholder="Experience (years)" className="border rounded px-3 py-2" />
-                  <input name="consultationFee" type="number" step="0.01" defaultValue={editingDoctor?.consultationFee} placeholder="Consultation Fee" className="border rounded px-3 py-2" />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-6xl w-full max-h-[95vh] overflow-y-auto dark:bg-gray-900">
+              <h2 className="text-2xl font-bold mb-6 text-luxury-700 dark:text-luxury-400">{editingDoctor ? 'Edit Doctor' : 'Add New Doctor'}</h2>
+              <form onSubmit={handleSaveDoctor} className="space-y-6">
+
+                {/* Basic Information - Gold Section */}
+                <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
+                  <h3 className="text-lg font-semibold mb-3 text-primary-800 dark:text-primary-300">Basic Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Doctor Code</label>
+                      <input
+                        name="doctorCode"
+                        defaultValue={editingDoctor?.doctorCode}
+                        placeholder="Auto-generated or manual"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">First Name *</label>
+                      <input
+                        name="firstName"
+                        defaultValue={editingDoctor?.firstName}
+                        placeholder="First Name"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Middle Name</label>
+                      <input
+                        name="middleName"
+                        defaultValue={editingDoctor?.middleName}
+                        placeholder="Middle Name"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Last Name *</label>
+                      <input
+                        name="lastName"
+                        defaultValue={editingDoctor?.lastName}
+                        placeholder="Last Name"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Date of Birth *</label>
+                      <input
+                        name="dateOfBirth"
+                        type="date"
+                        defaultValue={editingDoctor?.dateOfBirth}
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Gender *</label>
+                      <select
+                        name="gender"
+                        defaultValue={editingDoctor?.gender}
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => { setShowDoctorModal(false); setEditingDoctor(null); }} className="px-4 py-2 border rounded hover:bg-gray-50">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Save</button>
+
+                {/* Contact Information - Luxury Gold Section */}
+                <div className="bg-luxury-50 dark:bg-luxury-900/20 p-4 rounded-lg border border-luxury-200 dark:border-luxury-800">
+                  <h3 className="text-lg font-semibold mb-3 text-luxury-800 dark:text-luxury-300">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Email *</label>
+                      <input
+                        name="email"
+                        type="email"
+                        defaultValue={editingDoctor?.email}
+                        placeholder="email@example.com"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Primary Phone *</label>
+                      <input
+                        name="phonePrimary"
+                        type="tel"
+                        defaultValue={editingDoctor?.phonePrimary}
+                        placeholder="1234567890"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Secondary Phone</label>
+                      <input
+                        name="phoneSecondary"
+                        type="tel"
+                        defaultValue={editingDoctor?.phoneSecondary}
+                        placeholder="0987654321"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Professional Details - Rose Gold Section */}
+                <div className="bg-accent-50 dark:bg-accent-900/20 p-4 rounded-lg border border-accent-200 dark:border-accent-800">
+                  <h3 className="text-lg font-semibold mb-3 text-accent-800 dark:text-accent-300">Professional Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Specialization *</label>
+                      <input
+                        name="specialization"
+                        defaultValue={editingDoctor?.specialization}
+                        placeholder="e.g., Cardiologist, Neurologist"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Qualification *</label>
+                      <input
+                        name="qualification"
+                        defaultValue={editingDoctor?.qualification}
+                        placeholder="e.g., MBBS, MD"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">License Number *</label>
+                      <input
+                        name="licenseNumber"
+                        defaultValue={editingDoctor?.licenseNumber}
+                        placeholder="Medical License Number"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Experience Years *</label>
+                      <input
+                        name="experienceYears"
+                        type="number"
+                        min="0"
+                        defaultValue={editingDoctor?.experienceYears}
+                        placeholder="Years of experience"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Joining Date *</label>
+                      <input
+                        name="joiningDate"
+                        type="date"
+                        defaultValue={editingDoctor?.joiningDate}
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Consultation Fee *</label>
+                      <input
+                        name="consultationFee"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        defaultValue={editingDoctor?.consultationFee}
+                        placeholder="0.00"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Room Number</label>
+                      <input
+                        name="roomNumber"
+                        defaultValue={editingDoctor?.roomNumber}
+                        placeholder="e.g., R-101"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Availability Status</label>
+                      <select
+                        name="availabilityStatus"
+                        defaultValue={editingDoctor?.availabilityStatus || 'AVAILABLE'}
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      >
+                        <option value="AVAILABLE">Available</option>
+                        <option value="BUSY">Busy</option>
+                        <option value="ON_LEAVE">On Leave</option>
+                        <option value="UNAVAILABLE">Unavailable</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Information - Primary Light Section */}
+                <div className="bg-primary-100 dark:bg-primary-800/20 p-4 rounded-lg border border-primary-300 dark:border-primary-700">
+                  <h3 className="text-lg font-semibold mb-3 text-primary-800 dark:text-primary-300">Address Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Address Line 1</label>
+                      <input
+                        name="addressLine1"
+                        defaultValue={editingDoctor?.addressLine1}
+                        placeholder="Street address"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Address Line 2</label>
+                      <input
+                        name="addressLine2"
+                        defaultValue={editingDoctor?.addressLine2}
+                        placeholder="Apartment, suite, etc."
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">City</label>
+                      <input
+                        name="city"
+                        defaultValue={editingDoctor?.city}
+                        placeholder="City"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">State/Province</label>
+                      <input
+                        name="state"
+                        defaultValue={editingDoctor?.state}
+                        placeholder="State"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Postal Code</label>
+                      <input
+                        name="postalCode"
+                        defaultValue={editingDoctor?.postalCode}
+                        placeholder="ZIP/Postal code"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Country</label>
+                      <input
+                        name="country"
+                        defaultValue={editingDoctor?.country || 'India'}
+                        placeholder="Country"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Emergency Contact - Luxury Section */}
+                <div className="bg-luxury-100 dark:bg-luxury-800/20 p-4 rounded-lg border border-luxury-300 dark:border-luxury-700">
+                  <h3 className="text-lg font-semibold mb-3 text-luxury-800 dark:text-luxury-300">Emergency Contact</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Emergency Contact Name</label>
+                      <input
+                        name="emergencyContactName"
+                        defaultValue={editingDoctor?.emergencyContactName}
+                        placeholder="Full name"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Emergency Contact Phone</label>
+                      <input
+                        name="emergencyContactPhone"
+                        type="tel"
+                        defaultValue={editingDoctor?.emergencyContactPhone}
+                        placeholder="Phone number"
+                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4 border-t dark:border-gray-700">
+                  <button
+                    type="button"
+                    onClick={() => { setShowDoctorModal(false); setEditingDoctor(null); }}
+                    className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 dark:text-gray-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-luxury-600 text-white rounded-lg hover:bg-luxury-700 dark:bg-luxury-700 dark:hover:bg-luxury-600"
+                  >
+                    Save Doctor
+                  </button>
                 </div>
               </form>
             </div>
