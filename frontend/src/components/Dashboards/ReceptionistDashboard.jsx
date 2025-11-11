@@ -409,8 +409,9 @@ const ReceptionistDashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <input
                       name="patientCode"
-                      placeholder="Patient Code (Auto-generated)"
+                      placeholder="Patient Code *"
                       className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500"
+                      required
                     />
                     <input
                       name="firstName"
@@ -427,7 +428,7 @@ const ReceptionistDashboard = () => {
                     <input
                       name="dateOfBirth"
                       type="date"
-                      placeholder="Date of Birth"
+                      placeholder="Date of Birth *"
                       className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500"
                       required
                     />
@@ -533,9 +534,10 @@ const ReceptionistDashboard = () => {
                     <input
                       name="registrationDate"
                       type="date"
-                      placeholder="Registration Date"
+                      placeholder="Registration Date *"
                       defaultValue={new Date().toISOString().split('T')[0]}
                       className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500 md:col-span-2"
+                      required
                     />
                   </div>
                 </div>
@@ -628,8 +630,15 @@ const ReceptionistDashboard = () => {
                   <h3 className="text-lg font-semibold text-primary-800 dark:text-primary-300 mb-3">Appointment Details</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
+                      name="appointmentCode"
+                      placeholder="Appointment Code *"
+                      className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500 md:col-span-2"
+                      required
+                    />
+                    <input
                       name="appointmentDate"
                       type="date"
+                      placeholder="Appointment Date *"
                       className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500"
                       min={new Date().toISOString().split('T')[0]}
                       required
@@ -637,6 +646,7 @@ const ReceptionistDashboard = () => {
                     <input
                       name="appointmentTime"
                       type="time"
+                      placeholder="Appointment Time *"
                       className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500"
                       required
                     />

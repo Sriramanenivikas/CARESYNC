@@ -149,29 +149,19 @@ const AdminDashboard = () => {
     const doctorData = {
       doctorCode: formData.get('doctorCode'),
       firstName: formData.get('firstName'),
-      middleName: formData.get('middleName'),
       lastName: formData.get('lastName'),
-      dateOfBirth: formData.get('dateOfBirth'),
-      gender: formData.get('gender'),
+      dateOfBirth: formData.get('dateOfBirth') || null,
+      gender: formData.get('gender') || null,
       email: formData.get('email'),
       phonePrimary: formData.get('phonePrimary'),
-      phoneSecondary: formData.get('phoneSecondary'),
+      phoneSecondary: formData.get('phoneSecondary') || null,
       specialization: formData.get('specialization'),
       qualification: formData.get('qualification'),
       licenseNumber: formData.get('licenseNumber'),
-      experienceYears: parseInt(formData.get('experienceYears')) || 0,
+      experienceYears: formData.get('experienceYears') ? parseInt(formData.get('experienceYears')) : null,
       joiningDate: formData.get('joiningDate'),
-      consultationFee: parseFloat(formData.get('consultationFee')) || 0,
-      roomNumber: formData.get('roomNumber'),
-      availabilityStatus: formData.get('availabilityStatus') || 'AVAILABLE',
-      emergencyContactName: formData.get('emergencyContactName'),
-      emergencyContactPhone: formData.get('emergencyContactPhone'),
-      addressLine1: formData.get('addressLine1'),
-      addressLine2: formData.get('addressLine2'),
-      city: formData.get('city'),
-      state: formData.get('state'),
-      postalCode: formData.get('postalCode'),
-      country: formData.get('country') || 'India',
+      consultationFee: formData.get('consultationFee') ? parseFloat(formData.get('consultationFee')) : null,
+      availabilityStatus: formData.get('availabilityStatus') || null,
       isActive: true
     };
 
@@ -552,14 +542,15 @@ const AdminDashboard = () => {
                 {/* Basic Information - Gold Section */}
                 <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-lg border border-primary-200 dark:border-primary-800">
                   <h3 className="text-lg font-semibold mb-3 text-primary-800 dark:text-primary-300">Basic Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Doctor Code</label>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Doctor Code *</label>
                       <input
                         name="doctorCode"
                         defaultValue={editingDoctor?.doctorCode}
-                        placeholder="Auto-generated or manual"
+                        placeholder="Doctor Code"
                         className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        required
                       />
                     </div>
                     <div>
@@ -573,15 +564,6 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Middle Name</label>
-                      <input
-                        name="middleName"
-                        defaultValue={editingDoctor?.middleName}
-                        placeholder="Middle Name"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
                       <label className="block text-sm font-medium mb-1 dark:text-gray-300">Last Name *</label>
                       <input
                         name="lastName"
@@ -592,22 +574,20 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Date of Birth *</label>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Date of Birth</label>
                       <input
                         name="dateOfBirth"
                         type="date"
                         defaultValue={editingDoctor?.dateOfBirth}
                         className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Gender *</label>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Gender</label>
                       <select
                         name="gender"
                         defaultValue={editingDoctor?.gender}
                         className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        required
                       >
                         <option value="">Select Gender</option>
                         <option value="MALE">Male</option>
@@ -657,10 +637,10 @@ const AdminDashboard = () => {
                   </div>
                 </div>
 
-                {/* Professional Details - Rose Gold Section */}
+                {/* Professional Details - Accent Section */}
                 <div className="bg-accent-50 dark:bg-accent-900/20 p-4 rounded-lg border border-accent-200 dark:border-accent-800">
                   <h3 className="text-lg font-semibold mb-3 text-accent-800 dark:text-accent-300">Professional Details</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-1 dark:text-gray-300">Specialization *</label>
                       <input
@@ -692,7 +672,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Experience Years *</label>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Experience Years</label>
                       <input
                         name="experienceYears"
                         type="number"
@@ -700,7 +680,6 @@ const AdminDashboard = () => {
                         defaultValue={editingDoctor?.experienceYears}
                         placeholder="Years of experience"
                         className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        required
                       />
                     </div>
                     <div>
@@ -714,7 +693,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Consultation Fee *</label>
+                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Consultation Fee</label>
                       <input
                         name="consultationFee"
                         type="number"
@@ -723,19 +702,9 @@ const AdminDashboard = () => {
                         defaultValue={editingDoctor?.consultationFee}
                         placeholder="0.00"
                         className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        required
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Room Number</label>
-                      <input
-                        name="roomNumber"
-                        defaultValue={editingDoctor?.roomNumber}
-                        placeholder="e.g., R-101"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
+                    <div className="md:col-span-2">
                       <label className="block text-sm font-medium mb-1 dark:text-gray-300">Availability Status</label>
                       <select
                         name="availabilityStatus"
@@ -747,93 +716,6 @@ const AdminDashboard = () => {
                         <option value="ON_LEAVE">On Leave</option>
                         <option value="UNAVAILABLE">Unavailable</option>
                       </select>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Address Information - Primary Light Section */}
-                <div className="bg-primary-100 dark:bg-primary-800/20 p-4 rounded-lg border border-primary-300 dark:border-primary-700">
-                  <h3 className="text-lg font-semibold mb-3 text-primary-800 dark:text-primary-300">Address Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Address Line 1</label>
-                      <input
-                        name="addressLine1"
-                        defaultValue={editingDoctor?.addressLine1}
-                        placeholder="Street address"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Address Line 2</label>
-                      <input
-                        name="addressLine2"
-                        defaultValue={editingDoctor?.addressLine2}
-                        placeholder="Apartment, suite, etc."
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">City</label>
-                      <input
-                        name="city"
-                        defaultValue={editingDoctor?.city}
-                        placeholder="City"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">State/Province</label>
-                      <input
-                        name="state"
-                        defaultValue={editingDoctor?.state}
-                        placeholder="State"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Postal Code</label>
-                      <input
-                        name="postalCode"
-                        defaultValue={editingDoctor?.postalCode}
-                        placeholder="ZIP/Postal code"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Country</label>
-                      <input
-                        name="country"
-                        defaultValue={editingDoctor?.country || 'India'}
-                        placeholder="Country"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Emergency Contact - Luxury Section */}
-                <div className="bg-luxury-100 dark:bg-luxury-800/20 p-4 rounded-lg border border-luxury-300 dark:border-luxury-700">
-                  <h3 className="text-lg font-semibold mb-3 text-luxury-800 dark:text-luxury-300">Emergency Contact</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Emergency Contact Name</label>
-                      <input
-                        name="emergencyContactName"
-                        defaultValue={editingDoctor?.emergencyContactName}
-                        placeholder="Full name"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1 dark:text-gray-300">Emergency Contact Phone</label>
-                      <input
-                        name="emergencyContactPhone"
-                        type="tel"
-                        defaultValue={editingDoctor?.emergencyContactPhone}
-                        placeholder="Phone number"
-                        className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
                     </div>
                   </div>
                 </div>
