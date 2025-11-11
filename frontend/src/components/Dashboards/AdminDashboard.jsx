@@ -120,10 +120,22 @@ const AdminDashboard = () => {
       lastName: formData.get('lastName'),
       dateOfBirth: formData.get('dateOfBirth'),
       gender: formData.get('gender'),
-      phoneNumber: formData.get('phoneNumber'),
-      email: formData.get('email'),
-      address: formData.get('address'),
-      bloodGroup: formData.get('bloodGroup'),
+      bloodGroup: formData.get('bloodGroup') || null,
+      phonePrimary: formData.get('phonePrimary'),
+      phoneSecondary: formData.get('phoneSecondary') || null,
+      email: formData.get('email') || null,
+      addressLine1: formData.get('addressLine1') || null,
+      addressLine2: formData.get('addressLine2') || null,
+      city: formData.get('city') || null,
+      state: formData.get('state') || null,
+      postalCode: formData.get('postalCode') || null,
+      country: formData.get('country') || null,
+      maritalStatus: formData.get('maritalStatus') || null,
+      occupation: formData.get('occupation') || null,
+      registrationDate: formData.get('registrationDate'),
+      allergies: formData.get('allergies') || null,
+      chronicConditions: formData.get('chronicConditions') || null,
+      currentMedications: formData.get('currentMedications') || null,
       isActive: true
     };
 
@@ -493,39 +505,93 @@ const AdminDashboard = () => {
 
         {/* Patient Modal */}
         {showPatientModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900">
-              <h2 className="text-xl font-semibold mb-4">{editingPatient ? 'Edit Patient' : 'Add New Patient'}</h2>
-              <form onSubmit={handleSavePatient} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input name="patientCode" defaultValue={editingPatient?.patientCode} placeholder="Patient Code" className="input-field" required />
-                  <input name="firstName" defaultValue={editingPatient?.firstName} placeholder="First Name" className="input-field" required />
-                  <input name="lastName" defaultValue={editingPatient?.lastName} placeholder="Last Name" className="input-field" required />
-                  <input name="dateOfBirth" type="date" defaultValue={editingPatient?.dateOfBirth} className="input-field" required />
-                  <select name="gender" defaultValue={editingPatient?.gender} className="input-field" required>
-                    <option value="">Select Gender</option>
-                    <option value="MALE">MALE</option>
-                    <option value="FEMALE">FEMALE</option>
-                    <option value="OTHER">OTHER</option>
-                  </select>
-                  <input name="phoneNumber" defaultValue={editingPatient?.phoneNumber} placeholder="Phone Number" className="input-field" required />
-                  <input name="email" type="email" defaultValue={editingPatient?.email} placeholder="Email" className="input-field" />
-                  <select name="bloodGroup" defaultValue={editingPatient?.bloodGroup} className="input-field">
-                    <option value="">Blood Group</option>
-                    <option value="O_POSITIVE">O_POSITIVE</option>
-                    <option value="O_NEGATIVE">O_NEGATIVE</option>
-                    <option value="A_POSITIVE">A_POSITIVE</option>
-                    <option value="A_NEGATIVE">A_NEGATIVE</option>
-                    <option value="B_POSITIVE">B_POSITIVE</option>
-                    <option value="B_NEGATIVE">B_NEGATIVE</option>
-                    <option value="AB_POSITIVE">AB_POSITIVE</option>
-                    <option value="AB_NEGATIVE">AB_NEGATIVE</option>
-                  </select>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-900 rounded-lg p-6 max-w-6xl w-full max-h-[95vh] overflow-y-auto">
+              <h2 className="text-2xl font-bold mb-6 text-primary-700 dark:text-primary-400">{editingPatient ? 'Edit Patient' : 'Register New Patient'}</h2>
+              <form onSubmit={handleSavePatient} className="space-y-6">
+
+                {/* Basic Information */}
+                <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-lg">
+                  <h3 className="text-lg font-semibold text-primary-800 dark:text-primary-300 mb-3">Basic Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input name="patientCode" defaultValue={editingPatient?.patientCode} placeholder="Patient Code *" className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500" required />
+                    <input name="firstName" defaultValue={editingPatient?.firstName} placeholder="First Name *" className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500" required />
+                    <input name="lastName" defaultValue={editingPatient?.lastName} placeholder="Last Name *" className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500" required />
+                    <input name="dateOfBirth" type="date" defaultValue={editingPatient?.dateOfBirth} placeholder="Date of Birth *" className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500" required />
+                    <select name="gender" defaultValue={editingPatient?.gender} className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500" required>
+                      <option value="">Select Gender *</option>
+                      <option value="MALE">Male</option>
+                      <option value="FEMALE">Female</option>
+                      <option value="OTHER">Other</option>
+                    </select>
+                    <select name="bloodGroup" defaultValue={editingPatient?.bloodGroup} className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500">
+                      <option value="">Blood Group</option>
+                      <option value="A_POSITIVE">A+</option>
+                      <option value="A_NEGATIVE">A-</option>
+                      <option value="B_POSITIVE">B+</option>
+                      <option value="B_NEGATIVE">B-</option>
+                      <option value="O_POSITIVE">O+</option>
+                      <option value="O_NEGATIVE">O-</option>
+                      <option value="AB_POSITIVE">AB+</option>
+                      <option value="AB_NEGATIVE">AB-</option>
+                    </select>
+                  </div>
                 </div>
-                <textarea name="address" defaultValue={editingPatient?.address} placeholder="Address" className="input-field w-full" rows="3" />
-                <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => { setShowPatientModal(false); setEditingPatient(null); }} className="px-4 py-2 border rounded hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 dark:text-gray-200">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600">Save</button>
+
+                {/* Contact Information */}
+                <div className="bg-luxury-50 dark:bg-luxury-900/20 p-4 rounded-lg">
+                  <h3 className="text-lg font-semibold text-luxury-800 dark:text-luxury-300 mb-3">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input name="phonePrimary" type="tel" defaultValue={editingPatient?.phonePrimary} placeholder="Primary Phone *" className="input-field border-luxury-300 focus:ring-luxury-500 focus:border-luxury-500" required />
+                    <input name="phoneSecondary" type="tel" defaultValue={editingPatient?.phoneSecondary} placeholder="Secondary Phone" className="input-field border-luxury-300 focus:ring-luxury-500 focus:border-luxury-500" />
+                    <input name="email" type="email" defaultValue={editingPatient?.email} placeholder="Email" className="input-field border-luxury-300 focus:ring-luxury-500 focus:border-luxury-500 md:col-span-2" />
+                  </div>
+                </div>
+
+                {/* Address Information */}
+                <div className="bg-accent-50 dark:bg-accent-900/20 p-4 rounded-lg">
+                  <h3 className="text-lg font-semibold text-accent-800 dark:text-accent-300 mb-3">Address Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input name="addressLine1" defaultValue={editingPatient?.addressLine1} placeholder="Address Line 1" className="input-field border-accent-300 focus:ring-accent-500 focus:border-accent-500 md:col-span-2" />
+                    <input name="addressLine2" defaultValue={editingPatient?.addressLine2} placeholder="Address Line 2" className="input-field border-accent-300 focus:ring-accent-500 focus:border-accent-500 md:col-span-2" />
+                    <input name="city" defaultValue={editingPatient?.city} placeholder="City" className="input-field border-accent-300 focus:ring-accent-500 focus:border-accent-500" />
+                    <input name="state" defaultValue={editingPatient?.state} placeholder="State" className="input-field border-accent-300 focus:ring-accent-500 focus:border-accent-500" />
+                    <input name="postalCode" defaultValue={editingPatient?.postalCode} placeholder="Postal Code" className="input-field border-accent-300 focus:ring-accent-500 focus:border-accent-500" />
+                    <input name="country" defaultValue={editingPatient?.country} placeholder="Country" className="input-field border-accent-300 focus:ring-accent-500 focus:border-accent-500" />
+                  </div>
+                </div>
+
+                {/* Personal Details */}
+                <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-lg">
+                  <h3 className="text-lg font-semibold text-primary-800 dark:text-primary-300 mb-3">Personal Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <select name="maritalStatus" defaultValue={editingPatient?.maritalStatus} className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500">
+                      <option value="">Marital Status</option>
+                      <option value="SINGLE">Single</option>
+                      <option value="MARRIED">Married</option>
+                      <option value="DIVORCED">Divorced</option>
+                      <option value="WIDOWED">Widowed</option>
+                      <option value="SEPARATED">Separated</option>
+                    </select>
+                    <input name="occupation" defaultValue={editingPatient?.occupation} placeholder="Occupation" className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500" />
+                    <input name="registrationDate" type="date" defaultValue={editingPatient?.registrationDate || new Date().toISOString().split('T')[0]} placeholder="Registration Date *" className="input-field border-primary-300 focus:ring-primary-500 focus:border-primary-500 md:col-span-2" required />
+                  </div>
+                </div>
+
+                {/* Medical History */}
+                <div className="bg-luxury-50 dark:bg-luxury-900/20 p-4 rounded-lg">
+                  <h3 className="text-lg font-semibold text-luxury-800 dark:text-luxury-300 mb-3">Medical History</h3>
+                  <div className="space-y-3">
+                    <textarea name="allergies" defaultValue={editingPatient?.allergies} placeholder="Allergies (comma-separated)" className="input-field border-luxury-300 focus:ring-luxury-500 focus:border-luxury-500 w-full" rows="2"></textarea>
+                    <textarea name="chronicConditions" defaultValue={editingPatient?.chronicConditions} placeholder="Chronic Conditions (comma-separated)" className="input-field border-luxury-300 focus:ring-luxury-500 focus:border-luxury-500 w-full" rows="2"></textarea>
+                    <textarea name="currentMedications" defaultValue={editingPatient?.currentMedications} placeholder="Current Medications (comma-separated)" className="input-field border-luxury-300 focus:ring-luxury-500 focus:border-luxury-500 w-full" rows="2"></textarea>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4 border-t dark:border-gray-700">
+                  <button type="button" onClick={() => { setShowPatientModal(false); setEditingPatient(null); }} className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 dark:text-gray-200">Cancel</button>
+                  <button type="submit" className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600">Save Patient</button>
                 </div>
               </form>
             </div>
