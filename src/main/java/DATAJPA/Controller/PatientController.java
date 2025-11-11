@@ -5,7 +5,7 @@ import DATAJPA.Dto.PatientDto;
 import DATAJPA.Dto.BloodGroupCountDto;
 import DATAJPA.Entity.Patient;
 import DATAJPA.Service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/Patients")
 public class PatientController {
 
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
 
     // Create a new patient - ADMIN and RECEPTIONIST can create
     @PostMapping

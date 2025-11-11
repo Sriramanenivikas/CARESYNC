@@ -4,7 +4,7 @@ import DATAJPA.Dto.DoctorDetailDto;
 import DATAJPA.Dto.DoctorDto;
 import DATAJPA.Entity.Doctor;
 import DATAJPA.Service.Doctorservice;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/Doctors")
 public class DoctorController {
 
-    @Autowired
-    private Doctorservice doctorService;
+    private final Doctorservice doctorService;
 
     // Get all Doctors - All roles can view doctor list (returns DTOs to prevent lazy loading)
     @GetMapping

@@ -1,12 +1,17 @@
 package DATAJPA.Controller;
 
+import DATAJPA.Entity.Appointment;
 import DATAJPA.Entity.User;
+import DATAJPA.Exception.ResourceNotFoundException;
+import DATAJPA.Repository.*;
 import DATAJPA.Service.ActivityLogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,19 +23,37 @@ import java.util.Map;
 public class AdminController {
 
     private final ActivityLogService activityLogService;
+    private final Userrepositary userRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final BillMasterRepository billMasterRepository;
+    private final StaffProfileRepository staffProfileRepository;
 
     // Get system statistics
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Object>> getSystemStats() {
         Map<String, Object> stats = new HashMap<>();
-        stats.put("totalUsers", 0); // TODO: Implement actual count
-        stats.put("totalPatients", 0);
-        stats.put("totalDoctors", 0);
-        stats.put("totalAppointments", 0);
-        stats.put("todayAppointments", 0);
-        stats.put("pendingBills", 0);
-        stats.put("todayRevenue", 0);
-        stats.put("activeStaff", 0);
+
+        // Get actual counts from repositories
+        stats.put("totalUsers", userRepository.count());
+        stats.put("totalPatients", patientRepository.count());
+        stats.put("totalDoctors", doctorRepository.count());
+        stats.put("totalAppointments", appointmentRepository.count());
+
+        // Today's appointments
+        LocalDate today = LocalDate.now();
+        stats.put("todayAppointments", appointmentRepository.countByAppointmentDateBetween(today, today));
+
+        // Pending bills
+        stats.put("pendingBills", billMasterRepository.countByPaymentStatus("PENDING"));
+
+        // Total revenue (all time)
+        stats.put("totalRevenue", billMasterRepository.sumTotalAmount());
+
+        // Active staff count
+        stats.put("activeStaff", staffProfileRepository.count());
+
         return ResponseEntity.ok(stats);
     }
 
@@ -61,22 +84,39 @@ public class AdminController {
 
     // Create new user (for admin user management)
     @PostMapping("/users")
-    public ResponseEntity<Map<String, String>> createUser(@RequestBody User user) {
-        // TODO: Implement user creation service
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User creation endpoint - to be implemented");
-        return ResponseEntity.ok(response);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        // Set default values if not provided
+        if (user.getIsActive() == null) {
+            user.setIsActive(true);
+        }
+        if (user.getCreatedAt() == null) {
+            user.setCreatedAt(LocalDateTime.now());
+        }
+
+        // Save user to database
+        User savedUser = userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     // Update user status (activate/deactivate)
     @PutMapping("/users/{userId}/status")
-    public ResponseEntity<Map<String, String>> updateUserStatus(
+    public ResponseEntity<User> updateUserStatus(
             @PathVariable Long userId,
             @RequestParam Boolean isActive) {
-        // TODO: Implement user status update
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User " + userId + " status updated to " + isActive);
-        return ResponseEntity.ok(response);
+
+        // Find user by ID
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        // Update status
+        user.setIsActive(isActive);
+        user.setUpdatedAt(LocalDateTime.now());
+
+        // Save updated user
+        User updatedUser = userRepository.save(user);
+
+        return ResponseEntity.ok(updatedUser);
     }
 
     // Get revenue reports

@@ -68,7 +68,8 @@ const NurseDashboard = () => {
       notes: formData.get('notes'),
     };
 
-    console.log('Recording vitals:', vitalsData);
+    // TODO: Implement API call to save vitals to backend
+    // For now, just show success message
     alert('Vitals recorded successfully');
     setShowVitalsModal(false);
     setSelectedPatient(null);

@@ -4,6 +4,7 @@ import DATAJPA.Dto.OtpRequestDto;
 import DATAJPA.Dto.OtpVerifyDto;
 import DATAJPA.Entity.OtpVerification;
 import DATAJPA.Entity.User;
+import DATAJPA.Exception.ResourceNotFoundException;
 import DATAJPA.Repository.OtpVerificationRepository;
 import DATAJPA.Repository.Userrepositary;
 import lombok.extern.slf4j.Slf4j;
@@ -43,14 +44,14 @@ public class OtpService {
         User user = null;
         if (request.getEmail() != null) {
             user = userRepository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new RuntimeException("User not found with email: " + request.getEmail()));
+                    .orElseThrow(() -> new ResourceNotFoundException("User", "email", request.getEmail()));
         } else if (request.getUsername() != null) {
             user = userRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> new RuntimeException("User not found with username: " + request.getUsername()));
+                    .orElseThrow(() -> new ResourceNotFoundException("User", "username", request.getUsername()));
         }
 
         if (user == null) {
-            throw new RuntimeException("User identification required");
+            throw new IllegalArgumentException("User identification required (email or username)");
         }
 
         // Generate OTP
@@ -95,7 +96,7 @@ public class OtpService {
                     .findByMobileAndOtpCodeAndIsVerifiedFalseAndExpiresAtAfter(
                             verifyDto.getMobile(), verifyDto.getOtpCode(), LocalDateTime.now());
         } else {
-            throw new RuntimeException("Email or mobile required for OTP verification");
+            throw new IllegalArgumentException("Email or mobile required for OTP verification");
         }
 
         if (otpOpt.isEmpty()) {

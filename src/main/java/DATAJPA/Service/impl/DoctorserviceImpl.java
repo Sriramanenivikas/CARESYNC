@@ -3,9 +3,10 @@ package DATAJPA.Service.impl;
 import DATAJPA.Dto.DoctorDetailDto;
 import DATAJPA.Dto.DoctorDto;
 import DATAJPA.Entity.Doctor;
+import DATAJPA.Exception.ResourceNotFoundException;
 import DATAJPA.Repository.DoctorRepository;
 import DATAJPA.Service.Doctorservice;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +14,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorserviceImpl implements Doctorservice {
-    @Autowired
-    private DoctorRepository doctorRepository;
+    private final DoctorRepository doctorRepository;
 
 
     @Override
@@ -31,7 +32,7 @@ public class DoctorserviceImpl implements Doctorservice {
     @Override
     public Doctor getDoctorById(Long id) {
         return doctorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", id));
     }
 
     @Override
