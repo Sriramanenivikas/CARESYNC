@@ -83,10 +83,19 @@ const ReceptionistDashboard = () => {
       lastName: formData.get('lastName'),
       dateOfBirth: formData.get('dateOfBirth'),
       gender: formData.get('gender'),
-      phoneNumber: formData.get('phoneNumber'),
-      email: formData.get('email'),
-      address: formData.get('address'),
-      bloodGroup: formData.get('bloodGroup'),
+      phonePrimary: formData.get('phonePrimary'),
+      phoneSecondary: formData.get('phoneSecondary') || null,
+      email: formData.get('email') || null,
+      addressLine1: formData.get('addressLine1') || null,
+      addressLine2: formData.get('addressLine2') || null,
+      city: formData.get('city') || null,
+      state: formData.get('state') || null,
+      country: formData.get('country') || null,
+      postalCode: formData.get('postalCode') || null,
+      bloodGroup: formData.get('bloodGroup') || null,
+      maritalStatus: formData.get('maritalStatus') || null,
+      occupation: formData.get('occupation') || null,
+      registrationDate: formData.get('registrationDate') || new Date().toISOString().split('T')[0],
       isActive: true
     };
 
@@ -104,13 +113,19 @@ const ReceptionistDashboard = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const appointmentData = {
+      appointmentCode: formData.get('appointmentCode'),
       patientId: formData.get('patientId'),
       doctorId: formData.get('doctorId'),
+      departmentId: formData.get('departmentId') || 1, // Default department
       appointmentDate: formData.get('appointmentDate'),
       appointmentTime: formData.get('appointmentTime'),
-      reason: formData.get('reason'),
       appointmentType: formData.get('appointmentType'),
-      status: 'PENDING'
+      priority: formData.get('priority') || 'NORMAL',
+      reason: formData.get('reason'),
+      symptoms: formData.get('symptoms') || null,
+      notes: formData.get('notes') || null,
+      consultationFee: formData.get('consultationFee') || null,
+      status: 'SCHEDULED'
     };
 
     try {
@@ -350,39 +365,150 @@ const ReceptionistDashboard = () => {
 
         {/* Patient Modal */}
         {showPatientModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900">
-              <h2 className="text-xl font-semibold mb-4">Register New Patient</h2>
-              <form onSubmit={handleSavePatient} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input name="patientCode" placeholder="Patient Code" className="input-field" required />
-                  <input name="firstName" placeholder="First Name" className="input-field" required />
-                  <input name="lastName" placeholder="Last Name" className="input-field" required />
-                  <input name="dateOfBirth" type="date" className="input-field" required />
-                  <select name="gender" className="input-field" required>
-                    <option value="">Select Gender</option>
-                    <option value="MALE">MALE</option>
-                    <option value="FEMALE">FEMALE</option>
-                    <option value="OTHER">OTHER</option>
-                  </select>
-                  <input name="phoneNumber" placeholder="Phone Number" className="input-field" required />
-                  <input name="email" type="email" placeholder="Email" className="input-field" />
-                  <select name="bloodGroup" className="input-field">
-                    <option value="">Blood Group</option>
-                    <option value="O_POSITIVE">O_POSITIVE</option>
-                    <option value="O_NEGATIVE">O_NEGATIVE</option>
-                    <option value="A_POSITIVE">A_POSITIVE</option>
-                    <option value="A_NEGATIVE">A_NEGATIVE</option>
-                    <option value="B_POSITIVE">B_POSITIVE</option>
-                    <option value="B_NEGATIVE">B_NEGATIVE</option>
-                    <option value="AB_POSITIVE">AB_POSITIVE</option>
-                    <option value="AB_NEGATIVE">AB_NEGATIVE</option>
-                  </select>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900 shadow-2xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Register New Patient</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowPatientModal(false)}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleSavePatient} className="space-y-6">
+                {/* Personal Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Personal Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Patient Code *</label>
+                      <input name="patientCode" placeholder="PAT-001" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">First Name *</label>
+                      <input name="firstName" placeholder="John" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Last Name *</label>
+                      <input name="lastName" placeholder="Doe" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Date of Birth *</label>
+                      <input name="dateOfBirth" type="date" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Gender *</label>
+                      <select name="gender" className="input-field" required>
+                        <option value="">Select Gender</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Blood Group</label>
+                      <select name="bloodGroup" className="input-field">
+                        <option value="">Select Blood Group</option>
+                        <option value="A_POSITIVE">A+</option>
+                        <option value="A_NEGATIVE">A-</option>
+                        <option value="B_POSITIVE">B+</option>
+                        <option value="B_NEGATIVE">B-</option>
+                        <option value="O_POSITIVE">O+</option>
+                        <option value="O_NEGATIVE">O-</option>
+                        <option value="AB_POSITIVE">AB+</option>
+                        <option value="AB_NEGATIVE">AB-</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Marital Status</label>
+                      <select name="maritalStatus" className="input-field">
+                        <option value="">Select Status</option>
+                        <option value="SINGLE">Single</option>
+                        <option value="MARRIED">Married</option>
+                        <option value="DIVORCED">Divorced</option>
+                        <option value="WIDOWED">Widowed</option>
+                        <option value="SEPARATED">Separated</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Occupation</label>
+                      <input name="occupation" placeholder="Software Engineer" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Registration Date</label>
+                      <input name="registrationDate" type="date" defaultValue={new Date().toISOString().split('T')[0]} className="input-field" />
+                    </div>
+                  </div>
                 </div>
-                <textarea name="address" placeholder="Address" className="input-field w-full" rows="3" />
-                <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => setShowPatientModal(false)} className="px-4 py-2 border rounded hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Register</button>
+
+                {/* Contact Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Primary Phone *</label>
+                      <input name="phonePrimary" type="tel" placeholder="+1 234 567 8900" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Secondary Phone</label>
+                      <input name="phoneSecondary" type="tel" placeholder="+1 234 567 8901" className="input-field" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Email</label>
+                      <input name="email" type="email" placeholder="john.doe@example.com" className="input-field" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Information */}
+                <div className="pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Address Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Address Line 1</label>
+                      <input name="addressLine1" placeholder="123 Main Street" className="input-field" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Address Line 2</label>
+                      <input name="addressLine2" placeholder="Apt 4B" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">City</label>
+                      <input name="city" placeholder="New York" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">State</label>
+                      <input name="state" placeholder="NY" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Country</label>
+                      <input name="country" placeholder="United States" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Postal Code</label>
+                      <input name="postalCode" placeholder="10001" className="input-field" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <button
+                    type="button"
+                    onClick={() => setShowPatientModal(false)}
+                    className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium shadow-md hover:shadow-lg transition"
+                  >
+                    Register Patient
+                  </button>
                 </div>
               </form>
             </div>
@@ -391,33 +517,127 @@ const ReceptionistDashboard = () => {
 
         {/* Appointment Modal */}
         {showAppointmentModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full dark:bg-gray-900">
-              <h2 className="text-xl font-semibold mb-4">Schedule Appointment</h2>
-              <form onSubmit={handleSaveAppointment} className="space-y-4">
-                <select name="patientId" className="w-full input-field" required>
-                  <option value="">Select Patient</option>
-                  {patients.map(p => (
-                    <option key={p.id} value={p.id}>{p.name || `${p.firstName} ${p.lastName}`} ({p.patientCode})</option>
-                  ))}
-                </select>
-                <select name="doctorId" className="w-full input-field" required>
-                  <option value="">Select Doctor</option>
-                  <option value="1">Dr. Smith - Cardiology</option>
-                  <option value="2">Dr. Johnson - Orthopedics</option>
-                </select>
-                <input name="appointmentDate" type="date" className="w-full input-field" required />
-                <input name="appointmentTime" type="time" className="w-full input-field" required />
-                <select name="appointmentType" className="w-full input-field" required>
-                  <option value="">Select Type</option>
-                  <option value="CONSULTATION">Consultation</option>
-                  <option value="FOLLOW_UP">Follow-up</option>
-                  <option value="EMERGENCY">Emergency</option>
-                </select>
-                <textarea name="reason" placeholder="Reason for visit" className="w-full input-field" rows="3" required />
-                <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => setShowAppointmentModal(false)} className="px-4 py-2 border rounded hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Schedule</button>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900 shadow-2xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Schedule Appointment</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowAppointmentModal(false)}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveAppointment} className="space-y-6">
+                {/* Appointment Details */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Appointment Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Appointment Code *</label>
+                      <input name="appointmentCode" placeholder="APT-001" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Select Patient *</label>
+                      <select name="patientId" className="input-field" required>
+                        <option value="">Select Patient</option>
+                        {patients.map(p => (
+                          <option key={p.id} value={p.id}>
+                            {p.name || `${p.firstName} ${p.lastName}`} ({p.patientCode})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Select Doctor *</label>
+                      <select name="doctorId" className="input-field" required>
+                        <option value="">Select Doctor</option>
+                        <option value="1">Dr. Smith - Cardiology</option>
+                        <option value="2">Dr. Johnson - Orthopedics</option>
+                        <option value="3">Dr. Williams - Neurology</option>
+                        <option value="4">Dr. Brown - Pediatrics</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Department</label>
+                      <select name="departmentId" className="input-field">
+                        <option value="1">Cardiology</option>
+                        <option value="2">Orthopedics</option>
+                        <option value="3">Neurology</option>
+                        <option value="4">Pediatrics</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Appointment Date *</label>
+                      <input name="appointmentDate" type="date" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Appointment Time *</label>
+                      <input name="appointmentTime" type="time" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Appointment Type *</label>
+                      <select name="appointmentType" className="input-field" required>
+                        <option value="">Select Type</option>
+                        <option value="CONSULTATION">Consultation</option>
+                        <option value="FOLLOW_UP">Follow-up</option>
+                        <option value="EMERGENCY">Emergency</option>
+                        <option value="CHECKUP">Checkup</option>
+                        <option value="PROCEDURE">Procedure</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Priority</label>
+                      <select name="priority" className="input-field">
+                        <option value="NORMAL">Normal</option>
+                        <option value="LOW">Low</option>
+                        <option value="HIGH">High</option>
+                        <option value="EMERGENCY">Emergency</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Consultation Fee ($)</label>
+                      <input name="consultationFee" type="number" step="0.01" min="0" placeholder="150.00" className="input-field" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Medical Information */}
+                <div className="pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Medical Information</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Reason for Visit *</label>
+                      <textarea name="reason" placeholder="Enter reason for visit..." className="input-field w-full" rows="2" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Symptoms</label>
+                      <textarea name="symptoms" placeholder="Describe symptoms..." className="input-field w-full" rows="2" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Additional Notes</label>
+                      <textarea name="notes" placeholder="Any additional notes..." className="input-field w-full" rows="2" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <button
+                    type="button"
+                    onClick={() => setShowAppointmentModal(false)}
+                    className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium shadow-md hover:shadow-lg transition"
+                  >
+                    Schedule Appointment
+                  </button>
                 </div>
               </form>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
 import Login from './components/Auth/Login';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import AdminDashboard from './components/Dashboards/AdminDashboard';
@@ -28,7 +29,7 @@ function App() {
       const dashboardRoute = getDashboardRoute(role);
       return <Navigate to={dashboardRoute} replace />;
     }
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   };
 
   return (
@@ -36,10 +37,17 @@ function App() {
       <div className="App">
         <Routes>
           {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
 
           {/* Home Route - Auto redirect based on auth status and role */}
-          <Route path="/" element={<HomeRedirect />} />
+          <Route path="/home" element={
+            isAuthenticated() ? (
+              <Navigate to={getDashboardRoute(getUserRole())} replace />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } />
 
           {/* Protected Dashboard Routes */}
           <Route
@@ -150,4 +158,3 @@ function App() {
 }
 
 export default App;
-

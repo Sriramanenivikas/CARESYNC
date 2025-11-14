@@ -27,6 +27,7 @@ const AdminDashboard = () => {
   const [editingDoctor, setEditingDoctor] = useState(null);
   const [patientDetails, setPatientDetails] = useState(null);
   const [showPatientDetails, setShowPatientDetails] = useState(false);
+  const [showAppointmentModal, setShowAppointmentModal] = useState(false);
 
   const menuItems = [
     { label: 'Dashboard', path: '/dashboard/admin', icon: <FaCog /> },
@@ -120,10 +121,22 @@ const AdminDashboard = () => {
       lastName: formData.get('lastName'),
       dateOfBirth: formData.get('dateOfBirth'),
       gender: formData.get('gender'),
-      phoneNumber: formData.get('phoneNumber'),
-      email: formData.get('email'),
-      address: formData.get('address'),
-      bloodGroup: formData.get('bloodGroup'),
+      phonePrimary: formData.get('phonePrimary'),
+      phoneSecondary: formData.get('phoneSecondary') || null,
+      email: formData.get('email') || null,
+      addressLine1: formData.get('addressLine1') || null,
+      addressLine2: formData.get('addressLine2') || null,
+      city: formData.get('city') || null,
+      state: formData.get('state') || null,
+      country: formData.get('country') || null,
+      postalCode: formData.get('postalCode') || null,
+      bloodGroup: formData.get('bloodGroup') || null,
+      maritalStatus: formData.get('maritalStatus') || null,
+      occupation: formData.get('occupation') || null,
+      allergies: formData.get('allergies') || null,
+      chronicConditions: formData.get('chronicConditions') || null,
+      currentMedications: formData.get('currentMedications') || null,
+      registrationDate: formData.get('registrationDate') || new Date().toISOString().split('T')[0],
       isActive: true
     };
 
@@ -150,11 +163,18 @@ const AdminDashboard = () => {
       doctorCode: formData.get('doctorCode'),
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName'),
-      specialization: formData.get('specialization'),
-      phoneNumber: formData.get('phoneNumber'),
+      dateOfBirth: formData.get('dateOfBirth') || null,
+      gender: formData.get('gender'),
+      phonePrimary: formData.get('phonePrimary'),
+      phoneSecondary: formData.get('phoneSecondary') || null,
       email: formData.get('email'),
-      experience: parseInt(formData.get('experience')),
-      consultationFee: parseFloat(formData.get('consultationFee')),
+      specialization: formData.get('specialization'),
+      qualification: formData.get('qualification'),
+      licenseNumber: formData.get('licenseNumber'),
+      experienceYears: parseInt(formData.get('experienceYears')) || 0,
+      consultationFee: parseFloat(formData.get('consultationFee')) || 0,
+      joiningDate: formData.get('joiningDate') || new Date().toISOString().split('T')[0],
+      availabilityStatus: formData.get('availabilityStatus') || 'AVAILABLE',
       isActive: true
     };
 
@@ -171,6 +191,35 @@ const AdminDashboard = () => {
       fetchDoctors();
     } catch (err) {
       alert('Failed to save doctor: ' + (err.response?.data?.message || err.message));
+    }
+  };
+
+  const handleSaveAppointment = async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    const payload = {
+      appointmentCode: form.get('appointmentCode'),
+      patientId: form.get('patientId'),
+      doctorId: form.get('doctorId'),
+      departmentId: form.get('departmentId') || 1,
+      appointmentDate: form.get('appointmentDate'),
+      appointmentTime: form.get('appointmentTime'),
+      appointmentType: form.get('appointmentType'),
+      priority: form.get('priority') || 'NORMAL',
+      reason: form.get('reason'),
+      symptoms: form.get('symptoms') || null,
+      notes: form.get('notes') || null,
+      consultationFee: form.get('consultationFee') ? parseFloat(form.get('consultationFee')) : null,
+      status: 'SCHEDULED'
+    };
+    try {
+      await appointmentService.createAppointment(payload);
+      alert('Appointment created');
+      setShowAppointmentModal(false);
+      fetchAppointments();
+      setActiveTab('appointments');
+    } catch (err) {
+      alert('Failed to create appointment: ' + (err.response?.data?.message || err.message));
     }
   };
 
@@ -199,7 +248,11 @@ const AdminDashboard = () => {
     catch { return `$${num}`; }
   };
 
-  const renderBloodGroup = (value) => value || '-';
+  const renderBloodGroup = (value) => {
+    if (!value) return '-';
+    // Convert A_POSITIVE to A+, etc.
+    return value.replace('_POSITIVE', '+').replace('_NEGATIVE', '-');
+  };
 
   if (loading && activeTab === 'overview') {
     return <DashboardLayout menuItems={menuItems}><div className="flex items-center justify-center h-64"><div className="text-lg">Loading...</div></div></DashboardLayout>;
@@ -278,15 +331,21 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   <button
                     onClick={() => { setEditingPatient(null); setShowPatientModal(true); }}
-                    className="p-4 border border-blue-300 rounded-lg hover:bg-blue-50 text-blue-600 font-medium flex items-center justify-center gap-2 dark:border-blue-900 dark:hover:bg-blue-900/20"
+                    className="btn-primary"
                   >
                     <FaPlus /> Add Patient
                   </button>
                   <button
                     onClick={() => { setEditingDoctor(null); setShowDoctorModal(true); }}
-                    className="p-4 border border-green-300 rounded-lg hover:bg-green-50 text-green-600 font-medium flex items-center justify-center gap-2 dark:border-green-900 dark:hover:bg-green-900/20"
+                    className="btn-success"
                   >
                     <FaPlus /> Add Doctor
+                  </button>
+                  <button
+                    onClick={() => setShowAppointmentModal(true)}
+                    className="btn-secondary"
+                  >
+                    <FaPlus /> Schedule Appointment
                   </button>
                   <button
                     onClick={() => setActiveTab('patients')}
@@ -443,7 +502,15 @@ const AdminDashboard = () => {
             {/* Appointments Tab */}
             {activeTab === 'appointments' && (
               <div>
-                <h2 className="text-xl font-semibold mb-4">Appointments</h2>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold">Appointments</h2>
+                  <button
+                    onClick={() => setShowAppointmentModal(true)}
+                    className="btn-primary"
+                  >
+                    <FaPlus /> Schedule Appointment
+                  </button>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
                     <thead className="bg-gray-50 dark:bg-gray-800">
@@ -486,39 +553,171 @@ const AdminDashboard = () => {
 
         {/* Patient Modal */}
         {showPatientModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900">
-              <h2 className="text-xl font-semibold mb-4">{editingPatient ? 'Edit Patient' : 'Add New Patient'}</h2>
-              <form onSubmit={handleSavePatient} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input name="patientCode" defaultValue={editingPatient?.patientCode} placeholder="Patient Code" className="input-field" required />
-                  <input name="firstName" defaultValue={editingPatient?.firstName} placeholder="First Name" className="input-field" required />
-                  <input name="lastName" defaultValue={editingPatient?.lastName} placeholder="Last Name" className="input-field" required />
-                  <input name="dateOfBirth" type="date" defaultValue={editingPatient?.dateOfBirth} className="input-field" required />
-                  <select name="gender" defaultValue={editingPatient?.gender} className="input-field" required>
-                    <option value="">Select Gender</option>
-                    <option value="MALE">MALE</option>
-                    <option value="FEMALE">FEMALE</option>
-                    <option value="OTHER">OTHER</option>
-                  </select>
-                  <input name="phoneNumber" defaultValue={editingPatient?.phoneNumber} placeholder="Phone Number" className="input-field" required />
-                  <input name="email" type="email" defaultValue={editingPatient?.email} placeholder="Email" className="input-field" />
-                  <select name="bloodGroup" defaultValue={editingPatient?.bloodGroup} className="input-field">
-                    <option value="">Blood Group</option>
-                    <option value="O_POSITIVE">O_POSITIVE</option>
-                    <option value="O_NEGATIVE">O_NEGATIVE</option>
-                    <option value="A_POSITIVE">A_POSITIVE</option>
-                    <option value="A_NEGATIVE">A_NEGATIVE</option>
-                    <option value="B_POSITIVE">B_POSITIVE</option>
-                    <option value="B_NEGATIVE">B_NEGATIVE</option>
-                    <option value="AB_POSITIVE">AB_POSITIVE</option>
-                    <option value="AB_NEGATIVE">AB_NEGATIVE</option>
-                  </select>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900 shadow-2xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                  {editingPatient ? 'Edit Patient' : 'Add New Patient'}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => { setShowPatientModal(false); setEditingPatient(null); }}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleSavePatient} className="space-y-6">
+                {/* Personal Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Personal Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Patient Code *</label>
+                      <input name="patientCode" defaultValue={editingPatient?.patientCode} placeholder="PAT-001" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">First Name *</label>
+                      <input name="firstName" defaultValue={editingPatient?.firstName} placeholder="John" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Last Name *</label>
+                      <input name="lastName" defaultValue={editingPatient?.lastName} placeholder="Doe" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Date of Birth *</label>
+                      <input name="dateOfBirth" type="date" defaultValue={editingPatient?.dateOfBirth} className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Gender *</label>
+                      <select name="gender" defaultValue={editingPatient?.gender} className="input-field" required>
+                        <option value="">Select Gender</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Blood Group</label>
+                      <select name="bloodGroup" defaultValue={editingPatient?.bloodGroup} className="input-field">
+                        <option value="">Select Blood Group</option>
+                        <option value="A_POSITIVE">A+</option>
+                        <option value="A_NEGATIVE">A-</option>
+                        <option value="B_POSITIVE">B+</option>
+                        <option value="B_NEGATIVE">B-</option>
+                        <option value="O_POSITIVE">O+</option>
+                        <option value="O_NEGATIVE">O-</option>
+                        <option value="AB_POSITIVE">AB+</option>
+                        <option value="AB_NEGATIVE">AB-</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Marital Status</label>
+                      <select name="maritalStatus" defaultValue={editingPatient?.maritalStatus} className="input-field">
+                        <option value="">Select Status</option>
+                        <option value="SINGLE">Single</option>
+                        <option value="MARRIED">Married</option>
+                        <option value="DIVORCED">Divorced</option>
+                        <option value="WIDOWED">Widowed</option>
+                        <option value="SEPARATED">Separated</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Occupation</label>
+                      <input name="occupation" defaultValue={editingPatient?.occupation} placeholder="Software Engineer" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Registration Date</label>
+                      <input name="registrationDate" type="date" defaultValue={editingPatient?.registrationDate || new Date().toISOString().split('T')[0]} className="input-field" />
+                    </div>
+                  </div>
                 </div>
-                <textarea name="address" defaultValue={editingPatient?.address} placeholder="Address" className="input-field w-full" rows="3" />
-                <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => { setShowPatientModal(false); setEditingPatient(null); }} className="px-4 py-2 border rounded hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save</button>
+
+                {/* Contact Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Primary Phone *</label>
+                      <input name="phonePrimary" type="tel" defaultValue={editingPatient?.phonePrimary} placeholder="+1 234 567 8900" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Secondary Phone</label>
+                      <input name="phoneSecondary" type="tel" defaultValue={editingPatient?.phoneSecondary} placeholder="+1 234 567 8901" className="input-field" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Email</label>
+                      <input name="email" type="email" defaultValue={editingPatient?.email} placeholder="john.doe@example.com" className="input-field" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Address Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Address Line 1</label>
+                      <input name="addressLine1" defaultValue={editingPatient?.addressLine1} placeholder="123 Main Street" className="input-field" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Address Line 2</label>
+                      <input name="addressLine2" defaultValue={editingPatient?.addressLine2} placeholder="Apt 4B" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">City</label>
+                      <input name="city" defaultValue={editingPatient?.city} placeholder="New York" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">State</label>
+                      <input name="state" defaultValue={editingPatient?.state} placeholder="NY" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Country</label>
+                      <input name="country" defaultValue={editingPatient?.country} placeholder="United States" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Postal Code</label>
+                      <input name="postalCode" defaultValue={editingPatient?.postalCode} placeholder="10001" className="input-field" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Medical Information */}
+                <div className="pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Medical Information</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Allergies</label>
+                      <textarea name="allergies" defaultValue={editingPatient?.allergies} placeholder="List any known allergies..." className="input-field w-full" rows="2" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Chronic Conditions</label>
+                      <textarea name="chronicConditions" defaultValue={editingPatient?.chronicConditions} placeholder="List any chronic conditions..." className="input-field w-full" rows="2" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Current Medications</label>
+                      <textarea name="currentMedications" defaultValue={editingPatient?.currentMedications} placeholder="List current medications..." className="input-field w-full" rows="2" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <button
+                    type="button"
+                    onClick={() => { setShowPatientModal(false); setEditingPatient(null); }}
+                    className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium shadow-md hover:shadow-lg transition"
+                  >
+                    {editingPatient ? 'Update Patient' : 'Create Patient'}
+                  </button>
                 </div>
               </form>
             </div>
@@ -527,23 +726,128 @@ const AdminDashboard = () => {
 
         {/* Doctor Modal */}
         {showDoctorModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900">
-              <h2 className="text-xl font-semibold mb-4">{editingDoctor ? 'Edit Doctor' : 'Add New Doctor'}</h2>
-              <form onSubmit={handleSaveDoctor} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input name="doctorCode" defaultValue={editingDoctor?.doctorCode} placeholder="Doctor Code" className="border rounded px-3 py-2" required />
-                  <input name="firstName" defaultValue={editingDoctor?.firstName} placeholder="First Name" className="border rounded px-3 py-2" required />
-                  <input name="lastName" defaultValue={editingDoctor?.lastName} placeholder="Last Name" className="border rounded px-3 py-2" required />
-                  <input name="specialization" defaultValue={editingDoctor?.specialization} placeholder="Specialization" className="border rounded px-3 py-2" required />
-                  <input name="phoneNumber" defaultValue={editingDoctor?.phoneNumber} placeholder="Phone Number" className="border rounded px-3 py-2" required />
-                  <input name="email" type="email" defaultValue={editingDoctor?.email} placeholder="Email" className="border rounded px-3 py-2" />
-                  <input name="experience" type="number" defaultValue={editingDoctor?.experience} placeholder="Experience (years)" className="border rounded px-3 py-2" />
-                  <input name="consultationFee" type="number" step="0.01" defaultValue={editingDoctor?.consultationFee} placeholder="Consultation Fee" className="border rounded px-3 py-2" />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto dark:bg-gray-900 shadow-2xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                  {editingDoctor ? 'Edit Doctor' : 'Add New Doctor'}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => { setShowDoctorModal(false); setEditingDoctor(null); }}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveDoctor} className="space-y-6">
+                {/* Personal Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Personal Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Doctor Code *</label>
+                      <input name="doctorCode" defaultValue={editingDoctor?.doctorCode} placeholder="DOC-001" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">First Name *</label>
+                      <input name="firstName" defaultValue={editingDoctor?.firstName} placeholder="Jane" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Last Name *</label>
+                      <input name="lastName" defaultValue={editingDoctor?.lastName} placeholder="Smith" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Date of Birth</label>
+                      <input name="dateOfBirth" type="date" defaultValue={editingDoctor?.dateOfBirth} className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Gender *</label>
+                      <select name="gender" defaultValue={editingDoctor?.gender} className="input-field" required>
+                        <option value="">Select Gender</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Joining Date *</label>
+                      <input name="joiningDate" type="date" defaultValue={editingDoctor?.joiningDate || new Date().toISOString().split('T')[0]} className="input-field" required />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-end space-x-2">
-                  <button type="button" onClick={() => { setShowDoctorModal(false); setEditingDoctor(null); }} className="px-4 py-2 border rounded hover:bg-gray-50">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Save</button>
+
+                {/* Contact Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Primary Phone *</label>
+                      <input name="phonePrimary" type="tel" defaultValue={editingDoctor?.phonePrimary} placeholder="+1 234 567 8900" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Secondary Phone</label>
+                      <input name="phoneSecondary" type="tel" defaultValue={editingDoctor?.phoneSecondary} placeholder="+1 234 567 8901" className="input-field" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Email *</label>
+                      <input name="email" type="email" defaultValue={editingDoctor?.email} placeholder="dr.smith@hospital.com" className="input-field" required />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Professional Information */}
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Professional Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Specialization *</label>
+                      <input name="specialization" defaultValue={editingDoctor?.specialization} placeholder="Cardiology" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Qualification *</label>
+                      <input name="qualification" defaultValue={editingDoctor?.qualification} placeholder="MBBS, MD" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">License Number *</label>
+                      <input name="licenseNumber" defaultValue={editingDoctor?.licenseNumber} placeholder="LIC-12345" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Experience (Years)</label>
+                      <input name="experienceYears" type="number" min="0" defaultValue={editingDoctor?.experienceYears || 0} placeholder="5" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Consultation Fee ($)</label>
+                      <input name="consultationFee" type="number" step="0.01" min="0" defaultValue={editingDoctor?.consultationFee || 0} placeholder="150.00" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Availability Status</label>
+                      <select name="availabilityStatus" defaultValue={editingDoctor?.availabilityStatus || 'AVAILABLE'} className="input-field">
+                        <option value="AVAILABLE">Available</option>
+                        <option value="BUSY">Busy</option>
+                        <option value="ON_LEAVE">On Leave</option>
+                        <option value="UNAVAILABLE">Unavailable</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => { setShowDoctorModal(false); setEditingDoctor(null); }}
+                    className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium shadow-md hover:shadow-lg transition"
+                  >
+                    {editingDoctor ? 'Update Doctor' : 'Create Doctor'}
+                  </button>
                 </div>
               </form>
             </div>
@@ -610,6 +914,118 @@ const AdminDashboard = () => {
                   </table>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Appointment Modal */}
+        {showAppointmentModal && (
+          <div className="modal-overlay">
+            <div className="modal-content max-w-3xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Schedule Appointment</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowAppointmentModal(false)}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveAppointment} className="space-y-6">
+                <div className="form-section">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Appointment Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="form-label">Appointment Code *</label>
+                      <input name="appointmentCode" className="input-field" placeholder="APT-001" required />
+                    </div>
+                    <div>
+                      <label className="form-label">Patient *</label>
+                      <select name="patientId" className="input-field" required>
+                        <option value="">Select Patient</option>
+                        {patients.map(p => (
+                          <option key={p.id} value={p.id}>{p.name || `${p.firstName} ${p.lastName}`} ({p.patientCode})</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="form-label">Doctor *</label>
+                      <select name="doctorId" className="input-field" required>
+                        <option value="">Select Doctor</option>
+                        {doctors.map(d => (
+                          <option key={d.id} value={d.id}>Dr. {d.firstName} {d.lastName} - {d.specialization}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="form-label">Department</label>
+                      <select name="departmentId" className="input-field">
+                        <option value="1">General</option>
+                        <option value="2">Cardiology</option>
+                        <option value="3">Orthopedics</option>
+                        <option value="4">Neurology</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="form-label">Date *</label>
+                      <input type="date" name="appointmentDate" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="form-label">Time *</label>
+                      <input type="time" name="appointmentTime" className="input-field" required />
+                    </div>
+                    <div>
+                      <label className="form-label">Type *</label>
+                      <select name="appointmentType" className="input-field" required>
+                        <option value="">Select Type</option>
+                        <option value="CONSULTATION">Consultation</option>
+                        <option value="FOLLOW_UP">Follow-up</option>
+                        <option value="EMERGENCY">Emergency</option>
+                        <option value="CHECKUP">Checkup</option>
+                        <option value="PROCEDURE">Procedure</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="form-label">Priority</label>
+                      <select name="priority" className="input-field">
+                        <option value="NORMAL">Normal</option>
+                        <option value="LOW">Low</option>
+                        <option value="HIGH">High</option>
+                        <option value="EMERGENCY">Emergency</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="form-label">Consultation Fee</label>
+                      <input name="consultationFee" type="number" step="0.01" className="input-field" placeholder="150.00" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-section">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Medical Information</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <label className="form-label">Reason for Visit *</label>
+                      <textarea name="reason" className="input-field" rows="2" placeholder="Enter reason..." required />
+                    </div>
+                    <div>
+                      <label className="form-label">Symptoms</label>
+                      <textarea name="symptoms" className="input-field" rows="2" placeholder="Describe symptoms..." />
+                    </div>
+                    <div>
+                      <label className="form-label">Additional Notes</label>
+                      <textarea name="notes" className="input-field" rows="2" placeholder="Any additional notes..." />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3 pt-2">
+                  <button type="button" onClick={() => setShowAppointmentModal(false)} className="btn-secondary">Cancel</button>
+                  <button type="submit" className="btn-primary">Create Appointment</button>
+                </div>
+              </form>
             </div>
           </div>
         )}
