@@ -3,6 +3,7 @@ package DATAJPA.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,19 +28,30 @@ public class Patient {
     private Long id;
 
     @Column(name = "patient_code", nullable = false, unique = true, length = 20)
+    @NotBlank(message = "Patient code is required")
+    @Size(max = 20, message = "Patient code must not exceed 20 characters")
     private String patientCode;
 
     @Column(name = "first_name", nullable = false, length = 100)
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 100, message = "First name must be between 2 and 100 characters")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "First name must only contain letters and spaces")
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 100)
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 100, message = "Last name must be between 2 and 100 characters")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Last name must only contain letters and spaces")
     private String lastName;
 
     @Column(name = "email")
+    @Email(message = "Please provide a valid email address")
+    @Size(max = 255, message = "Email must not exceed 255 characters")
     private String email;
 
     @Column(name = "gender", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Gender is required")
     private Gender gender;
 
     @Column(name = "blood_group", length = 10)
@@ -47,12 +59,17 @@ public class Patient {
     private BloodGroup bloodGroup;
 
     @Column(name = "date_of_birth", nullable = false)
+    @NotNull(message = "Date of birth is required")
+    @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
 
     @Column(name = "phone_primary", nullable = false, length = 20)
+    @NotBlank(message = "Primary phone number is required")
+    @Pattern(regexp = "^[+]?[0-9]{10,15}$", message = "Please provide a valid phone number (10-15 digits)")
     private String phonePrimary;
 
     @Column(name = "phone_secondary", length = 20)
+    @Pattern(regexp = "^[+]?[0-9]{10,15}$", message = "Please provide a valid secondary phone number (10-15 digits)")
     private String phoneSecondary;
 
     @Column(name = "address_line1")

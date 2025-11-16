@@ -4,6 +4,7 @@ import DATAJPA.Dto.AppointmentDetailDto;
 import DATAJPA.Dto.AppointmentDto;
 import DATAJPA.Entity.Appointment;
 import DATAJPA.Service.AppointmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AppointmentController {
     // Create appointment - PATIENT, RECEPTIONIST, ADMIN can create
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST', 'PATIENT')")
-    public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
+    public ResponseEntity<Appointment> createAppointment(@Valid @RequestBody Appointment appointment) {
         Appointment created = appointmentService.saveAppointment(appointment);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
@@ -68,7 +69,7 @@ public class AppointmentController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'RECEPTIONIST')")
     public ResponseEntity<Appointment> updateAppointment(
             @PathVariable Long id,
-            @RequestBody Appointment appointment) {
+            @Valid @RequestBody Appointment appointment) {
         return ResponseEntity.ok(appointmentService.updateAppointment(appointment, id));
     }
 

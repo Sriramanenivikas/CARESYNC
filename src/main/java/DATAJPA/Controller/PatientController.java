@@ -5,6 +5,7 @@ import DATAJPA.Dto.PatientDto;
 import DATAJPA.Dto.BloodGroupCountDto;
 import DATAJPA.Entity.Patient;
 import DATAJPA.Service.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,7 @@ public class PatientController {
     // Create a new patient - ADMIN and RECEPTIONIST can create
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
         return new ResponseEntity<>(patientService.savePatient(patient), HttpStatus.CREATED);
     }
 
@@ -77,7 +78,7 @@ public class PatientController {
     // Update patient - ADMIN and RECEPTIONIST can update
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient, @PathVariable Long id) {
+    public ResponseEntity<Patient> updatePatient(@Valid @RequestBody Patient patient, @PathVariable Long id) {
         return new ResponseEntity<>(patientService.updatePatient(patient, id), HttpStatus.OK);
     }
 

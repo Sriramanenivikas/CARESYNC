@@ -4,6 +4,7 @@ import DATAJPA.Dto.DoctorDetailDto;
 import DATAJPA.Dto.DoctorDto;
 import DATAJPA.Entity.Doctor;
 import DATAJPA.Service.Doctorservice;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +37,14 @@ public class DoctorController {
     // Create a new Doctor - Only ADMIN can create
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
+    public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody Doctor doctor) {
         return new ResponseEntity<>(doctorService.saveDoctor(doctor), HttpStatus.CREATED);
     }
 
     // Update Doctor - ADMIN and DOCTOR (self) can update
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
-    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor, @PathVariable Long id) {
+    public ResponseEntity<Doctor> updateDoctor(@Valid @RequestBody Doctor doctor, @PathVariable Long id) {
         return new ResponseEntity<>(doctorService.updateDoctor(doctor, id), HttpStatus.OK);
     }
 
