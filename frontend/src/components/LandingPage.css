@@ -1,17 +1,17 @@
-/* Landing Page Styles */
+/* Landing Page Styles - CareSync Hospital Management System */
 
 .landing-page {
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* Animations */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -39,7 +39,7 @@
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(-50px);
   }
   to {
     opacity: 1;
@@ -50,7 +50,7 @@
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(50px);
   }
   to {
     opacity: 1;
@@ -59,44 +59,69 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 @keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
   0%, 100% {
-    transform: translateY(0);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
   }
   50% {
-    transform: translateY(-10px);
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.6), 0 0 60px rgba(16, 185, 129, 0.3);
   }
 }
 
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  70% { transform: scale(1); }
+}
+
+@keyframes wave {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Animation Classes */
 .animate-fade-in {
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 1s ease-out forwards;
 }
 
 .animate-slide-up {
-  animation: slideUp 1s ease-out;
+  animation: slideUp 1s ease-out forwards;
   animation-delay: 0.2s;
   opacity: 0;
-  animation-fill-mode: forwards;
 }
 
 .animate-slide-down {
-  animation: slideDown 1s ease-out;
+  animation: slideDown 1s ease-out forwards;
 }
 
 .animate-slide-in-left {
-  animation: slideInLeft 1s ease-out;
+  animation: slideInLeft 1s ease-out forwards;
 }
 
 .animate-slide-in-right {
-  animation: slideInRight 1s ease-out;
+  animation: slideInRight 1s ease-out forwards;
 }
 
 .animate-pulse {
@@ -107,27 +132,59 @@
   animation: float 3s ease-in-out infinite;
 }
 
-/* Smooth Scrolling */
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Animation Delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* ============================================
+   SCROLL BEHAVIOR
+   ============================================ */
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Video Background */
+/* ============================================
+   VIDEO BACKGROUND
+   ============================================ */
+
 .landing-page video {
   object-fit: cover;
   width: 100%;
   height: 100%;
 }
 
-/* Gradient Text */
+/* ============================================
+   TEXT EFFECTS
+   ============================================ */
+
 .gradient-text {
-  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+  background: linear-gradient(135deg, #0d9488 0%, #059669 50%, #10b981 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Glass Effect */
+.text-shadow-hero {
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   GLASS EFFECTS
+   ============================================ */
+
 .glass-effect {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -135,50 +192,47 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Custom Scrollbar */
+.glass-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
 .landing-page::-webkit-scrollbar {
   width: 10px;
 }
 
 .landing-page::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f1f5f9;
 }
 
 .landing-page::-webkit-scrollbar-thumb {
-  background: #0d9488;
+  background: linear-gradient(180deg, #0d9488, #059669);
   border-radius: 5px;
 }
 
 .landing-page::-webkit-scrollbar-thumb:hover {
-  background: #0f766e;
+  background: linear-gradient(180deg, #0f766e, #047857);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .landing-page section {
-    padding: 60px 0;
-  }
+/* ============================================
+   CARD EFFECTS
+   ============================================ */
 
-  .landing-page h1 {
-    font-size: 2.5rem;
-  }
-
-  .landing-page h2 {
-    font-size: 2rem;
-  }
-}
-
-/* Enhanced hover effects */
 .hover-lift {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Card glow effect on hover */
 .card-glow {
   position: relative;
   transition: all 0.3s ease;
@@ -193,7 +247,7 @@ html {
   bottom: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(135deg, #0d9488, #059669);
+  background: linear-gradient(135deg, #0d9488, #059669, #10b981);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -205,7 +259,194 @@ html {
   opacity: 1;
 }
 
-/* Parallax effect */
+/* Service Card Shine Effect */
+.service-card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.service-card-shine:hover::after {
+  animation: wave 1.5s ease-out;
+  opacity: 1;
+}
+
+/* ============================================
+   BUTTON EFFECTS
+   ============================================ */
+
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-ripple:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+}
+
+/* ============================================
+   STATS SECTION
+   ============================================ */
+
+.stat-counter {
+  transition: all 0.3s ease;
+}
+
+.stat-counter:hover {
+  transform: scale(1.1);
+}
+
+.stat-counter:hover .stat-icon {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* ============================================
+   DEPARTMENT CARDS
+   ============================================ */
+
+.dept-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dept-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0d9488, #059669);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.dept-card:hover::after {
+  width: 80%;
+}
+
+/* ============================================
+   CONTACT CARDS
+   ============================================ */
+
+.contact-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.contact-icon-pulse:hover {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+
+.nav-scrolled {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0d9488, #059669);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #10b981;
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #10b981;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* ============================================
+   SCROLL INDICATOR
+   ============================================ */
+
+.scroll-indicator {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* ============================================
+   PARALLAX EFFECT
+   ============================================ */
+
 .parallax {
   background-attachment: fixed;
   background-position: center;
@@ -213,3 +454,107 @@ html {
   background-size: cover;
 }
 
+/* ============================================
+   LOADING SHIMMER
+   ============================================ */
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============================================
+   SECTION DIVIDERS
+   ============================================ */
+
+.section-divider {
+  position: relative;
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #0d9488, #059669);
+  border-radius: 2px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .landing-page section {
+    padding: 60px 0;
+  }
+
+  .landing-page h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+
+  .landing-page h2 {
+    font-size: 2rem;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  .stat-counter:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-page h1 {
+    font-size: 2rem;
+  }
+
+  .landing-page h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* ============================================
+   SELECTION STYLING
+   ============================================ */
+
+::selection {
+  background: #10b981;
+  color: white;
+}
+
+::-moz-selection {
+  background: #10b981;
+  color: white;
+}
+
+/* ============================================
+   FOCUS STATES (Accessibility)
+   ============================================ */
+
+.landing-page a:focus,
+.landing-page button:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
