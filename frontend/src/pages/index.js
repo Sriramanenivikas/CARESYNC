@@ -1,0 +1,12 @@
+export { default as LoginPage } from './LoginPage';
+export { default as DashboardPage } from './DashboardPage';
+export { default as PatientsPage } from './PatientsPage';
+export { default as DoctorsPage } from './DoctorsPage';
+export { default as AppointmentsPage } from './AppointmentsPage';
+export { default as PrescriptionsPage } from './PrescriptionsPage';
+export { default as BillsPage } from './BillsPage';
+export { default as AnalyticsPage } from './AnalyticsPage';
+export { default as UsersPage } from './UsersPage';
+export { default as UnauthorizedPage } from './UnauthorizedPage';
+export { default as NotFoundPage } from './NotFoundPage';
+export { default as LandingPage } from './LandingPage';

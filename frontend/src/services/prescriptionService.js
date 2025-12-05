@@ -1,47 +1,117 @@
-import apiClient from './apiService';
+import api from './api';
 
+// Helper to extract data from wrapped API response { success, message, data }
+const extractData = (response) => response.data?.data ?? response.data;
+
+/**
+ * Prescription Service
+ */
 const prescriptionService = {
-  // Get all prescriptions
-  getAllPrescriptions: async () => {
-    const response = await apiClient.get('/api/prescriptions');
-    return response.data;
+  /**
+   * Get all prescriptions
+   */
+  getAll: async (params = {}) => {
+    try {
+      // Default to larger page size to get more data
+      const queryParams = { size: 100, ...params };
+      const response = await api.get('/prescriptions', { params: queryParams });
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to fetch prescriptions';
+      return { success: false, error: message, data: [] };
+    }
   },
 
-  // Get prescription by ID
-  getPrescriptionById: async (id) => {
-    const response = await apiClient.get(`/api/prescriptions/${id}`);
-    return response.data;
+  /**
+   * Get prescription by ID
+   */
+  getById: async (id) => {
+    try {
+      const response = await api.get(`/prescriptions/${id}`);
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to fetch prescription';
+      return { success: false, error: message };
+    }
   },
 
-  // Get prescriptions by patient ID
-  getPrescriptionsByPatient: async (patientId) => {
-    const response = await apiClient.get(`/api/prescriptions/patient/${patientId}`);
-    return response.data;
+  /**
+   * Create new prescription
+   */
+  create: async (prescriptionData) => {
+    try {
+      const response = await api.post('/prescriptions', prescriptionData);
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to create prescription';
+      return { success: false, error: message };
+    }
   },
 
-  // Get prescriptions by doctor ID
-  getPrescriptionsByDoctor: async (doctorId) => {
-    const response = await apiClient.get(`/api/prescriptions/doctor/${doctorId}`);
-    return response.data;
+  /**
+   * Update prescription
+   */
+  update: async (id, prescriptionData) => {
+    try {
+      const response = await api.put(`/prescriptions/${id}`, prescriptionData);
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to update prescription';
+      return { success: false, error: message };
+    }
   },
 
-  // Create prescription
-  createPrescription: async (prescriptionData) => {
-    const response = await apiClient.post('/api/prescriptions', prescriptionData);
-    return response.data;
+  /**
+   * Delete prescription
+   */
+  delete: async (id) => {
+    try {
+      await api.delete(`/prescriptions/${id}`);
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to delete prescription';
+      return { success: false, error: message };
+    }
   },
 
-  // Update prescription
-  updatePrescription: async (id, prescriptionData) => {
-    const response = await apiClient.put(`/api/prescriptions/${id}`, prescriptionData);
-    return response.data;
+  /**
+   * Get prescriptions by patient
+   */
+  getByPatient: async (patientId) => {
+    try {
+      const response = await api.get(`/prescriptions/patient/${patientId}`);
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to fetch prescriptions';
+      return { success: false, error: message, data: [] };
+    }
   },
 
-  // Delete prescription
-  deletePrescription: async (id) => {
-    const response = await apiClient.delete(`/api/prescriptions/${id}`);
-    return response.data;
-  }
+  /**
+   * Get prescriptions by doctor
+   */
+  getByDoctor: async (doctorId) => {
+    try {
+      const response = await api.get(`/prescriptions/doctor/${doctorId}`);
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to fetch prescriptions';
+      return { success: false, error: message, data: [] };
+    }
+  },
+
+  /**
+   * Get active prescriptions
+   */
+  getActive: async (patientId) => {
+    try {
+      const response = await api.get(`/prescriptions/active/${patientId}`);
+      return { success: true, data: extractData(response) };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to fetch active prescriptions';
+      return { success: false, error: message, data: [] };
+    }
+  },
 };
 
 export default prescriptionService;

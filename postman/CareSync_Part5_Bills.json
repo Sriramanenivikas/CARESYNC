@@ -1,0 +1,337 @@
+{
+  "info": {
+    "name": "CareSync API - Part 5: Bills",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Bills",
+      "item": [
+        {
+          "name": "Get All Bills",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Has content',function(){pm.expect(pm.response.json().data.content).to.be.an('array');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Bill By ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Has bill data',function(){pm.expect(pm.response.json().data.id).to.be.a('number');pm.expect(pm.response.json().data.billNumber).to.be.a('string');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/1"
+          }
+        },
+        {
+          "name": "Get Bill Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404',function(){pm.response.to.have.status(404);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/99999"
+          }
+        },
+        {
+          "name": "Get Bill By Number",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/number/BILL-20241103-00001"
+          }
+        },
+        {
+          "name": "Get Bills By Patient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/patient/1?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Pending Bills",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Is array',function(){pm.expect(pm.response.json().data).to.be.an('array');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/pending"
+          }
+        },
+        {
+          "name": "Get Bills By Status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/status/PAID?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Total Revenue",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Is number',function(){pm.expect(pm.response.json().data).to.be.a('number');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/revenue/total"
+          }
+        },
+        {
+          "name": "Get Today Revenue",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/revenue/today"
+          }
+        },
+        {
+          "name": "Get Monthly Revenue",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/revenue/monthly"
+          }
+        },
+        {
+          "name": "Get Outstanding Amount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bills/outstanding"
+          }
+        },
+        {
+          "name": "Create Bill",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201',function(){pm.response.to.have.status(201);});",
+                  "pm.collectionVariables.set('newBillId',pm.response.json().data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"patientId\":1,\"totalAmount\":500.00,\"discountAmount\":50.00,\"taxAmount\":0.00,\"finalAmount\":450.00,\"dueDate\":\"2025-12-31\",\"notes\":\"Test bill\",\"items\":[{\"description\":\"Consultation\",\"quantity\":1,\"unitPrice\":300.00,\"totalPrice\":300.00},{\"description\":\"Lab Test\",\"quantity\":1,\"unitPrice\":200.00,\"totalPrice\":200.00}]}"
+            },
+            "url": "{{baseUrl}}/bills"
+          }
+        },
+        {
+          "name": "Create Bill Invalid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 400 or 404',function(){pm.expect([400,404]).to.include(pm.response.code);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"patientId\":99999,\"totalAmount\":100.00}"
+            },
+            "url": "{{baseUrl}}/bills"
+          }
+        },
+        {
+          "name": "Process Payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Payment processed',function(){var data=pm.response.json().data;pm.expect(data.paidAmount).to.be.above(0);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"billId\":{{newBillId}},\"amount\":450.00,\"paymentMethod\":\"CARD\",\"notes\":\"Full payment\"}"
+            },
+            "url": "{{baseUrl}}/bills/payment"
+          }
+        },
+        {
+          "name": "Update Bill",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"patientId\":1,\"totalAmount\":600.00,\"discountAmount\":60.00,\"taxAmount\":0.00,\"finalAmount\":540.00,\"dueDate\":\"2026-01-15\",\"notes\":\"Updated bill\",\"items\":[{\"description\":\"Updated Consultation\",\"quantity\":1,\"unitPrice\":400.00,\"totalPrice\":400.00},{\"description\":\"Updated Lab\",\"quantity\":1,\"unitPrice\":200.00,\"totalPrice\":200.00}]}"
+            },
+            "url": "{{baseUrl}}/bills/{{newBillId}}"
+          }
+        },
+        {
+          "name": "Delete Bill",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/bills/{{newBillId}}"
+          }
+        }
+      ]
+    }
+  ]
+}

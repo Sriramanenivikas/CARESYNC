@@ -1,0 +1,186 @@
+{
+  "info": {
+    "name": "CareSync API - Part 2: Doctors",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Doctors",
+      "item": [
+        {
+          "name": "Get All Doctors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Has content',function(){pm.expect(pm.response.json().data.content).to.be.an('array');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Doctor By ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Has doctor',function(){pm.expect(pm.response.json().data.id).to.be.a('number');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors/1"
+          }
+        },
+        {
+          "name": "Get Doctor Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404',function(){pm.response.to.have.status(404);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors/99999"
+          }
+        },
+        {
+          "name": "Get Available Doctors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors/available"
+          }
+        },
+        {
+          "name": "Get Doctors By Department",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors/department/1"
+          }
+        },
+        {
+          "name": "Search Doctors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors/search?query=cardio&page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Doctor Count",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Is number',function(){pm.expect(pm.response.json().data).to.be.a('number');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doctors/count"
+          }
+        },
+        {
+          "name": "Create Doctor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201',function(){pm.response.to.have.status(201);});",
+                  "pm.collectionVariables.set('newDoctorId',pm.response.json().data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"firstName\":\"Test\",\"lastName\":\"Doctor\",\"email\":\"test.doc@test.com\",\"phone\":\"+1-555-0000\",\"specialization\":\"General\",\"qualification\":\"MBBS\",\"licenseNumber\":\"LIC-TEST-001\",\"experienceYears\":5,\"consultationFee\":150.00,\"departmentId\":1,\"isAvailable\":true}"
+            },
+            "url": "{{baseUrl}}/doctors"
+          }
+        },
+        {
+          "name": "Delete Doctor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/doctors/{{newDoctorId}}"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d54d62ee-ebb0-4a5a-8b0e-e893c47ebb9c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CARESYNC struc.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Auth/Login.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Auth/PrivateRoute.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/AdminDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/DoctorDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/LabTechnicianDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/NurseDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/PatientDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/PharmacistDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/ReceptionistDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboards/TestDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/LandingPage.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/LandingPage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Layout/DashboardLayout.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Layout/PlaceholderPage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Layout/StatCard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/apiService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/appointmentService.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/appointmentService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/authService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/billingService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/dashboardService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/doctorService.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/doctorService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/patientService.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/patientService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/prescriptionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/prescriptionService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/utils/authUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/AdminController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/AppointmentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/BillingController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/DashboardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/DoctorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/NotificationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/PatientController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Controller/PrescriptionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/DataJPA_Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/AppointmentDetailDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/AppointmentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/BillDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/BillItemDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/BloodGroupCountDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/DepartmentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/DoctorDetailDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/DoctorDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/DoctorScheduleDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/InsuranceDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/LabTestDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/LoginRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/LoginResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/NotificationDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/OtpRequestDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/OtpVerifyDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/PatientDetailDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/PatientDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/PaymentTransactionDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/PrescriptionDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/PrescriptionItemDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Dto/RegisterDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/ActivityLog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Appointment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Bed.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/BedAssignment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/BedWard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/BillItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/BillMaster.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Department.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Doctor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/DoctorSchedule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/EmergencyContact.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Insurance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/LabTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/LoginAttempt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/MedicalRecord.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Notification.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/OtpVerification.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Patient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/PaymentTransaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/Prescription.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/PrescriptionItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/StaffProfile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Entity/UserSession.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/DuplicateResourceException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/InvalidInsuranceException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/InvalidTokenException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/ResourceNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Exception/UnauthorizedAccessException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/ActivityLogRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/AppointmentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/BillItemRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/BillMasterRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/DepartmentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/DoctorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/InsuranceRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/LabTestRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/LoginAttemptRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/NotificationRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/OtpVerificationRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/PatientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/PaymentTransactionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/PrescriptionItemRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/PrescriptionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/StaffProfileRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/UserSessionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Repository/Userrepositary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/ActivityLogService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/AppointmentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/BillingService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/DashboardService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/Doctorservice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/EmailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/InsuranceServise.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/NotificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/OtpService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/PatientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/PrescriptionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/SmsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/impl/AppointmentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/impl/DoctorserviceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/impl/InsuranceService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/impl/PatientServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/Service/impl/UserDetailsServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/config/JacksonConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/config/MailConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/security/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/security/Auth_util.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/security/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/security/Filter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DATAJPA/security/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-DataJPA.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/AdminController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/AppointmentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/BillingController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/DashboardController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/DashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/DoctorController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/NotificationController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/PatientController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Controller/PrescriptionController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/DataJPA_Application.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/AppointmentDetailDto$AppointmentDetailDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/AppointmentDetailDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/AppointmentDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/BillDto$BillDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/BillDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/BillItemDto$BillItemDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/BillItemDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/BloodGroupCountDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DepartmentDto$DepartmentDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DepartmentDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DoctorDetailDto$DoctorDetailDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DoctorDetailDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DoctorDto$DoctorDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DoctorDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DoctorScheduleDto$DoctorScheduleDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/DoctorScheduleDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/InsuranceDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/LoginRequestDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/LoginResponseDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/NotificationDto$NotificationDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/NotificationDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/OtpRequestDto$OtpRequestDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/OtpRequestDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/OtpVerifyDto$OtpVerifyDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/OtpVerifyDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PatientDetailDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PatientDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PaymentTransactionDto$PaymentTransactionDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PaymentTransactionDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PrescriptionDto$PrescriptionDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PrescriptionDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PrescriptionItemDto$PrescriptionItemDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/PrescriptionItemDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Dto/RegisterDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/ActivityLog$ActivityLogBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/ActivityLog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Appointment$AppointmentBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Appointment$AppointmentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Appointment$AppointmentType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Appointment$Priority.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Appointment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Bed$BedBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Bed$BedStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Bed$BedType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Bed.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedAssignment$AdmissionType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedAssignment$AssignmentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedAssignment$BedAssignmentBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedAssignment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedWard$BedWardBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedWard$WardType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BedWard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillItem$BillItemBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillItem$ItemType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillMaster$BillMasterBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillMaster$BillType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillMaster$PaymentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/BillMaster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Department$DepartmentBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Department.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Doctor$DoctorBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Doctor$Gender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Doctor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/DoctorSchedule$DoctorScheduleBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/DoctorSchedule.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/EmergencyContact$EmergencyContactBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/EmergencyContact.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Insurance$InsuranceBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Insurance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/LoginAttempt$LoginAttemptBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/LoginAttempt.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/MedicalRecord$MedicalRecordBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/MedicalRecord.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Notification$NotificationBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Notification$NotificationType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Notification$Priority.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Notification.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/OtpVerification$OtpType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/OtpVerification$OtpVerificationBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/OtpVerification.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Patient$BloodGroup.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Patient$Gender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Patient$MaritalStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Patient$PatientBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Patient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/PaymentTransaction$PaymentMode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/PaymentTransaction$PaymentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/PaymentTransaction$PaymentTransactionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/PaymentTransaction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Prescription$PrescriptionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/Prescription.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/PrescriptionItem$PrescriptionItemBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/PrescriptionItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/StaffProfile$EmploymentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/StaffProfile$Gender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/StaffProfile$StaffProfileBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/StaffProfile$StaffType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/StaffProfile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/User$Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/User$UserBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/UserSession$UserSessionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Entity/UserSession.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/DuplicateResourceException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/ErrorResponse$ErrorResponseBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/ErrorResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/GlobalExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/InvalidTokenException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/ResourceNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Exception/UnauthorizedAccessException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/ActivityLogRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/AppointmentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/BillItemRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/BillMasterRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/DepartmentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/DoctorRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/InsuranceRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/LoginAttemptRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/NotificationRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/OtpVerificationRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/PatientRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/PaymentTransactionRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/PrescriptionItemRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/PrescriptionRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/StaffProfileRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/UserSessionRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Repository/Userrepositary.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/ActivityLogService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/AppointmentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/BillingService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/DashboardService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/Doctorservice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/EmailService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/InsuranceServise.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/NotificationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/OtpService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/PatientService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/PrescriptionService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/SmsService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/impl/AppointmentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/impl/DoctorserviceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/impl/InsuranceService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/impl/PatientServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/Service/impl/UserDetailsServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/config/JacksonConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/config/MailConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/security/AuthService$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/security/AuthService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/security/Auth_util.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/security/CorsConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/security/Filter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DATAJPA/security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-DataJPA.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/application.properties" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="34pgEQEGd05FMHTpmUUr4HLQZcs" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DataJPA_Application.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
+    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/Users/vikas/Library/Application Support/JetBrains/IntelliJIdea2025.2/plugins/Shell Script/shellcheck&quot;,
+    &quot;Spring Boot.CareSyncApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.DataJPA_Application.executor&quot;: &quot;Run&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vikas/Downloads/CareSync&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/vikas/Library/Application Support/JetBrains/IntelliJIdea2025.2/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Spring Boot.CareSyncApplication">
+    <configuration name="DataJPA_Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DATAJPA.DataJPA_Application" />
+      <module name="SpringBOOT" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DATAJPA.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CareSyncApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="SpringBOOT" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.caresync.CareSyncApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DataJPA_Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="SpringBOOT" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="DATAJPA.DataJPA_Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.DataJPA_Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d54d62ee-ebb0-4a5a-8b0e-e893c47ebb9c" name="Changes" comment="" />
+      <created>1761915814200</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761915814200</updated>
+      <workItem from="1761915815300" duration="7670000" />
+      <workItem from="1761974332437" duration="270000" />
+      <workItem from="1761974693968" duration="4760000" />
+      <workItem from="1761991155641" duration="8631000" />
+      <workItem from="1762000052591" duration="7375000" />
+      <workItem from="1762075816097" duration="20000" />
+      <workItem from="1762084179353" duration="38000" />
+      <workItem from="1762329519223" duration="1614000" />
+      <workItem from="1762836099496" duration="6683000" />
+      <workItem from="1762846801438" duration="30000" />
+      <workItem from="1763046218415" duration="6106000" />
+      <workItem from="1763100595043" duration="855000" />
+      <workItem from="1763118500628" duration="7000" />
+      <workItem from="1763484722527" duration="53000" />
+      <workItem from="1763526423734" duration="8000" />
+      <workItem from="1764579528007" duration="1581000" />
+      <workItem from="1764581146960" duration="3435000" />
+      <workItem from="1764741952662" duration="7803000" />
+      <workItem from="1764749797184" duration="22795000" />
+      <workItem from="1764826035627" duration="12026000" />
+      <workItem from="1764857256010" duration="7400000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/DATAJPA/Entity/ActivityLog.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

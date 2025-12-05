@@ -1,235 +1,70 @@
-# CareSync Frontend - Hospital Management System
+# Getting Started with Create React App
 
-A comprehensive role-based dashboard system built with React.js and Tailwind CSS.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## ✨ Features
+## Available Scripts
 
-### 🔐 Role-Based Authentication
-- **Automatic Dashboard Routing**: Users are automatically redirected to their role-specific dashboard after login
-- **JWT Token Authentication**: Secure token-based authentication
-- **Protected Routes**: Role-based access control for all routes
+In the project directory, you can run:
 
-### 👥 Supported Roles
-1. **Admin** - Full system access, manage users, view reports
-2. **Doctor** - Manage appointments, patients, prescriptions, medical records
-3. **Patient** - View appointments, prescriptions, bills, find doctors
-4. **Receptionist** - Patient registration, appointments, billing, bed management
-5. **Nurse** - Patient care, bed management, tasks
-6. **Pharmacist** - Prescription management, inventory
-7. **Lab Technician** - Lab tests and results (coming soon)
+### `npm start`
 
-## 🚀 Quick Start
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- Backend API running on http://localhost:8080
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### Installation
+### `npm test`
 
-```bash
-# Navigate to frontend directory
-cd frontend
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-# Install dependencies
-npm install
+### `npm run build`
 
-# Start development server
-npm start
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The application will open at `http://localhost:3000`
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## 📁 Project Structure
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-```
-frontend/
-├── public/
-│   └── index.html
-├── src/
-│   ├── components/
-│   │   ├── Auth/
-│   │   │   ├── Login.jsx
-│   │   │   └── PrivateRoute.jsx
-│   │   ├── Dashboards/
-│   │   │   ├── AdminDashboard.jsx
-│   │   │   ├── DoctorDashboard.jsx
-│   │   │   ├── PatientDashboard.jsx
-│   │   │   ├── ReceptionistDashboard.jsx
-│   │   │   ├── NurseDashboard.jsx
-│   │   │   ├── PharmacistDashboard.jsx
-│   │   │   └── LabTechnicianDashboard.jsx
-│   │   └── Layout/
-│   │       ├── DashboardLayout.jsx
-│   │       └── StatCard.jsx
-│   ├── services/
-│   │   ├── apiService.js
-│   │   ├── authService.js
-│   │   └── dashboardService.js
-│   ├── utils/
-│   │   └── authUtils.js
-│   ├── App.js
-│   ├── index.js
-│   └── index.css
-├── .env
-├── package.json
-├── tailwind.config.js
-└── postcss.config.js
-```
+### `npm run eject`
 
-## 🔑 Authentication Flow
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-1. **Login**: User enters username and password
-2. **API Call**: Credentials sent to `/auth/login`
-3. **Response**: Backend returns JWT token, user info, role, and dashboard URL
-4. **Storage**: Token and user data stored in localStorage
-5. **Auto-Redirect**: User automatically redirected to role-specific dashboard
-6. **Protected Routes**: All dashboard routes protected by role-based guards
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## 🎨 Dashboard Features by Role
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-### Admin Dashboard
-- Total Patients, Doctors, Appointments statistics
-- Revenue overview
-- Quick actions: Add Patient, Add Doctor, View Reports
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Doctor Dashboard
-- Today's appointments
-- Total appointments (pending/completed)
-- Patient count
-- Quick actions: View Appointments, Add Prescription, Patient History
+## Learn More
 
-### Patient Dashboard
-- Upcoming appointments
-- Prescriptions
-- Billing summary
-- Quick actions: Book Appointment, Find Doctors, View Prescriptions
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Receptionist Dashboard
-- Today's appointments
-- Patient registration
-- Billing management
-- Quick actions: Register Patient, Book Appointment, Generate Bill
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Nurse Dashboard
-- Patient assignments
-- Bed management
-- Pending tasks
-- Quick actions: View Patients, Update Bed Status, View Tasks
+### Code Splitting
 
-### Pharmacist Dashboard
-- Prescriptions (pending/dispensed)
-- Inventory management
-- Quick actions: View Prescriptions, Dispense Medicine, Check Inventory
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Lab Technician Dashboard
-- Pending tests
-- Completed tests
-- Quick actions: View Tests, Upload Results, Generate Report
+### Analyzing the Bundle Size
 
-## 🔧 Configuration
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Environment Variables (.env)
+### Making a Progressive Web App
 
-```env
-REACT_APP_API_URL=http://localhost:8080
-REACT_APP_API_BASE_URL=http://localhost:8080/api
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### API Endpoints
+### Advanced Configuration
 
-- `POST /auth/login` - User login
-- `POST /auth/logout` - User logout
-- `GET /api/dashboard` - Auto-detect role and return dashboard
-- `GET /api/dashboard/admin` - Admin dashboard data
-- `GET /api/dashboard/doctor` - Doctor dashboard data
-- `GET /api/dashboard/patient` - Patient dashboard data
-- `GET /api/dashboard/receptionist` - Receptionist dashboard data
-- `GET /api/dashboard/nurse` - Nurse dashboard data
-- `GET /api/dashboard/pharmacist` - Pharmacist dashboard data
-- `GET /api/dashboard/lab-technician` - Lab technician dashboard data
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-## 🎨 Styling
+### Deployment
 
-- **Tailwind CSS** for utility-first styling
-- **Custom Components** for reusable UI elements
-- **Responsive Design** works on mobile, tablet, and desktop
-- **Color Scheme**: Primary blue theme with role-specific accent colors
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-## 🔐 Security Features
+### `npm run build` fails to minify
 
-- JWT token stored in localStorage
-- Automatic token injection in API requests
-- Token expiry handling with auto-redirect to login
-- Role-based route protection
-- Unauthorized access redirects to appropriate dashboard
-
-## 🚧 Development
-
-### Available Scripts
-
-```bash
-# Start development server
-npm start
-
-# Build for production
-npm run build
-
-# Run tests
-npm test
-```
-
-### Adding New Routes
-
-1. Create component in `src/components/`
-2. Add route in `src/App.js`
-3. Protect with `<PrivateRoute allowedRoles={['ROLE']}>` if needed
-4. Update menu items in dashboard layout
-
-## 📦 Dependencies
-
-- **react**: ^18.2.0
-- **react-dom**: ^18.2.0
-- **react-router-dom**: ^6.20.0
-- **axios**: ^1.6.2
-- **react-icons**: ^4.12.0
-- **tailwindcss**: ^3.3.5
-
-## 🐛 Troubleshooting
-
-### Login Issues
-- Ensure backend is running on http://localhost:8080
-- Check browser console for API errors
-- Verify credentials are correct
-
-### Dashboard Not Loading
-- Check JWT token in localStorage
-- Verify role is set correctly
-- Check network tab for API responses
-
-### Styling Issues
-- Run `npm install` to ensure Tailwind is installed
-- Check that tailwind.config.js is properly configured
-- Clear browser cache
-
-## 🔮 Future Enhancements
-
-- [ ] OTP verification integration
-- [ ] CAPTCHA implementation
-- [ ] Real-time notifications
-- [ ] Advanced reporting and analytics
-- [ ] Appointment booking UI
-- [ ] Patient management interface
-- [ ] Doctor management interface
-- [ ] Billing module UI
-- [ ] Lab module integration
-- [ ] Dark mode support
-
-## 📝 License
-
-This project is part of the CareSync Hospital Management System.
-
-## 🤝 Support
-
-For issues or questions, please contact the development team.
-
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

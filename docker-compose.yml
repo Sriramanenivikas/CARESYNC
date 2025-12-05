@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: caresync-db
+    environment:
+      POSTGRES_DB: CARESYNC
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/indian_seed_data.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d CARESYNC"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - caresync-network
+
+  # CareSync Application (Backend + Frontend)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: caresync-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/CARESYNC
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres123}
+      DATABASE_URL: jdbc:postgresql://postgres:5432/CARESYNC
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${DB_PASSWORD:-postgres123}
+      JWT_SECRET: ${JWT_SECRET:-caresync-jwt-secret-key-change-in-production-256-bits}
+      SPRING_PROFILES_ACTIVE: prod
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - caresync-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  caresync-network:
+    driver: bridge

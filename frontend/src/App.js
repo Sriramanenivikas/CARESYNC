@@ -1,159 +1,137 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
-import Login from './components/Auth/Login';
-import PrivateRoute from './components/Auth/PrivateRoute';
-import AdminDashboard from './components/Dashboards/AdminDashboard';
-import TestDashboard from './components/Dashboards/TestDashboard';
-import DoctorDashboard from './components/Dashboards/DoctorDashboard';
-import PatientDashboard from './components/Dashboards/PatientDashboard';
-import ReceptionistDashboard from './components/Dashboards/ReceptionistDashboard';
-import NurseDashboard from './components/Dashboards/NurseDashboard';
-import PharmacistDashboard from './components/Dashboards/PharmacistDashboard';
-import LabTechnicianDashboard from './components/Dashboards/LabTechnicianDashboard';
-import { isAuthenticated, getDashboardRoute, getUserRole } from './utils/authUtils';
-import PlaceholderPage from './components/Layout/PlaceholderPage';
+import { AuthProvider } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { ProtectedRoute } from './components/auth';
+import { DashboardLayout } from './components/layout';
+import ErrorBoundary from './components/ErrorBoundary';
+import { ToastProvider } from './components/Toast';
+import {
+  LoginPage,
+  DashboardPage,
+  PatientsPage,
+  DoctorsPage,
+  AppointmentsPage,
+  PrescriptionsPage,
+  BillsPage,
+  AnalyticsPage,
+  UsersPage,
+  UnauthorizedPage,
+  NotFoundPage,
+  LandingPage,
+} from './pages';
+import './index.css';
 
 function App() {
-  const HomeRedirect = () => {
-    if (isAuthenticated()) {
-      // Prefer dashboardUrl stored from login if present
-      const storedUrl = localStorage.getItem('dashboardUrl');
-      if (storedUrl) {
-        // Normalize stored url to frontend route (remove leading /api if present)
-        const normalized = storedUrl.replace(/^\/api/, '');
-        return <Navigate to={normalized} replace />;
-      }
-
-      const role = getUserRole();
-      const dashboardRoute = getDashboardRoute(role);
-      return <Navigate to={dashboardRoute} replace />;
-    }
-    return <Navigate to="/" replace />;
-  };
-
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
+    <ErrorBoundary>
+      <Router>
+        <ThemeProvider>
+          <AuthProvider>
+            <NotificationProvider>
+              <ToastProvider>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-          {/* Home Route - Auto redirect based on auth status and role */}
-          <Route path="/home" element={
-            isAuthenticated() ? (
-              <Navigate to={getDashboardRoute(getUserRole())} replace />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          } />
+            {/* Protected Routes */}
+            <Route
+              path="/app"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="/app/dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardPage />} />
+              
+              <Route
+                path="patients"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST', 'TEST']}>
+                    <PatientsPage />
+                  </ProtectedRoute>
+                }
+              />
+              
+              <Route
+                path="doctors"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'RECEPTIONIST', 'TEST']}>
+                    <DoctorsPage />
+                  </ProtectedRoute>
+                }
+              />
+              
+              <Route
+                path="appointments"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST', 'PATIENT', 'TEST']}>
+                    <AppointmentsPage />
+                  </ProtectedRoute>
+                }
+              />
+              
+              <Route
+                path="prescriptions"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'DOCTOR', 'NURSE', 'PATIENT', 'TEST']}>
+                    <PrescriptionsPage />
+                  </ProtectedRoute>
+                }
+              />
+              
+              <Route
+                path="bills"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'RECEPTIONIST', 'PATIENT', 'TEST']}>
+                    <BillsPage />
+                  </ProtectedRoute>
+                }
+              />
 
-          {/* Protected Dashboard Routes */}
-          <Route
-            path="/dashboard/admin"
-            element={
-              <PrivateRoute allowedRoles={["ADMIN"]}>
-                <AdminDashboard />
-              </PrivateRoute>
-            }
-          />
+              <Route
+                path="analytics"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'TEST']}>
+                    <AnalyticsPage />
+                  </ProtectedRoute>
+                }
+              />
 
-          {/* Test dashboard route (for debugging) */}
-          <Route
-            path="/dashboard/test"
-            element={
-              <PrivateRoute allowedRoles={["ADMIN"]}>
-                <TestDashboard />
-              </PrivateRoute>
-            }
-          />
+              <Route
+                path="users"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN', 'TEST']}>
+                    <UsersPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
 
-          <Route
-            path="/dashboard/doctor"
-            element={
-              <PrivateRoute allowedRoles={["DOCTOR"]}>
-                <DoctorDashboard />
-              </PrivateRoute>
-            }
-          />
+            {/* Legacy routes redirect to /app */}
+            <Route path="/dashboard" element={<Navigate to="/app/dashboard" replace />} />
+            <Route path="/patients" element={<Navigate to="/app/patients" replace />} />
+            <Route path="/doctors" element={<Navigate to="/app/doctors" replace />} />
+            <Route path="/appointments" element={<Navigate to="/app/appointments" replace />} />
+            <Route path="/prescriptions" element={<Navigate to="/app/prescriptions" replace />} />
+            <Route path="/bills" element={<Navigate to="/app/bills" replace />} />
+            <Route path="/analytics" element={<Navigate to="/app/analytics" replace />} />
+            <Route path="/users" element={<Navigate to="/app/users" replace />} />
 
-          <Route
-            path="/dashboard/patient"
-            element={
-              <PrivateRoute allowedRoles={["PATIENT"]}>
-                <PatientDashboard />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/dashboard/receptionist"
-            element={
-              <PrivateRoute allowedRoles={["RECEPTIONIST"]}>
-                <ReceptionistDashboard />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/dashboard/nurse"
-            element={
-              <PrivateRoute allowedRoles={["NURSE"]}>
-                <NurseDashboard />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/dashboard/pharmacist"
-            element={
-              <PrivateRoute allowedRoles={["PHARMACIST"]}>
-                <PharmacistDashboard />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/dashboard/lab-technician"
-            element={
-              <PrivateRoute allowedRoles={["LAB_TECHNICIAN"]}>
-                <LabTechnicianDashboard />
-              </PrivateRoute>
-            }
-          />
-
-          {/* Dashboard base route */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <HomeRedirect />
-              </PrivateRoute>
-            }
-          />
-
-          {/* Placeholder routes for sidebar pages to keep navigation moving */}
-          <Route path="/patients" element={<PrivateRoute><PlaceholderPage title="Patients" /></PrivateRoute>} />
-          <Route path="/doctors" element={<PrivateRoute><PlaceholderPage title="Doctors" /></PrivateRoute>} />
-          <Route path="/appointments" element={<PrivateRoute><PlaceholderPage title="Appointments" /></PrivateRoute>} />
-          <Route path="/departments" element={<PrivateRoute><PlaceholderPage title="Departments" /></PrivateRoute>} />
-          <Route path="/reports" element={<PrivateRoute><PlaceholderPage title="Reports" /></PrivateRoute>} />
-          <Route path="/settings" element={<PrivateRoute><PlaceholderPage title="Settings" /></PrivateRoute>} />
-
-          {/* Role-based wildcard routes to allow subpaths like /nurse/patients etc. */}
-          <Route path="/nurse/*" element={<PrivateRoute allowedRoles={["NURSE"]}><PlaceholderPage title="Nurse Module" /></PrivateRoute>} />
-          <Route path="/doctor/*" element={<PrivateRoute allowedRoles={["DOCTOR"]}><PlaceholderPage title="Doctor Module" /></PrivateRoute>} />
-          <Route path="/patient/*" element={<PrivateRoute allowedRoles={["PATIENT"]}><PlaceholderPage title="Patient Module" /></PrivateRoute>} />
-          <Route path="/receptionist/*" element={<PrivateRoute allowedRoles={["RECEPTIONIST"]}><PlaceholderPage title="Receptionist Module" /></PrivateRoute>} />
-          <Route path="/pharmacist/*" element={<PrivateRoute allowedRoles={["PHARMACIST"]}><PlaceholderPage title="Pharmacist Module" /></PrivateRoute>} />
-          <Route path="/lab/*" element={<PrivateRoute allowedRoles={["LAB_TECHNICIAN"]}><PlaceholderPage title="Lab Module" /></PrivateRoute>} />
-
-          {/* Catch all - redirect to home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </div>
-    </Router>
+            {/* 404 Route */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+              </ToastProvider>
+            </NotificationProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
 

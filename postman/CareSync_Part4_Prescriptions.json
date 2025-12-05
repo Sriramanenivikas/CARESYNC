@@ -1,0 +1,240 @@
+{
+  "info": {
+    "name": "CareSync API - Part 4: Prescriptions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Prescriptions",
+      "item": [
+        {
+          "name": "Get All Prescriptions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Has content',function(){pm.expect(pm.response.json().data.content).to.be.an('array');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Prescription By ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Has data',function(){pm.expect(pm.response.json().data.id).to.be.a('number');pm.expect(pm.response.json().data.diagnosis).to.be.a('string');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions/1"
+          }
+        },
+        {
+          "name": "Get Prescription Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404',function(){pm.response.to.have.status(404);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions/99999"
+          }
+        },
+        {
+          "name": "Get Prescriptions By Patient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions/patient/1?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Prescriptions By Doctor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions/doctor/1?page=0&size=10"
+          }
+        },
+        {
+          "name": "Get Recent By Patient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions/patient/1/recent?limit=5"
+          }
+        },
+        {
+          "name": "Get Prescription Count",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});",
+                  "pm.test('Is number',function(){pm.expect(pm.response.json().data).to.be.a('number');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/prescriptions/count"
+          }
+        },
+        {
+          "name": "Create Prescription",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201',function(){pm.response.to.have.status(201);});",
+                  "pm.collectionVariables.set('newPrescId',pm.response.json().data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"patientId\":1,\"doctorId\":1,\"diagnosis\":\"Test Diagnosis\",\"notes\":\"Test prescription notes\",\"followUpDate\":\"2025-12-30\",\"items\":[{\"medicineName\":\"Paracetamol\",\"dosage\":\"500mg\",\"frequency\":\"Twice daily\",\"duration\":\"7 days\",\"quantity\":14,\"instructions\":\"Take after meals\"}]}"
+            },
+            "url": "{{baseUrl}}/prescriptions"
+          }
+        },
+        {
+          "name": "Create Prescription Invalid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 400 or 404',function(){pm.expect([400,404]).to.include(pm.response.code);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"patientId\":99999,\"doctorId\":99999,\"diagnosis\":\"Test\"}"
+            },
+            "url": "{{baseUrl}}/prescriptions"
+          }
+        },
+        {
+          "name": "Update Prescription",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"patientId\":1,\"doctorId\":1,\"diagnosis\":\"Updated Diagnosis\",\"notes\":\"Updated notes\",\"followUpDate\":\"2026-01-15\",\"items\":[{\"medicineName\":\"Ibuprofen\",\"dosage\":\"400mg\",\"frequency\":\"Three times daily\",\"duration\":\"5 days\",\"quantity\":15,\"instructions\":\"Take with food\"}]}"
+            },
+            "url": "{{baseUrl}}/prescriptions/{{newPrescId}}"
+          }
+        },
+        {
+          "name": "Delete Prescription",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200',function(){pm.response.to.have.status(200);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/prescriptions/{{newPrescId}}"
+          }
+        }
+      ]
+    }
+  ]
+}

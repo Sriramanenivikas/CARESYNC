@@ -1,92 +1,123 @@
-import axios from 'axios';
-import apiClient from './apiService';
+import api from './api';
+import { storage } from '../utils/helpers';
 
-// Use a single source of truth for base URL; apiService uses REACT_APP_API_BASE_URL
-const AUTH_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:2222';
+const AUTH_TOKEN_KEY = 'token';
+const USER_KEY = 'user';
 
+/**
+ * Authentication Service
+ */
 const authService = {
-  // Login with username and password - use full URL to /auth/login
-  login: async (credentials) => {
+  /**
+   * Login user
+   */
+  login: async (username, password) => {
     try {
-      const url = `${AUTH_BASE_URL}/auth/login`;
-      const response = await axios.post(url, credentials);
-      const data = response.data;
-
-      if (data?.jwtToken) {
-        localStorage.setItem('jwtToken', data.jwtToken);
-        if (data.role) localStorage.setItem('userRole', data.role);
-        if (data.userId) localStorage.setItem('userId', data.userId);
-        if (data.username) localStorage.setItem('username', data.username);
-        if (data.email) localStorage.setItem('email', data.email);
-        if (data.dashboardUrl) localStorage.setItem('dashboardUrl', data.dashboardUrl);
-      }
-
-      return data;
+      const response = await api.post('/auth/login', { username, password });
+      // Backend returns wrapped response: { success, message, data: { token, user } }
+      const { data } = response.data;
+      const { token, user } = data;
+      
+      // Store token and user data
+      storage.set(AUTH_TOKEN_KEY, token);
+      storage.set(USER_KEY, user);
+      
+      return { success: true, user, token };
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message || 'Login failed';
-      throw new Error(errorMessage);
+      const message = error.response?.data?.message || 'Login failed. Please try again.';
+      return { success: false, error: message };
     }
   },
 
-  // Logout via /auth/logout (no /api prefix)
-  logout: async () => {
+  /**
+   * Logout user
+   */
+  logout: () => {
+    storage.remove(AUTH_TOKEN_KEY);
+    storage.remove(USER_KEY);
+  },
+
+  /**
+   * Get current user
+   */
+  getCurrentUser: () => {
+    return storage.get(USER_KEY);
+  },
+
+  /**
+   * Get auth token
+   */
+  getToken: () => {
+    return storage.get(AUTH_TOKEN_KEY);
+  },
+
+  /**
+   * Check if user is authenticated
+   */
+  isAuthenticated: () => {
+    const token = storage.get(AUTH_TOKEN_KEY);
+    return !!token;
+  },
+
+  /**
+   * Get user role
+   */
+  getUserRole: () => {
+    const user = storage.get(USER_KEY);
+    return user?.role || null;
+  },
+
+  /**
+   * Check if user has specific role
+   */
+  hasRole: (requiredRole) => {
+    const user = storage.get(USER_KEY);
+    if (!user) return false;
+    
+    if (Array.isArray(requiredRole)) {
+      return requiredRole.includes(user.role);
+    }
+    return user.role === requiredRole;
+  },
+
+  /**
+   * Validate token (check with server)
+   */
+  validateToken: async () => {
     try {
-      await apiClient.post('/auth/logout');
-    } catch (error) {
-      // ignore
-    } finally {
-      localStorage.removeItem('jwtToken');
-      localStorage.removeItem('userRole');
-      localStorage.removeItem('userId');
-      localStorage.removeItem('username');
-      localStorage.removeItem('email');
-      localStorage.removeItem('dashboardUrl');
+      const response = await api.get('/auth/validate');
+      return response.data.valid;
+    } catch {
+      return false;
     }
   },
 
-  // Get current user info from /api/dashboard/me
-  getCurrentUser: async () => {
+  /**
+   * Refresh token
+   */
+  refreshToken: async () => {
     try {
-      const response = await apiClient.get('/api/dashboard/me');
-      return response.data;
+      const response = await api.post('/auth/refresh');
+      const { token } = response.data;
+      storage.set(AUTH_TOKEN_KEY, token);
+      return { success: true, token };
     } catch (error) {
-      throw error.response?.data || { message: 'Failed to get user info' };
+      return { success: false, error: 'Failed to refresh token' };
     }
   },
 
-  // Request OTP
-  requestOtp: async (otpRequest) => {
+  /**
+   * Change password
+   */
+  changePassword: async (currentPassword, newPassword) => {
     try {
-      const response = await axios.post(`${AUTH_BASE_URL}/auth/otp/request`, otpRequest);
-      return response.data;
+      await api.post('/auth/change-password', { currentPassword, newPassword });
+      return { success: true };
     } catch (error) {
-      throw error.response?.data || { message: 'OTP request failed' };
+      const message = error.response?.data?.message || 'Failed to change password';
+      return { success: false, error: message };
     }
   },
-
-  // Verify OTP
-  verifyOtp: async (otpVerify) => {
-    try {
-      const response = await axios.post(`${AUTH_BASE_URL}/auth/otp/verify`, otpVerify);
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || { message: 'OTP verification failed' };
-    }
-  },
-
-  // Register new user
-  register: async (userData) => {
-    try {
-      const response = await axios.post(`${AUTH_BASE_URL}/auth/register`, userData);
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || { message: 'Registration failed' };
-    }
-  },
-
-  isAuthenticated: () => !!localStorage.getItem('jwtToken'),
-  getUserRole: () => localStorage.getItem('userRole'),
-  getDashboardUrl: () => localStorage.getItem('dashboardUrl') || '/dashboard',
 };
 
 export default authService;
