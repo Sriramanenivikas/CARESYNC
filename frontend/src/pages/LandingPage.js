@@ -67,7 +67,7 @@ const LandingPage = () => {
       <header className="flex justify-between items-center px-[5%] py-5 border-b border-black/5 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <Logo size={28} className="text-blue-500" />
-          <div className="minecraft-heading text-xl">CareSync</div>
+          <div className="minecraft-heading text-xl">Hospital</div>
         </div>
         <nav className="hidden md:flex gap-8">
           <a href="#features" className="text-gray-600 text-sm font-medium hover:text-black transition-colors">Features</a>
@@ -108,7 +108,7 @@ const LandingPage = () => {
             onClick={() => navigate('/login')}
             className="px-8 py-3 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transition-colors flex items-center gap-2"
           >
-            Start Using CareSync <FiArrowRight className="w-4 h-4" />
+            Start Using App <FiArrowRight className="w-4 h-4" />
           </button>
           <a
             href="https://github.com/Sriramanenivikas/CARESYNC"
@@ -261,7 +261,7 @@ const LandingPage = () => {
       <footer className="py-8 px-[5%] border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="minecraft-heading text-lg">CareSync</span>
+            <span className="minecraft-heading text-lg">App</span>
             <span className="text-sm text-gray-500">© {new Date().getFullYear()}</span>
           </div>
           <div className="flex items-center gap-4">

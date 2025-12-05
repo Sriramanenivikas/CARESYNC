@@ -75,7 +75,7 @@ const LoginPage = () => {
           </button>
           <div className="flex items-center gap-3">
             <Logo size={36} className="text-blue-500" />
-            <div className="minecraft-heading text-2xl text-white">CareSync</div>
+            <div className="minecraft-heading text-2xl text-white">Hospital</div>
           </div>
         </div>
 
@@ -110,7 +110,7 @@ const LoginPage = () => {
         <div className="w-full max-w-sm">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <span className="minecraft-heading text-xl text-black dark:text-white">CareSync</span>
+            <span className="minecraft-heading text-xl text-black dark:text-white">Hospital</span>
           </div>
 
           <div className="text-center mb-8">
@@ -207,7 +207,7 @@ const LoginPage = () => {
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-6">
-            © {new Date().getFullYear()} CareSync. All rights reserved.
+            © {new Date().getFullYear()} Hospital. All rights reserved.
           </p>
         </div>
       </div>

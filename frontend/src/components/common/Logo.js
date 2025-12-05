@@ -1,49 +1,5 @@
 import React from 'react';
 
-/**
- * CareSync Logo Component - Medical Caduceus style logo
- */
-const Logo = ({ size = 32, className = '' }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-      fill="currentColor"
-      width={size}
-      height={size}
-      className={className}
-    >
-      <rect x="236" y="20" width="40" height="472" rx="20" />
-      <circle cx="256" cy="50" r="40" />
-
-      <path d="M480,80 c-40,0 -80,20 -110,50 c-20,20 -30,40 -30,60 h40 c0,-10 10,-20 20,-30 c20,-20 50,-30 80,-30 v-50 z" />
-      <path d="M32,80 c40,0 80,20 110,50 c20,20 30,40 30,60 h-40 c0,-10 -10,-20 -20,-30 c-20,-20 -50,-30 -80,-30 v-50 z" />
-
-      <path d="M256,160
-               c-50,0 -100,20 -100,70
-               c0,40 30,60 80,80
-               c50,20 80,40 80,80
-               c0,40 -40,60 -100,60
-               v40
-               c80,0 140,-30 140,-100
-               c0,-50 -40,-80 -90,-100
-               c-40,-15 -70,-30 -70,-60
-               c0,-20 20,-30 60,-30
-               z" />
-
-      <path d="M256,160
-               c50,0 100,20 100,70
-               c0,40 -30,60 -80,80
-               c-50,20 -80,40 -80,80
-               c0,40 40,60 100,60
-               v40
-               c-80,0 -140,-30 -140,-100
-               c0,-50 40,-80 90,-100
-               c40,-15 70,-30 70,-60
-               c0,-20 -20,-30 -60,-30
-               z" />
-    </svg>
-  );
-};
-
+// Placeholder Logo component removed for branding
+const Logo = () => null;
 export default Logo;

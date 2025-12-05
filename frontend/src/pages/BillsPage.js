@@ -381,9 +381,7 @@ const BillsPage = () => {
         <body>
           <div class="header">
             <div>
-              <div class="logo">CareSync Hospital</div>
-              <p>123 Medical Center Drive</p>
-              <p>Phone: (555) 123-4567</p>
+              <div class="logo">Hospital</div>
             </div>
             <div style="text-align: right;">
               <div class="invoice-title">INVOICE</div>
@@ -422,7 +420,7 @@ const BillsPage = () => {
           <p><strong>Status:</strong> <span class="status ${bill.status}">${bill.status}</span></p>
 
           <div class="footer">
-            <p>Thank you for choosing CareSync Hospital</p>
+            <p>Thank you for choosing our hospital</p>
             <p>Payment is due within 30 days. Please include invoice number with payment.</p>
           </div>
         </body>

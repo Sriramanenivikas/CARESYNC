@@ -296,7 +296,7 @@ const PrescriptionsPage = () => {
         </head>
         <body>
           <div class="header">
-            <div class="logo">CareSync Hospital</div>
+            <div class="logo">Hospital</div>
             <p>123 Medical Center Drive | Phone: (555) 123-4567</p>
           </div>
           <div class="rx-symbol">℞</div>
