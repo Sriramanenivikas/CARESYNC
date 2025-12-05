@@ -30,7 +30,7 @@ public class DoctorSchedule {
     private Doctor doctor;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "day_of_week", nullable = false, columnDefinition = "day_of_week")
+    @Column(name = "day_of_week", nullable = false, length = 20)
     private DayOfWeek dayOfWeek;
 
     @Column(name = "start_time", nullable = false)
