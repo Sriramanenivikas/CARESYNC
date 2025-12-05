@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNotification } from '../context/NotificationContext';
+import { useAuth } from '../context/AuthContext';
 import { adminService } from '../services';
+import { requiresAccessCode } from '../utils/accessCode';
 import {
   Card,
   Button,
@@ -14,6 +16,7 @@ import {
   Loading,
   Avatar,
   StatusBadge,
+  AccessCodeModal,
 } from '../components/common';
 import {
   FiPlus,
@@ -31,6 +34,7 @@ import { formatDate, getFullName, exportToCSV } from '../utils/helpers';
 
 const UsersPage = () => {
   const { success, error: showError } = useNotification();
+  const { user } = useAuth();
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,6 +46,8 @@ const UsersPage = () => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isAccessCodeModalOpen, setIsAccessCodeModalOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
@@ -117,38 +123,73 @@ const UsersPage = () => {
   };
 
   const handleCreate = () => {
+    if (requiresAccessCode(user, 'CREATE')) {
+      setPendingAction({ type: 'CREATE' });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      resetForm();
+      setIsFormModalOpen(true);
+    }
+  };
+
+  const proceedWithCreate = () => {
     resetForm();
     setIsFormModalOpen(true);
   };
 
-  const handleEdit = (user) => {
-    setSelectedUser(user);
+  const handleEdit = (userToEdit) => {
+    if (requiresAccessCode(user, 'UPDATE')) {
+      setPendingAction({ type: 'UPDATE', userToEdit });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      proceedWithEdit(userToEdit);
+    }
+  };
+
+  const proceedWithEdit = (userToEdit) => {
+    setSelectedUser(userToEdit);
     setFormData({
-      username: user.username || '',
-      email: user.email || '',
+      username: userToEdit.username || '',
+      email: userToEdit.email || '',
       password: '',
-      firstName: user.firstName || '',
-      lastName: user.lastName || '',
-      phone: user.phone || '',
-      role: user.role || 'PATIENT',
+      firstName: userToEdit.firstName || '',
+      lastName: userToEdit.lastName || '',
+      phone: userToEdit.phone || '',
+      role: userToEdit.role || 'PATIENT',
     });
     setFormErrors({});
     setIsFormModalOpen(true);
   };
 
-  const handleView = (user) => {
-    setSelectedUser(user);
+  const handleView = (userToView) => {
+    setSelectedUser(userToView);
     setIsViewModalOpen(true);
   };
 
-  const handleDeleteClick = (user) => {
-    setSelectedUser(user);
-    setIsDeleteDialogOpen(true);
+  const handleDeleteClick = (userToDelete) => {
+    setSelectedUser(userToDelete);
+    if (requiresAccessCode(user, 'DELETE')) {
+      setPendingAction({ type: 'DELETE', userToDelete });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      setIsDeleteDialogOpen(true);
+    }
   };
 
-  const handleRoleClick = (user) => {
-    setSelectedUser(user);
-    setNewRole(user.role || 'PATIENT');
+  const handleAccessCodeSuccess = () => {
+    if (pendingAction?.type === 'DELETE') {
+      setIsDeleteDialogOpen(true);
+    } else if (pendingAction?.type === 'CREATE') {
+      proceedWithCreate();
+    } else if (pendingAction?.type === 'UPDATE') {
+      proceedWithEdit(pendingAction.userToEdit);
+    }
+    setPendingAction(null);
+  };
+
+  const handleRoleClick = (userToUpdate) => {
+    setSelectedUser(userToUpdate);
+    setNewRole(userToUpdate.role || 'PATIENT');
     setIsRoleModalOpen(true);
   };
 
@@ -685,6 +726,18 @@ const UsersPage = () => {
         confirmText="Delete"
         type="danger"
         loading={formLoading}
+      />
+
+      {/* Access Code Modal */}
+      <AccessCodeModal
+        isOpen={isAccessCodeModalOpen}
+        onClose={() => {
+          setIsAccessCodeModalOpen(false);
+          setPendingAction(null);
+        }}
+        onSuccess={handleAccessCodeSuccess}
+        operation={pendingAction?.type?.toLowerCase() || 'modify'}
+        itemName={pendingAction?.type === 'CREATE' ? 'new user' : (selectedUser?.username || 'this user')}
       />
     </div>
   );

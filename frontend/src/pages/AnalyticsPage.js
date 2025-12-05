@@ -223,11 +223,11 @@ const AnalyticsPage = () => {
   }
 
   const statusColors = {
-    SCHEDULED: 'bg-blue-500',
-    CONFIRMED: 'bg-sky-500',
-    COMPLETED: 'bg-emerald-500',
-    CANCELLED: 'bg-red-500',
-    NO_SHOW: 'bg-zinc-400',
+    SCHEDULED: 'bg-zinc-500',
+    CONFIRMED: 'bg-zinc-600',
+    COMPLETED: 'bg-zinc-800',
+    CANCELLED: 'bg-zinc-400',
+    NO_SHOW: 'bg-zinc-300',
   };
 
   const maxRevenue = Math.max(...stats.revenueByMonth.map(r => r.revenue), 1);
@@ -256,15 +256,15 @@ const AnalyticsPage = () => {
               <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Total Patients</p>
               <p className="text-2xl font-semibold text-zinc-900 dark:text-white mt-1">{stats.totalPatients}</p>
               <div className="flex items-center gap-1 mt-2">
-                <span className="flex items-center text-xs text-emerald-600 dark:text-emerald-400">
+                <span className="flex items-center text-xs text-zinc-600 dark:text-zinc-400">
                   <FiTrendingUp className="w-3 h-3 mr-0.5" />
                   +{stats.newPatientsThisMonth}
                 </span>
                 <span className="text-xs text-zinc-400">this month</span>
               </div>
             </div>
-            <div className="p-2.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <FiUsers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+              <FiUsers className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
             </div>
           </div>
         </Card>
@@ -276,12 +276,12 @@ const AnalyticsPage = () => {
               <p className="text-2xl font-semibold text-zinc-900 dark:text-white mt-1">{formatCurrency(stats.totalRevenue)}</p>
               <div className="flex items-center gap-1 mt-2">
                 {parseFloat(stats.revenueGrowth) >= 0 ? (
-                  <span className="flex items-center text-xs text-emerald-600 dark:text-emerald-400">
+                  <span className="flex items-center text-xs text-zinc-600 dark:text-zinc-400">
                     <FiTrendingUp className="w-3 h-3 mr-0.5" />
                     +{stats.revenueGrowth}%
                   </span>
                 ) : (
-                  <span className="flex items-center text-xs text-red-600 dark:text-red-400">
+                  <span className="flex items-center text-xs text-zinc-600 dark:text-zinc-400">
                     <FiTrendingDown className="w-3 h-3 mr-0.5" />
                     {stats.revenueGrowth}%
                   </span>
@@ -289,8 +289,8 @@ const AnalyticsPage = () => {
                 <span className="text-xs text-zinc-400">vs last month</span>
               </div>
             </div>
-            <div className="p-2.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
-              <FiDollarSign className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+              <FiDollarSign className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
             </div>
           </div>
         </Card>
@@ -305,8 +305,8 @@ const AnalyticsPage = () => {
                 <span className="text-xs text-zinc-400">/ {stats.paidBills + stats.pendingBills} total</span>
               </div>
             </div>
-            <div className="p-2.5 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
-              <FiPercent className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+              <FiPercent className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
             </div>
           </div>
         </Card>
@@ -320,8 +320,8 @@ const AnalyticsPage = () => {
                 <span className="text-xs text-zinc-500">{stats.totalAppointments} appointments</span>
               </div>
             </div>
-            <div className="p-2.5 bg-sky-50 dark:bg-sky-900/20 rounded-lg">
-              <FiTarget className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+              <FiTarget className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
             </div>
           </div>
         </Card>
@@ -330,8 +330,8 @@ const AnalyticsPage = () => {
       {/* KPI Cards Row 2 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="flex items-center gap-4 p-4">
-          <div className="p-2.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
-            <FiUserPlus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+            <FiUserPlus className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </div>
           <div>
             <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Active Doctors</p>
@@ -340,8 +340,8 @@ const AnalyticsPage = () => {
         </Card>
 
         <Card className="flex items-center gap-4 p-4">
-          <div className="p-2.5 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
-            <FiClock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+          <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+            <FiClock className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </div>
           <div>
             <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Pending Bills</p>
@@ -350,18 +350,18 @@ const AnalyticsPage = () => {
         </Card>
 
         <Card className="flex items-center gap-4 p-4">
-          <div className="p-2.5 bg-red-50 dark:bg-red-900/20 rounded-lg">
-            <FiAlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
+          <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+            <FiAlertTriangle className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </div>
           <div>
             <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Overdue Amount</p>
-            <p className="text-xl font-semibold text-red-600 dark:text-red-400">{formatCurrency(stats.overdueAmount)}</p>
+            <p className="text-xl font-semibold text-zinc-700 dark:text-zinc-300">{formatCurrency(stats.overdueAmount)}</p>
           </div>
         </Card>
 
         <Card className="flex items-center gap-4 p-4">
-          <div className="p-2.5 bg-teal-50 dark:bg-teal-900/20 rounded-lg">
-            <FiHeart className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+          <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+            <FiHeart className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </div>
           <div>
             <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Avg Revenue/Patient</p>
@@ -387,7 +387,7 @@ const AnalyticsPage = () => {
                 </div>
                 <div className="h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-blue-500 rounded-full transition-all duration-500"
+                    className="h-full bg-zinc-700 dark:bg-zinc-400 rounded-full transition-all duration-500"
                     style={{ width: `${Math.max((item.revenue / maxRevenue) * 100, 3)}%` }}
                   />
                 </div>
@@ -449,7 +449,7 @@ const AnalyticsPage = () => {
               <div key={index} className="flex flex-col items-center flex-1 group">
                 <div className="relative w-full flex justify-center">
                   <div
-                    className="w-8 bg-blue-500 dark:bg-blue-600 rounded-t transition-all duration-300 group-hover:bg-blue-600 dark:group-hover:bg-blue-500"
+                    className="w-8 bg-zinc-600 dark:bg-zinc-500 rounded-t transition-all duration-300 group-hover:bg-zinc-700 dark:group-hover:bg-zinc-400"
                     style={{ height: `${Math.max((item.count / maxPatients) * 120, 16)}px` }}
                   />
                 </div>
@@ -471,7 +471,7 @@ const AnalyticsPage = () => {
               <div key={index} className="flex flex-col items-center flex-1 group">
                 <div className="relative w-full flex justify-center">
                   <div
-                    className="w-8 bg-violet-500 dark:bg-violet-600 rounded-t transition-all duration-300 group-hover:bg-violet-600 dark:group-hover:bg-violet-500"
+                    className="w-8 bg-zinc-500 dark:bg-zinc-600 rounded-t transition-all duration-300 group-hover:bg-zinc-600 dark:group-hover:bg-zinc-500"
                     style={{ height: `${Math.max((item.count / maxAppointments) * 120, 8)}px` }}
                   />
                 </div>
@@ -527,12 +527,12 @@ const AnalyticsPage = () => {
             {stats.departmentStats.slice(0, 6).map((dept, index) => {
               const maxDoctors = Math.max(...stats.departmentStats.map(d => d.doctors), 1);
               const colors = [
-                'bg-teal-500',
-                'bg-blue-500',
-                'bg-violet-500',
-                'bg-orange-500',
-                'bg-pink-500',
-                'bg-indigo-500',
+                'bg-zinc-800',
+                'bg-zinc-700',
+                'bg-zinc-600',
+                'bg-zinc-500',
+                'bg-zinc-400',
+                'bg-zinc-300',
               ];
               return (
                 <div key={index}>
@@ -542,7 +542,7 @@ const AnalyticsPage = () => {
                   </div>
                   <div className="h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                     <div
-                      className={`h-full ${colors[index % colors.length]} rounded-full transition-all duration-500`}
+                      className={`h-full ${colors[index % colors.length]} dark:bg-zinc-400 rounded-full transition-all duration-500`}
                       style={{ width: `${Math.max((dept.doctors / maxDoctors) * 100, 10)}%` }}
                     />
                   </div>

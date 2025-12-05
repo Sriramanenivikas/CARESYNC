@@ -1,64 +1,56 @@
-# 🏥 CareSync - Hospital Management System
-
-[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://openjdk.java.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green.svg)](https://spring.io/projects/spring-boot)
-[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+# CareSync - Hospital Management System
 
 A full-stack hospital management system with role-based access control for admins, doctors, nurses, receptionists, and patients. Built with modern technologies and production-ready practices.
 
-![CareSync Dashboard](docs/images/dashboard-preview.png)
-
-## 🌟 Features
+## Features
 
 ### Role-Based Access Control (RBAC)
 | Role | Capabilities |
 |------|--------------|
-| **Admin** | Full system access, revenue analytics, user management, system configuration |
-| **Doctor** | Patient appointments, prescriptions, medical records, consultation management |
-| **Nurse** | Patient vitals, assigned appointments, prescription viewing, care coordination |
-| **Receptionist** | Appointment scheduling, patient registration, billing, check-in/check-out |
-| **Patient** | View appointments, prescriptions, bills, medical history |
+| Admin | Full system access, revenue analytics, user management, system configuration |
+| Doctor | Patient appointments, prescriptions, medical records, consultation management |
+| Nurse | Patient vitals, assigned appointments, prescription viewing, care coordination |
+| Receptionist | Appointment scheduling, patient registration, billing, check-in/check-out |
+| Patient | View appointments, prescriptions, bills, medical history |
 
 ### Core Modules
-- 📅 **Appointment Management** - Schedule, reschedule, cancel appointments
-- 💊 **Prescription System** - Create and manage prescriptions with medications
-- 💰 **Billing & Payments** - Generate bills, track payments (₹ INR format)
-- 👥 **Patient Records** - Complete medical history and demographics
-- 📊 **Dashboard Analytics** - Role-specific KPIs and real-time charts
-- 🔍 **Global Search** - Search patients, doctors, appointments across system
+- Appointment Management - Schedule, reschedule, cancel appointments
+- Prescription System - Create and manage prescriptions with medications
+- Billing & Payments - Generate bills, track payments (INR format)
+- Patient Records - Complete medical history and demographics
+- Dashboard Analytics - Role-specific KPIs and real-time charts
+- Global Search - Search patients, doctors, appointments across system
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
-- **Java 17** - Core language
-- **Spring Boot 3.2** - Application framework
-- **Spring Security** - Authentication & authorization
-- **JWT** - Token-based authentication
-- **Spring Data JPA** - Data persistence
-- **PostgreSQL** - Database
+- Java 17 - Core language
+- Spring Boot 3.2 - Application framework
+- Spring Security - Authentication & authorization
+- JWT - Token-based authentication
+- Spring Data JPA - Data persistence
+- PostgreSQL - Database
 
 ### Frontend
-- **React 18** - UI framework
-- **Tailwind CSS** - Styling
-- **Recharts** - Data visualization
-- **React Router** - Navigation
-- **Axios** - HTTP client
+- React 18 - UI framework
+- Tailwind CSS - Styling
+- Recharts - Data visualization
+- React Router - Navigation
+- Axios - HTTP client
 
 ### DevOps
-- **Docker** - Containerization
-- **Maven** - Build tool
-- **GitHub Actions** - CI/CD (optional)
+- Docker - Containerization
+- Maven - Build tool
+- GitHub Actions - CI/CD (optional)
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Java 17 or higher
 - Node.js 18 or higher
 - PostgreSQL 14 or higher
 - Maven 3.8+
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 ```bash
@@ -74,7 +66,7 @@ createdb CARESYNC
 # Run schema migration
 psql -U postgres -d CARESYNC -f database/schema.sql
 
-# Seed Indian demo data
+# Seed demo data
 psql -U postgres -d CARESYNC -f database/indian_seed_data.sql
 ```
 
@@ -102,19 +94,19 @@ npm start
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8080
 
-## 🔐 Demo Credentials
+## Demo Credentials
 
 | Role | Username | Password | Access Level |
 |------|----------|----------|--------------|
-| **Test (Demo)** | test | Test@123$ | Read-only admin access for recruiters |
-| **Doctor** | dr.smith | Doctor@123 | Full doctor capabilities |
-| **Nurse** | nurse.lisa | Nurse@123 | Nursing staff access |
-| **Receptionist** | reception.mary | Reception@123 | Front desk operations |
-| **Patient** | patient.robert | Patient@123 | Patient self-service |
+| Test (Demo) | test | Test@123$ | Read-only admin access for recruiters |
+| Doctor | dr.smith | Doctor@123 | Full doctor capabilities |
+| Nurse | nurse.lisa | Nurse@123 | Nursing staff access |
+| Receptionist | reception.mary | Recept@123 | Front desk operations |
+| Patient | patient.robert | Patient@123 | Patient self-service |
 
-> **Note**: The Test/Demo account has admin-level view access but cannot create, update, or delete any data. This is designed for recruiters to explore the full system safely.
+Note: The Test/Demo account has admin-level view access but cannot create, update, or delete any data. This is designed for recruiters to explore the full system safely.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 CARESYNC/
@@ -146,17 +138,17 @@ CARESYNC/
 └── pom.xml                     # Maven dependencies
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `SPRING_DATASOURCE_URL` | Database connection URL | `jdbc:postgresql://localhost:5432/CARESYNC` |
-| `SPRING_DATASOURCE_USERNAME` | Database username | `postgres` |
-| `SPRING_DATASOURCE_PASSWORD` | Database password | - |
-| `JWT_SECRET` | JWT signing secret | - |
-| `JWT_EXPIRATION` | Token expiration (ms) | `86400000` |
+| SPRING_DATASOURCE_URL | Database connection URL | jdbc:postgresql://localhost:5432/CARESYNC |
+| SPRING_DATASOURCE_USERNAME | Database username | postgres |
+| SPRING_DATASOURCE_PASSWORD | Database password | - |
+| JWT_SECRET | JWT signing secret | - |
+| JWT_EXPIRATION | Token expiration (ms) | 86400000 |
 
 ### Application Properties
 ```properties
@@ -173,7 +165,7 @@ jwt.expiration=86400000
 server.port=8080
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ### Build and Run with Docker
 ```bash
@@ -195,7 +187,7 @@ docker run -d \
 docker-compose up -d
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Backend Tests
 ```bash
@@ -209,73 +201,73 @@ npm test
 ```
 
 ### API Testing with Postman
-1. Import collection from `postman/` folder
+1. Import collection from postman/ folder
 2. Set environment variables (base_url, token)
 3. Run collection
 
-## 📊 API Endpoints
+## API Endpoints
 
 ### Authentication
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/auth/login` | User login |
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/refresh` | Refresh token |
+| POST | /api/auth/login | User login |
+| POST | /api/auth/register | Register new user |
+| POST | /api/auth/refresh | Refresh token |
 
 ### Patients
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/patients` | List all patients |
-| GET | `/api/patients/{id}` | Get patient by ID |
-| POST | `/api/patients` | Create patient |
-| PUT | `/api/patients/{id}` | Update patient |
+| GET | /api/patients | List all patients |
+| GET | /api/patients/{id} | Get patient by ID |
+| POST | /api/patients | Create patient |
+| PUT | /api/patients/{id} | Update patient |
 
 ### Appointments
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/appointments` | List appointments |
-| GET | `/api/appointments/today` | Today's appointments |
-| POST | `/api/appointments` | Create appointment |
-| PUT | `/api/appointments/{id}/status` | Update status |
+| GET | /api/appointments | List appointments |
+| GET | /api/appointments/today | Today's appointments |
+| POST | /api/appointments | Create appointment |
+| PUT | /api/appointments/{id}/status | Update status |
 
 ### Bills
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/bills` | List all bills |
-| GET | `/api/bills/pending` | Pending bills |
-| POST | `/api/bills` | Create bill |
-| PUT | `/api/bills/{id}/pay` | Process payment |
+| GET | /api/bills | List all bills |
+| GET | /api/bills/pending | Pending bills |
+| POST | /api/bills | Create bill |
+| PUT | /api/bills/{id}/pay | Process payment |
 
-## 🔒 Security Features
+## Security Features
 
-- **JWT Authentication** - Secure token-based auth
-- **Role-Based Access** - Granular permissions
-- **Input Validation** - XSS and SQL injection prevention
-- **CORS Configuration** - Controlled cross-origin requests
-- **Password Hashing** - BCrypt encryption
-- **Rate Limiting** - API abuse prevention
+- JWT Authentication - Secure token-based auth
+- Role-Based Access - Granular permissions
+- Input Validation - XSS and SQL injection prevention
+- CORS Configuration - Controlled cross-origin requests
+- Password Hashing - BCrypt encryption
+- Rate Limiting - API abuse prevention
 
-## 🌐 Deployment on Render
+## Deployment on Render
 
 1. Create a new Web Service on Render
 2. Connect your GitHub repository
 3. Set environment variables:
-   - `SPRING_DATASOURCE_URL`
-   - `SPRING_DATASOURCE_PASSWORD`
-   - `JWT_SECRET`
+   - SPRING_DATASOURCE_URL
+   - SPRING_DATASOURCE_PASSWORD
+   - JWT_SECRET
 4. Deploy!
 
-## 📝 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👨‍💻 Author
+## Author
 
-**Vikas Sriramaneni**
-- LinkedIn: [linkedin.com/in/sriramanenivikas](https://www.linkedin.com/in/sriramanenivikas/)
-- GitHub: [github.com/Sriramanenivikas](https://github.com/Sriramanenivikas)
+Vikas Sriramaneni
+- LinkedIn: linkedin.com/in/sriramanenivikas
+- GitHub: github.com/Sriramanenivikas
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Spring Boot team for the amazing framework
 - React community for the excellent ecosystem
@@ -283,6 +275,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-⭐ **Star this repository if you find it helpful!**
-
-*Built with ❤️ for learning and demonstration purposes.*
+Built for learning and demonstration purposes.

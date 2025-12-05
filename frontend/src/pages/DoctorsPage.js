@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNotification } from '../context/NotificationContext';
+import { useAuth } from '../context/AuthContext';
 import { doctorService } from '../services';
 import { validateDoctorForm } from '../utils/validation';
+import { requiresAccessCode } from '../utils/accessCode';
 import {
   Card,
   Button,
@@ -14,6 +16,7 @@ import {
   EmptyState,
   Loading,
   Avatar,
+  AccessCodeModal,
 } from '../components/common';
 import {
   FiPlus,
@@ -31,6 +34,7 @@ import { getFullName, exportToCSV, formatCurrency } from '../utils/helpers';
 
 const DoctorsPage = () => {
   const { success, error: showError } = useNotification();
+  const { user } = useAuth();
 
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,6 +45,8 @@ const DoctorsPage = () => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isAccessCodeModalOpen, setIsAccessCodeModalOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
 
@@ -113,11 +119,30 @@ const DoctorsPage = () => {
   };
 
   const handleCreate = () => {
+    if (requiresAccessCode(user, 'CREATE')) {
+      setPendingAction({ type: 'CREATE' });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      resetForm();
+      setIsFormModalOpen(true);
+    }
+  };
+
+  const proceedWithCreate = () => {
     resetForm();
     setIsFormModalOpen(true);
   };
 
   const handleEdit = (doctor) => {
+    if (requiresAccessCode(user, 'UPDATE')) {
+      setPendingAction({ type: 'UPDATE', doctor });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      proceedWithEdit(doctor);
+    }
+  };
+
+  const proceedWithEdit = (doctor) => {
     setSelectedDoctor(doctor);
     setFormData({
       firstName: doctor.firstName || '',
@@ -141,7 +166,23 @@ const DoctorsPage = () => {
 
   const handleDeleteClick = (doctor) => {
     setSelectedDoctor(doctor);
-    setIsDeleteDialogOpen(true);
+    if (requiresAccessCode(user, 'DELETE')) {
+      setPendingAction({ type: 'DELETE', doctor });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      setIsDeleteDialogOpen(true);
+    }
+  };
+
+  const handleAccessCodeSuccess = () => {
+    if (pendingAction?.type === 'DELETE') {
+      setIsDeleteDialogOpen(true);
+    } else if (pendingAction?.type === 'CREATE') {
+      proceedWithCreate();
+    } else if (pendingAction?.type === 'UPDATE') {
+      proceedWithEdit(pendingAction.doctor);
+    }
+    setPendingAction(null);
   };
 
   const handleInputChange = (e) => {
@@ -575,6 +616,18 @@ const DoctorsPage = () => {
         confirmText="Delete"
         type="danger"
         loading={formLoading}
+      />
+
+      {/* Access Code Modal */}
+      <AccessCodeModal
+        isOpen={isAccessCodeModalOpen}
+        onClose={() => {
+          setIsAccessCodeModalOpen(false);
+          setPendingAction(null);
+        }}
+        onSuccess={handleAccessCodeSuccess}
+        operation={pendingAction?.type?.toLowerCase() || 'modify'}
+        itemName={pendingAction?.type === 'CREATE' ? 'new doctor' : (selectedDoctor ? `Dr. ${getFullName(selectedDoctor.firstName, selectedDoctor.lastName)}` : '')}
       />
     </div>
   );

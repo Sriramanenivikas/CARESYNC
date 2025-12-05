@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNotification } from '../context/NotificationContext';
+import { useAuth } from '../context/AuthContext';
 import { patientService } from '../services';
 import { validatePatientForm } from '../utils/validation';
+import { requiresAccessCode } from '../utils/accessCode';
 import {
   Card,
   Button,
@@ -14,6 +16,7 @@ import {
   EmptyState,
   Loading,
   Avatar,
+  AccessCodeModal,
 } from '../components/common';
 import {
   FiPlus,
@@ -29,6 +32,7 @@ import { formatDate, calculateAge, getFullName, exportToCSV } from '../utils/hel
 
 const PatientsPage = () => {
   const { success, error: showError } = useNotification();
+  const { user } = useAuth();
 
   // State
   const [patients, setPatients] = useState([]);
@@ -41,6 +45,8 @@ const PatientsPage = () => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isAccessCodeModalOpen, setIsAccessCodeModalOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
 
@@ -119,14 +125,35 @@ const PatientsPage = () => {
     setSelectedPatient(null);
   };
 
-  // Open create modal
+  // Open create modal - check if access code is required
   const handleCreate = () => {
+    if (requiresAccessCode(user, 'CREATE')) {
+      setPendingAction({ type: 'CREATE' });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      resetForm();
+      setIsFormModalOpen(true);
+    }
+  };
+
+  // Handle access code success for create
+  const proceedWithCreate = () => {
     resetForm();
     setIsFormModalOpen(true);
   };
 
-  // Open edit modal
+  // Open edit modal - check if access code is required
   const handleEdit = (patient) => {
+    if (requiresAccessCode(user, 'UPDATE')) {
+      setPendingAction({ type: 'UPDATE', patient });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      proceedWithEdit(patient);
+    }
+  };
+
+  // Proceed with edit after access code
+  const proceedWithEdit = (patient) => {
     setSelectedPatient(patient);
     setFormData({
       firstName: patient.firstName || '',
@@ -150,10 +177,29 @@ const PatientsPage = () => {
     setIsViewModalOpen(true);
   };
 
-  // Open delete dialog
+  // Open delete dialog - check if access code is required
   const handleDeleteClick = (patient) => {
     setSelectedPatient(patient);
-    setIsDeleteDialogOpen(true);
+    
+    // Check if this user needs access code for delete
+    if (requiresAccessCode(user, 'DELETE')) {
+      setPendingAction({ type: 'DELETE', patient });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      setIsDeleteDialogOpen(true);
+    }
+  };
+
+  // Handle access code success
+  const handleAccessCodeSuccess = () => {
+    if (pendingAction?.type === 'DELETE') {
+      setIsDeleteDialogOpen(true);
+    } else if (pendingAction?.type === 'CREATE') {
+      proceedWithCreate();
+    } else if (pendingAction?.type === 'UPDATE') {
+      proceedWithEdit(pendingAction.patient);
+    }
+    setPendingAction(null);
   };
 
   // Handle form input change
@@ -380,14 +426,14 @@ const PatientsPage = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleView(patient)}
-                            className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors"
+                            className="p-2 text-slate-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors"
                             title="View"
                           >
                             <FiEye className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleEdit(patient)}
-                            className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="p-2 text-slate-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors"
                             title="Edit"
                           >
                             <FiEdit2 className="w-4 h-4" />
@@ -626,6 +672,18 @@ const PatientsPage = () => {
         confirmText="Delete"
         type="danger"
         loading={formLoading}
+      />
+
+      {/* Access Code Modal for protected operations */}
+      <AccessCodeModal
+        isOpen={isAccessCodeModalOpen}
+        onClose={() => {
+          setIsAccessCodeModalOpen(false);
+          setPendingAction(null);
+        }}
+        onSuccess={handleAccessCodeSuccess}
+        operation={pendingAction?.type?.toLowerCase() || 'modify'}
+        itemName={pendingAction?.type === 'CREATE' ? 'new patient' : (selectedPatient ? getFullName(selectedPatient.firstName, selectedPatient.lastName) : '')}
       />
     </div>
   );

@@ -8,7 +8,7 @@ const DashboardLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 dot-grid">
       {/* Sidebar */}
       <Sidebar 
         collapsed={sidebarCollapsed} 

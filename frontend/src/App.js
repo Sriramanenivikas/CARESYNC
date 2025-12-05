@@ -21,6 +21,7 @@ import {
   NotFoundPage,
   LandingPage,
 } from './pages';
+import AccessCodeAdminPage from './pages/AccessCodeAdminPage';
 import './index.css';
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
+              
+              {/* Access Code Admin (separate from main app) */}
+              <Route path="/admin/access-codes" element={<AccessCodeAdminPage />} />
 
             {/* Protected Routes */}
             <Route

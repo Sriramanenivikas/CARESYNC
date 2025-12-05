@@ -58,9 +58,18 @@
   /* Headings - use Inter for clean look */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text-color);
+  }
+
+  /* Minecraft-style bold branding */
+  .minecraft-heading {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.15);
   }
 
   html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {

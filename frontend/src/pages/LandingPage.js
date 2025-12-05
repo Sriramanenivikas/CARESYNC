@@ -9,6 +9,7 @@ import {
   FiLinkedin,
   FiArrowRight,
   FiCheck,
+  FiLock,
 } from 'react-icons/fi';
 
 const LandingPage = () => {
@@ -63,7 +64,7 @@ const LandingPage = () => {
     <div className="min-h-screen dot-grid">
       {/* Header */}
       <header className="flex justify-between items-center px-[5%] py-5 border-b border-black/5 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="font-extrabold text-xl tracking-tight">CareSync</div>
+        <div className="minecraft-heading text-xl">CareSync</div>
         <nav className="hidden md:flex gap-8">
           <a href="#features" className="text-gray-600 text-sm font-medium hover:text-black transition-colors">Features</a>
           <a href="#roles" className="text-gray-600 text-sm font-medium hover:text-black transition-colors">Roles</a>
@@ -216,12 +217,20 @@ const LandingPage = () => {
             <p className="text-gray-400 mb-6">
               Use these credentials to explore different role-based dashboards.
             </p>
-            <button
-              onClick={() => navigate('/login')}
-              className="px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2"
-            >
-              Go to Login <FiArrowRight className="w-4 h-4" />
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={() => navigate('/login')}
+                className="px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2"
+              >
+                Go to Login <FiArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => navigate('/admin/access-codes')}
+                className="px-6 py-3 bg-transparent text-white font-semibold rounded-full border border-gray-600 hover:border-white transition-colors flex items-center gap-2"
+              >
+                <FiLock className="w-4 h-4" /> Admin Panel
+              </button>
+            </div>
           </div>
 
           <div className="border border-gray-700 p-6">
@@ -248,7 +257,7 @@ const LandingPage = () => {
       <footer className="py-8 px-[5%] border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="font-bold text-lg">CareSync</span>
+            <span className="minecraft-heading text-lg">CareSync</span>
             <span className="text-sm text-gray-500">© {new Date().getFullYear()}</span>
           </div>
           <div className="flex items-center gap-4">

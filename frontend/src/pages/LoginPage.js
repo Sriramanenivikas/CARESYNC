@@ -72,7 +72,7 @@ const LoginPage = () => {
           >
             <FiArrowLeft className="w-4 h-4" /> Back to home
           </button>
-          <div className="font-extrabold text-2xl text-white tracking-tight">CareSync</div>
+          <div className="minecraft-heading text-2xl text-white">CareSync</div>
         </div>
 
         <div className="space-y-6">
@@ -106,7 +106,7 @@ const LoginPage = () => {
         <div className="w-full max-w-sm">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <span className="font-extrabold text-xl text-black dark:text-white">CareSync</span>
+            <span className="minecraft-heading text-xl text-black dark:text-white">CareSync</span>
           </div>
 
           <div className="text-center mb-8">

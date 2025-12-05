@@ -1,22 +1,8 @@
--- ============================================
 -- CareSync Hospital Management System
--- Database Schema v1.1 (Audited & Hardened)
--- ============================================
--- Run this script to initialize the database
--- psql -U postgres -d CARESYNC -f database/schema.sql
--- ============================================
--- 
--- AUDIT COMPLETED: 2024-12-03
--- ✅ All CASCADE deletes verified
--- ✅ All NOT NULL constraints verified
--- ✅ All UNIQUE constraints verified  
--- ✅ All CHECK constraints added
--- ✅ All indexes optimized
--- ✅ Orphan prevention verified
--- ✅ Referential integrity verified
--- ============================================
+-- Database Schema
+-- Run: psql -U postgres -d CARESYNC -f database/schema.sql
 
--- Drop all existing tables (in reverse dependency order)
+-- Drop existing tables
 DROP TABLE IF EXISTS bill_items CASCADE;
 DROP TABLE IF EXISTS bills CASCADE;
 DROP TABLE IF EXISTS prescription_items CASCADE;

@@ -151,18 +151,71 @@ export const validateSecureInput = (input, fieldName = 'input') => {
  * Validate email format securely
  */
 export const validateEmail = (email) => {
-  const securityCheck = validateSecureInput(email, 'Email');
-  if (!securityCheck.isValid) {
-    return { isValid: false, error: securityCheck.errors[0] };
+  if (!email || typeof email !== 'string') {
+    return { isValid: false, error: 'Email address is required' };
   }
 
+  const trimmedEmail = email.trim();
+
+  // Check for empty email
+  if (trimmedEmail.length === 0) {
+    return { isValid: false, error: 'Email address is required' };
+  }
+
+  // Check max length first
+  if (trimmedEmail.length > 254) {
+    return { isValid: false, error: 'Email address is too long (max 254 characters)' };
+  }
+
+  // Check for dangerous characters with specific hints
+  const dangerousPatterns = [
+    { pattern: /<script/i, hint: 'Script tags are not allowed' },
+    { pattern: /javascript:/i, hint: 'JavaScript protocol is not allowed' },
+    { pattern: /on\w+\s*=/i, hint: 'Event handlers are not allowed' },
+    { pattern: /['";]--/i, hint: 'SQL comment sequences are not allowed' },
+    { pattern: /(\bOR\b|\bAND\b)\s*\d+\s*=\s*\d+/i, hint: 'SQL injection patterns detected' },
+    { pattern: /[<>]/g, hint: 'Angle brackets (< >) are not allowed in email' },
+    { pattern: /[;&|`$]/g, hint: 'Special characters (& ; | ` $) are not allowed' },
+  ];
+
+  for (const { pattern, hint } of dangerousPatterns) {
+    if (pattern.test(trimmedEmail)) {
+      return { 
+        isValid: false, 
+        error: `Email contains invalid characters. ${hint}` 
+      };
+    }
+  }
+
+  // Standard email format validation
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!emailRegex.test(email)) {
-    return { isValid: false, error: 'Please enter a valid email address' };
-  }
+  if (!emailRegex.test(trimmedEmail)) {
+    // Provide specific hints based on what's wrong
+    if (!trimmedEmail.includes('@')) {
+      return { isValid: false, error: 'Email must contain @ symbol (e.g., user@example.com)' };
+    }
+    
+    const [localPart, domain] = trimmedEmail.split('@');
+    
+    if (!localPart || localPart.length === 0) {
+      return { isValid: false, error: 'Email must have a username before @ symbol' };
+    }
+    
+    if (!domain || domain.length === 0) {
+      return { isValid: false, error: 'Email must have a domain after @ symbol (e.g., example.com)' };
+    }
+    
+    if (!domain.includes('.')) {
+      return { isValid: false, error: 'Email domain must include a dot (e.g., example.com)' };
+    }
 
-  if (email.length > 254) {
-    return { isValid: false, error: 'Email address is too long' };
+    const domainParts = domain.split('.');
+    const tld = domainParts[domainParts.length - 1];
+    if (tld.length < 2) {
+      return { isValid: false, error: 'Email domain extension must be at least 2 characters (e.g., .com, .org)' };
+    }
+
+    return { isValid: false, error: 'Please enter a valid email address (e.g., user@example.com)' };
   }
 
   return { isValid: true, error: null };

@@ -3,6 +3,7 @@ import { useNotification } from '../context/NotificationContext';
 import { useAuth } from '../context/AuthContext';
 import { billService, patientService, appointmentService } from '../services';
 import { validateBillForm } from '../utils/validation';
+import { requiresAccessCode } from '../utils/accessCode';
 import {
   Card,
   Button,
@@ -17,6 +18,7 @@ import {
   Loading,
   Avatar,
   StatusBadge,
+  AccessCodeModal,
 } from '../components/common';
 import {
   FiPlus,
@@ -48,6 +50,8 @@ const BillsPage = () => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isAccessCodeModalOpen, setIsAccessCodeModalOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
   const [selectedBill, setSelectedBill] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
 
@@ -187,11 +191,30 @@ const BillsPage = () => {
   };
 
   const handleCreate = () => {
+    if (requiresAccessCode(user, 'CREATE')) {
+      setPendingAction({ type: 'CREATE' });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      resetForm();
+      setIsFormModalOpen(true);
+    }
+  };
+
+  const proceedWithCreate = () => {
     resetForm();
     setIsFormModalOpen(true);
   };
 
   const handleEdit = (bill) => {
+    if (requiresAccessCode(user, 'UPDATE')) {
+      setPendingAction({ type: 'UPDATE', bill });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      proceedWithEdit(bill);
+    }
+  };
+
+  const proceedWithEdit = (bill) => {
     setSelectedBill(bill);
     setFormData({
       patientId: bill.patient?.id?.toString() || '',
@@ -212,7 +235,23 @@ const BillsPage = () => {
 
   const handleDeleteClick = (bill) => {
     setSelectedBill(bill);
-    setIsDeleteDialogOpen(true);
+    if (requiresAccessCode(user, 'DELETE')) {
+      setPendingAction({ type: 'DELETE', bill });
+      setIsAccessCodeModalOpen(true);
+    } else {
+      setIsDeleteDialogOpen(true);
+    }
+  };
+
+  const handleAccessCodeSuccess = () => {
+    if (pendingAction?.type === 'DELETE') {
+      setIsDeleteDialogOpen(true);
+    } else if (pendingAction?.type === 'CREATE') {
+      proceedWithCreate();
+    } else if (pendingAction?.type === 'UPDATE') {
+      proceedWithEdit(pendingAction.bill);
+    }
+    setPendingAction(null);
   };
 
   const handleInputChange = (e) => {
@@ -812,6 +851,18 @@ const BillsPage = () => {
         confirmText="Delete"
         type="danger"
         loading={formLoading}
+      />
+
+      {/* Access Code Modal */}
+      <AccessCodeModal
+        isOpen={isAccessCodeModalOpen}
+        onClose={() => {
+          setIsAccessCodeModalOpen(false);
+          setPendingAction(null);
+        }}
+        onSuccess={handleAccessCodeSuccess}
+        operation={pendingAction?.type?.toLowerCase() || 'modify'}
+        itemName={pendingAction?.type === 'CREATE' ? 'new bill' : (selectedBill?.billNumber || 'this bill')}
       />
     </div>
   );

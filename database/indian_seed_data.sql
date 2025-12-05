@@ -1,14 +1,8 @@
--- ============================================
 -- CareSync Hospital Management System
--- Indian Sample Data v2.0
--- ============================================
--- All names, addresses, and phone numbers are Indian
--- Currency: INR (₹)
--- Run after schema.sql
--- psql -U postgres -d CARESYNC -f database/indian_seed_data.sql
--- ============================================
+-- Sample Data for Production
+-- Run after schema.sql: psql -U postgres -d CARESYNC -f database/indian_seed_data.sql
 
--- Clear existing data (in correct order)
+-- Clear existing data
 TRUNCATE TABLE bill_items CASCADE;
 TRUNCATE TABLE bills CASCADE;
 TRUNCATE TABLE prescription_items CASCADE;
@@ -20,29 +14,21 @@ TRUNCATE TABLE patients CASCADE;
 TRUNCATE TABLE departments CASCADE;
 TRUNCATE TABLE users CASCADE;
 
--- ============================================
--- USERS - Role-based passwords (BCrypt hashed)
--- ============================================
--- | Role         | Username         | Password       |
--- |--------------|------------------|----------------|
--- | ADMIN        | admin            | Admin@123      |
--- | TEST (Demo)  | test             | Test@123$      |
--- | DOCTOR       | dr.smith         | Doctor@123     |
--- | PATIENT      | patient.robert   | Patient@123    |
--- | NURSE        | nurse.lisa       | Nurse@123      |
--- | RECEPTIONIST | reception.mary   | Recept@123     |
--- ============================================
+-- Users (BCrypt hashed passwords)
+-- Admin: admin / Admin@123
+-- Test: test / Test@123$
+-- Doctor: dr.smith / Doctor@123
+-- Patient: patient.robert / Patient@123
+-- Nurse: nurse.lisa / Nurse@123
+-- Receptionist: reception.mary / Reception@123
 
--- Admin Users (Password: Admin@123)
 INSERT INTO users (username, email, password, role, is_active) VALUES
 ('admin', 'admin@caresync.com', '$2b$10$BrXiJWW97UUCgcGVhP2f.OKSZ1n00DHdb0LznBozX4gydbCkANtjy', 'ADMIN', true),
 ('superadmin', 'superadmin@caresync.com', '$2b$10$BrXiJWW97UUCgcGVhP2f.OKSZ1n00DHdb0LznBozX4gydbCkANtjy', 'ADMIN', true);
 
--- Test/Demo User - READ-ONLY access for recruiters (Password: Test@123$)
 INSERT INTO users (username, email, password, role, is_active) VALUES
 ('test', 'test@caresync.com', '$2b$10$kZ8Q3rZzWilweIy2HhDfIuGJx2gWTywSkc136yPQbNZyNsr72y/eu', 'TEST', true);
 
--- Doctor Users (Password: Doctor@123)
 INSERT INTO users (username, email, password, role, is_active) VALUES
 ('dr.smith', 'rajesh.sharma@caresync.com', '$2b$10$vaGo87k7jQ0c.JRNdO.H9uvthQx9bROZFwlw0c0D1JfnqVYjCK4Ci', 'DOCTOR', true),
 ('dr.patel', 'priya.patel@caresync.com', '$2b$10$vaGo87k7jQ0c.JRNdO.H9uvthQx9bROZFwlw0c0D1JfnqVYjCK4Ci', 'DOCTOR', true),
@@ -77,10 +63,10 @@ INSERT INTO users (username, email, password, role, is_active) VALUES
 ('nurse.priya', 'priya.nanda@caresync.com', '$2b$10$xYKBuFsYi.FaGWsHi/YymebM/53Qp5xiVub0qmbirDMD/6jD8kO/u', 'NURSE', true),
 ('nurse.raju', 'raju.kumar@caresync.com', '$2b$10$xYKBuFsYi.FaGWsHi/YymebM/53Qp5xiVub0qmbirDMD/6jD8kO/u', 'NURSE', true);
 
--- Receptionist Users (Password: Reception@123)
+-- Receptionist Users (Password: Recept@123)
 INSERT INTO users (username, email, password, role, is_active) VALUES
-('reception.mary', 'mary.fernandes@caresync.com', '$2b$10$TVdFMATTlqeVs2s6kZMLbuUVNFS4wYjfzwqq5L8BFoq8jSrb/QuIS', 'RECEPTIONIST', true),
-('reception.john', 'john.dcosta@caresync.com', '$2b$10$TVdFMATTlqeVs2s6kZMLbuUVNFS4wYjfzwqq5L8BFoq8jSrb/QuIS', 'RECEPTIONIST', true);
+('reception.mary', 'mary.fernandes@caresync.com', '$2b$10$uHTHR4vmreIMxYMKLbRpQOucGk3a845OQvQqRcuD2/TKZBh4jAgx2', 'RECEPTIONIST', true),
+('reception.john', 'john.dcosta@caresync.com', '$2b$10$uHTHR4vmreIMxYMKLbRpQOucGk3a845OQvQqRcuD2/TKZBh4jAgx2', 'RECEPTIONIST', true);
 
 -- ============================================
 -- DEPARTMENTS
@@ -576,10 +562,138 @@ INSERT INTO bill_items (bill_id, description, quantity, unit_price, total_price)
 (35, 'INR Test', 1, 300.00, 300.00),
 (35, 'Anticoagulant (Dabigatran 30 tabs)', 1, 1000.00, 1000.00);
 
--- ============================================
--- DATA LOAD COMPLETE
--- ============================================
-SELECT 'Indian Sample Data Loaded Successfully!' as status;
+-- Additional appointments for better analytics distribution
+INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, end_time, status, reason, symptoms, diagnosis, notes) VALUES
+(1, 2, CURRENT_DATE - INTERVAL '120 days', '10:00', '10:30', 'COMPLETED', 'Headache evaluation', 'Recurring headaches', 'Migraine', 'Started preventive therapy'),
+(2, 5, CURRENT_DATE - INTERVAL '115 days', '11:00', '11:20', 'COMPLETED', 'Fever and cold', 'High fever, cough', 'Viral infection', 'Rest and fluids'),
+(3, 1, CURRENT_DATE - INTERVAL '110 days', '09:30', '10:00', 'COMPLETED', 'Chest pain', 'Sharp chest pain', 'Costochondritis', 'Anti-inflammatory prescribed'),
+(4, 6, CURRENT_DATE - INTERVAL '105 days', '14:00', '14:30', 'COMPLETED', 'Skin rash', 'Itchy red patches', 'Contact dermatitis', 'Topical cream prescribed'),
+(5, 3, CURRENT_DATE - INTERVAL '100 days', '10:00', '10:30', 'COMPLETED', 'Joint pain', 'Knee swelling', 'Early arthritis', 'Physical therapy recommended'),
+(6, 7, CURRENT_DATE - INTERVAL '95 days', '11:00', '11:30', 'COMPLETED', 'Menstrual issues', 'Irregular cycles', 'Hormonal imbalance', 'Hormone therapy started'),
+(7, 8, CURRENT_DATE - INTERVAL '92 days', '09:00', '09:30', 'COMPLETED', 'Vision problems', 'Blurry distance vision', 'Myopia progression', 'Updated glasses prescription'),
+(8, 4, CURRENT_DATE - INTERVAL '88 days', '10:30', '10:50', 'COMPLETED', 'Child vaccination', 'None', 'Healthy', 'MMR vaccine administered'),
+(9, 5, CURRENT_DATE - INTERVAL '82 days', '15:00', '15:20', 'COMPLETED', 'Fatigue', 'Constant tiredness', 'Anemia', 'Iron supplements prescribed'),
+(10, 1, CURRENT_DATE - INTERVAL '78 days', '11:00', '11:30', 'COMPLETED', 'Heart palpitations', 'Racing heart', 'Anxiety-related', 'Stress management advised'),
+(11, 2, CURRENT_DATE - INTERVAL '72 days', '14:00', '14:30', 'COMPLETED', 'Numbness in hands', 'Tingling sensation', 'Carpal tunnel syndrome', 'Wrist splints prescribed'),
+(12, 3, CURRENT_DATE - INTERVAL '68 days', '09:00', '09:30', 'COMPLETED', 'Sports injury', 'Ankle sprain', 'Grade 2 sprain', 'RICE protocol'),
+(13, 6, CURRENT_DATE - INTERVAL '62 days', '10:00', '10:30', 'COMPLETED', 'Acne treatment', 'Severe acne', 'Cystic acne', 'Oral medication started'),
+(14, 5, CURRENT_DATE - INTERVAL '55 days', '11:00', '11:20', 'COMPLETED', 'Allergy symptoms', 'Runny nose, sneezing', 'Allergic rhinitis', 'Antihistamines prescribed'),
+(15, 7, CURRENT_DATE - INTERVAL '48 days', '14:00', '14:30', 'COMPLETED', 'Pregnancy checkup', 'First trimester', 'Normal pregnancy', 'Prenatal vitamins prescribed');
+
+-- More recent appointments
+INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, end_time, status, reason, symptoms, diagnosis, notes) VALUES
+(1, 5, CURRENT_DATE - INTERVAL '42 days', '09:00', '09:20', 'COMPLETED', 'Blood pressure check', 'Mild headache', 'Controlled hypertension', 'Continue medication'),
+(2, 1, CURRENT_DATE - INTERVAL '38 days', '10:00', '10:30', 'COMPLETED', 'Cardiac screening', 'No symptoms', 'Normal ECG', 'Annual checkup complete'),
+(3, 6, CURRENT_DATE - INTERVAL '35 days', '11:00', '11:30', 'COMPLETED', 'Psoriasis flare', 'Red scaly patches', 'Plaque psoriasis', 'Steroid cream prescribed'),
+(4, 2, CURRENT_DATE - INTERVAL '32 days', '14:00', '14:30', 'COMPLETED', 'Memory concerns', 'Forgetfulness', 'Age-related changes', 'Cognitive exercises recommended'),
+(5, 8, CURRENT_DATE - INTERVAL '28 days', '09:30', '10:00', 'COMPLETED', 'Eye strain', 'Computer eye syndrome', 'Digital eye strain', 'Blue light glasses advised'),
+(6, 4, CURRENT_DATE - INTERVAL '25 days', '10:00', '10:20', 'COMPLETED', 'Child checkup', 'Growth monitoring', 'Normal development', 'Next checkup in 6 months'),
+(7, 1, CURRENT_DATE - INTERVAL '22 days', '11:00', '11:30', 'COMPLETED', 'Chest tightness', 'Shortness of breath', 'Mild asthma', 'Inhaler prescribed'),
+(8, 3, CURRENT_DATE - INTERVAL '18 days', '14:00', '14:30', 'COMPLETED', 'Shoulder pain', 'Frozen shoulder', 'Adhesive capsulitis', 'Physical therapy started'),
+(9, 7, CURRENT_DATE - INTERVAL '15 days', '09:00', '09:30', 'COMPLETED', 'Annual gynec exam', 'Routine checkup', 'Normal findings', 'Pap smear done'),
+(10, 5, CURRENT_DATE - INTERVAL '12 days', '10:00', '10:20', 'COMPLETED', 'Diabetes screening', 'Family history', 'Pre-diabetic', 'Lifestyle modifications advised');
+
+-- Additional bills
+INSERT INTO bills (patient_id, appointment_id, bill_number, total_amount, discount_amount, tax_amount, final_amount, paid_amount, status, payment_method, payment_date, due_date, notes) VALUES
+(1, 36, 'BILL-20240801-00036', 1800.00, 0.00, 0.00, 1800.00, 1800.00, 'PAID', 'CARD', CURRENT_TIMESTAMP - INTERVAL '120 days', CURRENT_DATE - INTERVAL '113 days', 'Neurology consultation'),
+(2, 37, 'BILL-20240806-00037', 700.00, 0.00, 0.00, 700.00, 700.00, 'PAID', 'CASH', CURRENT_TIMESTAMP - INTERVAL '115 days', CURRENT_DATE - INTERVAL '108 days', 'General medicine visit'),
+(3, 38, 'BILL-20240811-00038', 2200.00, 0.00, 0.00, 2200.00, 2200.00, 'PAID', 'UPI', CURRENT_TIMESTAMP - INTERVAL '110 days', CURRENT_DATE - INTERVAL '103 days', 'Cardiology with ECG'),
+(4, 39, 'BILL-20240816-00039', 1500.00, 150.00, 0.00, 1350.00, 1350.00, 'PAID', 'CARD', CURRENT_TIMESTAMP - INTERVAL '105 days', CURRENT_DATE - INTERVAL '98 days', 'Dermatology consultation'),
+(5, 40, 'BILL-20240821-00040', 1800.00, 0.00, 0.00, 1800.00, 1800.00, 'PAID', 'INSURANCE', CURRENT_TIMESTAMP - INTERVAL '100 days', CURRENT_DATE - INTERVAL '93 days', 'Orthopedic consultation'),
+(6, 41, 'BILL-20240826-00041', 1600.00, 0.00, 0.00, 1600.00, 1600.00, 'PAID', 'ONLINE', CURRENT_TIMESTAMP - INTERVAL '95 days', CURRENT_DATE - INTERVAL '88 days', 'Gynecology visit'),
+(7, 42, 'BILL-20240829-00042', 1100.00, 0.00, 0.00, 1100.00, 1100.00, 'PAID', 'CASH', CURRENT_TIMESTAMP - INTERVAL '92 days', CURRENT_DATE - INTERVAL '85 days', 'Eye checkup'),
+(8, 43, 'BILL-20240902-00043', 850.00, 0.00, 0.00, 850.00, 850.00, 'PAID', 'UPI', CURRENT_TIMESTAMP - INTERVAL '88 days', CURRENT_DATE - INTERVAL '81 days', 'Pediatric vaccination'),
+(9, 44, 'BILL-20240908-00044', 950.00, 0.00, 0.00, 950.00, 950.00, 'PAID', 'CARD', CURRENT_TIMESTAMP - INTERVAL '82 days', CURRENT_DATE - INTERVAL '75 days', 'General medicine'),
+(10, 45, 'BILL-20240912-00045', 2000.00, 200.00, 0.00, 1800.00, 1800.00, 'PAID', 'INSURANCE', CURRENT_TIMESTAMP - INTERVAL '78 days', CURRENT_DATE - INTERVAL '71 days', 'Cardiology with echo'),
+(11, 46, 'BILL-20240918-00046', 1400.00, 0.00, 0.00, 1400.00, 1400.00, 'PAID', 'CARD', CURRENT_TIMESTAMP - INTERVAL '72 days', CURRENT_DATE - INTERVAL '65 days', 'Neurology consultation'),
+(12, 47, 'BILL-20240922-00047', 1200.00, 0.00, 0.00, 1200.00, 1200.00, 'PAID', 'CASH', CURRENT_TIMESTAMP - INTERVAL '68 days', CURRENT_DATE - INTERVAL '61 days', 'Orthopedic visit'),
+(13, 48, 'BILL-20240928-00048', 1500.00, 0.00, 0.00, 1500.00, 1500.00, 'PAID', 'UPI', CURRENT_TIMESTAMP - INTERVAL '62 days', CURRENT_DATE - INTERVAL '55 days', 'Dermatology treatment'),
+(14, 49, 'BILL-20241005-00049', 600.00, 0.00, 0.00, 600.00, 600.00, 'PAID', 'CASH', CURRENT_TIMESTAMP - INTERVAL '55 days', CURRENT_DATE - INTERVAL '48 days', 'General medicine'),
+(15, 50, 'BILL-20241012-00050', 1800.00, 0.00, 0.00, 1800.00, 1800.00, 'PAID', 'INSURANCE', CURRENT_TIMESTAMP - INTERVAL '48 days', CURRENT_DATE - INTERVAL '41 days', 'Prenatal checkup'),
+(1, 51, 'BILL-20241018-00051', 700.00, 0.00, 0.00, 700.00, 700.00, 'PAID', 'UPI', CURRENT_TIMESTAMP - INTERVAL '42 days', CURRENT_DATE - INTERVAL '35 days', 'BP follow-up'),
+(2, 52, 'BILL-20241022-00052', 2500.00, 0.00, 0.00, 2500.00, 2500.00, 'PAID', 'CARD', CURRENT_TIMESTAMP - INTERVAL '38 days', CURRENT_DATE - INTERVAL '31 days', 'Cardiac screening'),
+(3, 53, 'BILL-20241025-00053', 1200.00, 0.00, 0.00, 1200.00, 1200.00, 'PAID', 'CASH', CURRENT_TIMESTAMP - INTERVAL '35 days', CURRENT_DATE - INTERVAL '28 days', 'Dermatology'),
+(4, 54, 'BILL-20241028-00054', 1600.00, 0.00, 0.00, 1600.00, 1600.00, 'PAID', 'INSURANCE', CURRENT_TIMESTAMP - INTERVAL '32 days', CURRENT_DATE - INTERVAL '25 days', 'Neurology'),
+(5, 55, 'BILL-20241101-00055', 1000.00, 0.00, 0.00, 1000.00, 1000.00, 'PAID', 'UPI', CURRENT_TIMESTAMP - INTERVAL '28 days', CURRENT_DATE - INTERVAL '21 days', 'Eye checkup');
+
+-- Additional bill items
+INSERT INTO bill_items (bill_id, description, quantity, unit_price, total_price) VALUES
+(36, 'Neurology Consultation', 1, 1400.00, 1400.00),
+(36, 'MRI Brain', 1, 400.00, 400.00),
+(37, 'General Medicine Consultation', 1, 700.00, 700.00),
+(38, 'Cardiology Consultation', 1, 1500.00, 1500.00),
+(38, 'ECG', 1, 500.00, 500.00),
+(38, 'Blood Test', 1, 200.00, 200.00),
+(39, 'Dermatology Consultation', 1, 1200.00, 1200.00),
+(39, 'Skin Biopsy', 1, 300.00, 300.00),
+(40, 'Orthopedic Consultation', 1, 1200.00, 1200.00),
+(40, 'X-Ray Knee', 1, 600.00, 600.00),
+(41, 'Gynecology Consultation', 1, 1200.00, 1200.00),
+(41, 'Ultrasound', 1, 400.00, 400.00),
+(42, 'Ophthalmology Consultation', 1, 900.00, 900.00),
+(42, 'Vision Test', 1, 200.00, 200.00),
+(43, 'Pediatric Consultation', 1, 600.00, 600.00),
+(43, 'MMR Vaccine', 1, 250.00, 250.00),
+(44, 'General Medicine Consultation', 1, 700.00, 700.00),
+(44, 'Blood Test CBC', 1, 250.00, 250.00),
+(45, 'Cardiology Consultation', 1, 1500.00, 1500.00),
+(45, 'Echocardiogram', 1, 500.00, 500.00),
+(46, 'Neurology Consultation', 1, 1400.00, 1400.00),
+(47, 'Orthopedic Consultation', 1, 1200.00, 1200.00),
+(48, 'Dermatology Consultation', 1, 1200.00, 1200.00),
+(48, 'Laser Treatment', 1, 300.00, 300.00),
+(49, 'General Medicine Consultation', 1, 600.00, 600.00),
+(50, 'Gynecology Consultation', 1, 1200.00, 1200.00),
+(50, 'Prenatal Scan', 1, 600.00, 600.00),
+(51, 'General Medicine Follow-up', 1, 700.00, 700.00),
+(52, 'Cardiology Consultation', 1, 1500.00, 1500.00),
+(52, 'Stress Test', 1, 1000.00, 1000.00),
+(53, 'Dermatology Follow-up', 1, 1200.00, 1200.00),
+(54, 'Neurology Consultation', 1, 1600.00, 1600.00),
+(55, 'Ophthalmology Consultation', 1, 900.00, 900.00),
+(55, 'Refraction Test', 1, 100.00, 100.00);
+
+-- Additional prescriptions
+INSERT INTO prescriptions (appointment_id, patient_id, doctor_id, diagnosis, notes, follow_up_date) VALUES
+(36, 1, 2, 'Migraine with aura', 'Preventive therapy initiated', CURRENT_DATE + INTERVAL '30 days'),
+(37, 2, 5, 'Viral upper respiratory infection', 'Symptomatic treatment', NULL),
+(38, 3, 1, 'Costochondritis', 'Anti-inflammatory therapy', CURRENT_DATE + INTERVAL '14 days'),
+(39, 4, 6, 'Allergic contact dermatitis', 'Avoid triggers', CURRENT_DATE + INTERVAL '21 days'),
+(40, 5, 3, 'Early osteoarthritis', 'Weight management advised', CURRENT_DATE + INTERVAL '60 days'),
+(41, 6, 7, 'Hormonal imbalance - PCOS', 'Lifestyle modifications', CURRENT_DATE + INTERVAL '45 days'),
+(42, 7, 8, 'Progressive myopia', 'Annual eye exam recommended', CURRENT_DATE + INTERVAL '365 days'),
+(43, 8, 4, 'Routine immunization', 'MMR vaccine given', CURRENT_DATE + INTERVAL '180 days'),
+(44, 9, 5, 'Iron deficiency anemia', 'Dietary changes advised', CURRENT_DATE + INTERVAL '30 days'),
+(45, 10, 1, 'Anxiety with cardiac symptoms', 'Stress management', CURRENT_DATE + INTERVAL '21 days'),
+(46, 11, 2, 'Carpal tunnel syndrome', 'Ergonomic assessment needed', CURRENT_DATE + INTERVAL '30 days'),
+(47, 12, 3, 'Grade 2 ankle sprain', 'RICE protocol', CURRENT_DATE + INTERVAL '14 days'),
+(48, 13, 6, 'Moderate cystic acne', 'Oral isotretinoin considered', CURRENT_DATE + INTERVAL '30 days'),
+(49, 14, 5, 'Seasonal allergic rhinitis', 'Avoid allergens', CURRENT_DATE + INTERVAL '90 days'),
+(50, 15, 7, 'Normal intrauterine pregnancy', 'First trimester screening done', CURRENT_DATE + INTERVAL '30 days');
+
+-- Additional prescription items
+INSERT INTO prescription_items (prescription_id, medicine_name, dosage, frequency, duration, quantity, instructions) VALUES
+(36, 'Sumatriptan', '50mg', 'As needed', '30 days', 9, 'Take at onset of migraine'),
+(36, 'Propranolol', '40mg', 'Once daily', '90 days', 90, 'Preventive therapy'),
+(37, 'Paracetamol', '500mg', 'Three times daily', '5 days', 15, 'For fever'),
+(37, 'Cetirizine', '10mg', 'Once daily', '7 days', 7, 'For cold symptoms'),
+(38, 'Naproxen', '500mg', 'Twice daily', '7 days', 14, 'Take with food'),
+(39, 'Betamethasone cream', '0.1%', 'Twice daily', '14 days', 1, 'Apply thin layer'),
+(40, 'Glucosamine', '1500mg', 'Once daily', '90 days', 90, 'Joint support'),
+(40, 'Diclofenac gel', 'Apply locally', 'Three times daily', '14 days', 1, 'For pain relief'),
+(41, 'Metformin', '500mg', 'Once daily', '90 days', 90, 'For insulin resistance'),
+(42, 'Artificial tears', '1 drop', 'Four times daily', '30 days', 1, 'For dry eyes'),
+(43, 'Paracetamol syrup', '5ml', 'As needed', '3 days', 1, 'If fever occurs'),
+(44, 'Ferrous sulfate', '200mg', 'Once daily', '60 days', 60, 'Take with vitamin C'),
+(45, 'Propranolol', '10mg', 'Twice daily', '30 days', 60, 'For anxiety'),
+(46, 'Vitamin B6', '50mg', 'Once daily', '30 days', 30, 'For nerve health'),
+(47, 'Ibuprofen', '400mg', 'Three times daily', '5 days', 15, 'For pain and swelling'),
+(48, 'Doxycycline', '100mg', 'Once daily', '30 days', 30, 'For acne'),
+(49, 'Fexofenadine', '180mg', 'Once daily', '30 days', 30, 'Non-drowsy antihistamine'),
+(50, 'Folic acid', '5mg', 'Once daily', '90 days', 90, 'Prenatal supplement'),
+(50, 'Iron supplement', '60mg', 'Once daily', '90 days', 90, 'Prenatal iron');
+
+SELECT 'Data Loaded Successfully' as status;
 SELECT 'Users: ' || COUNT(*) FROM users;
 SELECT 'Departments: ' || COUNT(*) FROM departments;
 SELECT 'Doctors: ' || COUNT(*) FROM doctors;

@@ -61,8 +61,12 @@ export const validatePatientForm = (data) => {
   if (!data.email?.trim()) {
     errors.email = 'Email is required';
   } else {
-    const result = validateEmail(data.email);
-    if (!result.isValid) errors.email = result.error;
+    try {
+      const result = validateEmail(data.email);
+      if (!result.isValid) errors.email = result.error;
+    } catch (e) {
+      errors.email = 'Invalid email format. Please use format: user@example.com';
+    }
   }
 
   // Phone
@@ -141,8 +145,12 @@ export const validateDoctorForm = (data) => {
   if (!data.email?.trim()) {
     errors.email = 'Email is required';
   } else {
-    const result = validateEmail(data.email);
-    if (!result.isValid) errors.email = result.error;
+    try {
+      const result = validateEmail(data.email);
+      if (!result.isValid) errors.email = result.error;
+    } catch (e) {
+      errors.email = 'Invalid email format. Please use format: user@example.com';
+    }
   }
 
   // Phone
@@ -392,8 +400,12 @@ export const validateUserForm = (data, isUpdate = false) => {
   if (!data.email?.trim()) {
     errors.email = 'Email is required';
   } else {
-    const result = validateEmail(data.email);
-    if (!result.isValid) errors.email = result.error;
+    try {
+      const result = validateEmail(data.email);
+      if (!result.isValid) errors.email = result.error;
+    } catch (e) {
+      errors.email = 'Invalid email format. Please use format: user@example.com';
+    }
   }
 
   // Password (required for new users)

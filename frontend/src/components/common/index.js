@@ -14,3 +14,4 @@ export { default as Select } from './Select';
 export { default as Textarea } from './Textarea';
 export { Dropdown, DropdownItem } from './Dropdown';
 export { default as GlobalSearch } from './GlobalSearch';
+export { default as AccessCodeModal } from './AccessCodeModal';
