@@ -164,42 +164,7 @@ jwt.expiration=86400000
 # Server
 server.port=8080
 ```
-
-## Docker Deployment
-
-### Build and Run with Docker
-```bash
-# Build the image
-docker build -t caresync:latest .
-
-# Run container
-docker run -d \
-  -p 8080:8080 \
-  -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/CARESYNC \
-  -e SPRING_DATASOURCE_USERNAME=postgres \
-  -e SPRING_DATASOURCE_PASSWORD=yourpassword \
-  --name caresync \
-  caresync:latest
-```
-
-### Docker Compose (Full Stack)
-```bash
-docker-compose up -d
-```
-
-## Testing
-
-### Backend Tests
-```bash
-./mvnw test
-```
-
-### Frontend Tests
-```bash
-cd frontend
-npm test
-```
-
+ 
 ### API Testing with Postman
 1. Import collection from postman/ folder
 2. Set environment variables (base_url, token)
@@ -247,32 +212,13 @@ npm test
 - Password Hashing - BCrypt encryption
 - Rate Limiting - API abuse prevention
 
-## Deployment on Render
-
-1. Create a new Web Service on Render
-2. Connect your GitHub repository
-3. Set environment variables:
-   - SPRING_DATASOURCE_URL
-   - SPRING_DATASOURCE_PASSWORD
-   - JWT_SECRET
-4. Deploy!
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Author
 
 Vikas Sriramaneni
 - LinkedIn: linkedin.com/in/sriramanenivikas
-- GitHub: github.com/Sriramanenivikas
 
-## Acknowledgments
-
-- Spring Boot team for the amazing framework
-- React community for the excellent ecosystem
-- All contributors and testers
-
+ 
 ---
 
 Built for learning and demonstration purposes.
