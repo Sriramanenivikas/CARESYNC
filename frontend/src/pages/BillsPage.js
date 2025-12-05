@@ -381,7 +381,7 @@ const BillsPage = () => {
         <body>
           <div class="header">
             <div>
-              <div class="logo">Hospital</div>
+              <div class="logo">CareSync</div>
             </div>
             <div style="text-align: right;">
               <div class="invoice-title">INVOICE</div>

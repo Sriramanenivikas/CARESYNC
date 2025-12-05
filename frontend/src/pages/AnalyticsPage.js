@@ -240,7 +240,7 @@ const AnalyticsPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-zinc-900 dark:text-white">Analytics</h1>
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">Hospital performance metrics & insights</p>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">CareSync performance metrics & insights</p>
         </div>
         <div className="flex items-center gap-2 text-sm text-zinc-400">
           <FiClock className="w-4 h-4" />
