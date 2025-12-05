@@ -7,7 +7,7 @@ services:
     staticPublishPath: frontend/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://caresync-backend.onrender.com/api
+        value: https://caresync-backend-3bbl.onrender.com/api
 
 databases:
   - name: caresync-db
