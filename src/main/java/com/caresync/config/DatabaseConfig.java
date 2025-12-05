@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
@@ -23,6 +24,7 @@ public class DatabaseConfig {
     private String databaseUrl;
 
     @Bean
+    @Primary
     @ConditionalOnProperty(name = "DATABASE_URL")
     public DataSource dataSource() throws URISyntaxException {
         if (databaseUrl == null || databaseUrl.isEmpty()) {
@@ -33,7 +35,14 @@ public class DatabaseConfig {
 
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
-        String jdbcUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+        // Handle port - use 5432 as default if not specified
+        int port = dbUri.getPort();
+        if (port == -1) {
+            port = 5432;
+        }
+
+        String jdbcUrl = "jdbc:postgresql://" + dbUri.getHost() + ":" + port + dbUri.getPath();
 
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(jdbcUrl);
@@ -43,6 +52,7 @@ public class DatabaseConfig {
         dataSource.setMaximumPoolSize(10);
         dataSource.setIdleTimeout(30000);
         dataSource.setConnectionTimeout(20000);
+        dataSource.setDriverClassName("org.postgresql.Driver");
 
         return dataSource;
     }

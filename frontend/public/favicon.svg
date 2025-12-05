@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#grad)"/>
+  <!-- White cross/plus symbol -->
+  <rect x="28" y="16" width="8" height="32" rx="2" fill="white"/>
+  <rect x="16" y="28" width="32" height="8" rx="2" fill="white"/>
+  <!-- Heart accent -->
+  <path d="M32 52 C28 48, 20 42, 20 36 C20 32, 24 30, 28 32 C30 33, 31 34, 32 36 C33 34, 34 33, 36 32 C40 30, 44 32, 44 36 C44 42, 36 48, 32 52Z" fill="#EF4444" opacity="0.9"/>
+</svg>
+
