@@ -1,9 +1,9 @@
 services:
+  # Backend - Java Spring Boot using Docker
   - type: web
     name: caresync-backend
-    env: java
-    buildCommand: ./mvnw clean install -DskipTests
-    startCommand: java -jar target/*.jar
+    runtime: docker
+    dockerfilePath: ./Dockerfile.backend
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
@@ -14,18 +14,15 @@ services:
       - key: JWT_SECRET
         generateValue: true
 
+  # Frontend - React Static Site
   - type: web
     name: caresync-frontend
-    env: node
+    runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/build
     envVars:
       - key: REACT_APP_API_URL
         value: https://caresync-backend.onrender.com/api
-      - key: REACT_APP_ADMIN_USER
-        sync: false
-      - key: REACT_APP_ADMIN_PASS
-        sync: false
 
 databases:
   - name: caresync-db
