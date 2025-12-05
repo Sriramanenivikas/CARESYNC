@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FiLock, FiShield, FiAlertTriangle, FiX } from 'react-icons/fi';
-import { validateAccessCode } from '../../utils/accessCode';
+import { FiLock, FiShield, FiAlertTriangle, FiX, FiLoader } from 'react-icons/fi';
+import { validateAccessCode } from '../../services/accessCodeService';
 
 /**
  * Access Code Modal - Minecraft-themed popup for protected operations
  * Shows when users try to perform CRUD operations without proper access
+ * Now validates against backend database instead of localStorage
  */
 const AccessCodeModal = ({ 
   isOpen, 
@@ -19,15 +20,14 @@ const AccessCodeModal = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsValidating(true);
     setError('');
 
-    // Small delay for UX
-    setTimeout(() => {
-      const result = validateAccessCode(accessCode);
-      
+    try {
+      const result = await validateAccessCode(accessCode);
+
       if (result.valid) {
         onSuccess(result.codeInfo);
         setAccessCode('');
@@ -35,8 +35,11 @@ const AccessCodeModal = ({
       } else {
         setError(result.message);
       }
+    } catch (err) {
+      setError('Failed to validate access code. Please try again.');
+    } finally {
       setIsValidating(false);
-    }, 500);
+    }
   };
 
   const handleClose = () => {

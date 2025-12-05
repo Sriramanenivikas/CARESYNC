@@ -2,8 +2,19 @@ import axios from 'axios';
 import { storage } from '../utils/helpers';
 import { sanitizeObject } from '../utils/security';
 
-// API Base URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+// API Base URL - ensure /api suffix is present
+const getApiBaseUrl = () => {
+  let url = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+  // Remove trailing slash if present
+  url = url.replace(/\/$/, '');
+  // Add /api suffix if not present
+  if (!url.endsWith('/api')) {
+    url = url + '/api';
+  }
+  return url;
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Create axios instance
 const api = axios.create({

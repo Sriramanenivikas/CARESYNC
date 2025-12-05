@@ -11,18 +11,22 @@ import {
   FiEyeOff,
   FiPlus,
   FiClock,
-  FiUser
+  FiUser,
+  FiAlertTriangle,
+  FiLoader
 } from 'react-icons/fi';
 import { 
   verifyAdminCredentials, 
   createAccessCode, 
   getAccessCodes, 
   deleteAccessCode,
-  deactivateAccessCode 
-} from '../utils/accessCode';
+  deactivateAccessCode,
+  formatRemainingTime
+} from '../services/accessCodeService';
 
 const AccessCodeAdminPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -31,32 +35,60 @@ const AccessCodeAdminPage = () => {
   const [newCodeNote, setNewCodeNote] = useState('');
   const [copiedId, setCopiedId] = useState(null);
   const [generatedCode, setGeneratedCode] = useState(null);
+  const [, setTick] = useState(0); // For re-rendering countdown
 
   useEffect(() => {
     if (isAuthenticated) {
       loadAccessCodes();
+      // Update countdown every minute
+      const interval = setInterval(() => {
+        loadAccessCodes();
+        setTick(t => t + 1);
+      }, 60000);
+      return () => clearInterval(interval);
     }
   }, [isAuthenticated]);
 
-  const loadAccessCodes = () => {
-    setAccessCodes(getAccessCodes());
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (verifyAdminCredentials(username, password)) {
-      setIsAuthenticated(true);
-      setAuthError('');
-    } else {
-      setAuthError('Invalid credentials. Access denied.');
+  const loadAccessCodes = async () => {
+    try {
+      const codes = await getAccessCodes();
+      setAccessCodes(codes);
+    } catch (error) {
+      console.error('Failed to load access codes:', error);
     }
   };
 
-  const handleGenerateCode = () => {
-    const newCode = createAccessCode(username, newCodeNote);
-    setGeneratedCode(newCode);
-    setNewCodeNote('');
-    loadAccessCodes();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setAuthError('');
+
+    try {
+      const valid = await verifyAdminCredentials(username, password);
+      if (valid) {
+        setIsAuthenticated(true);
+      } else {
+        setAuthError('Invalid credentials. Access denied.');
+      }
+    } catch (error) {
+      setAuthError('Authentication failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGenerateCode = async () => {
+    setIsLoading(true);
+    try {
+      const newCode = await createAccessCode(username, newCodeNote);
+      setGeneratedCode(newCode);
+      setNewCodeNote('');
+      await loadAccessCodes();
+    } catch (error) {
+      console.error('Failed to generate code:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCopyCode = (code) => {
@@ -65,16 +97,16 @@ const AccessCodeAdminPage = () => {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleDeleteCode = (codeId) => {
+  const handleDeleteCode = async (codeId) => {
     if (window.confirm('Are you sure you want to delete this access code?')) {
-      deleteAccessCode(codeId);
-      loadAccessCodes();
+      await deleteAccessCode(codeId);
+      await loadAccessCodes();
     }
   };
 
-  const handleDeactivateCode = (codeId) => {
-    deactivateAccessCode(codeId);
-    loadAccessCodes();
+  const handleDeactivateCode = async (codeId) => {
+    await deactivateAccessCode(codeId);
+    await loadAccessCodes();
   };
 
   const formatDate = (dateStr) => {
@@ -245,7 +277,7 @@ const AccessCodeAdminPage = () => {
           {generatedCode && (
             <div className="mt-4 bg-emerald-500/10 border-2 border-emerald-500 p-4">
               <p className="text-emerald-400 text-xs font-mono uppercase mb-2">
-                NEW CODE GENERATED:
+                NEW CODE GENERATED (VALID FOR 1 HOUR):
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-white font-mono tracking-widest">
@@ -268,9 +300,12 @@ const AccessCodeAdminPage = () => {
                   )}
                 </button>
               </div>
-              <p className="text-zinc-500 text-xs font-mono mt-2">
-                Share this code with the recruiter to grant write access
-              </p>
+              <div className="flex items-center gap-2 mt-2">
+                <FiAlertTriangle className="w-4 h-4 text-amber-400" />
+                <p className="text-amber-400 text-xs font-mono">
+                  ⏰ This code expires in 1 hour. Share it immediately with the recruiter.
+                </p>
+              </div>
             </div>
           )}
         </div>
@@ -300,10 +335,15 @@ const AccessCodeAdminPage = () => {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className={`w-3 h-3 rounded-full ${code.isActive ? 'bg-emerald-500' : 'bg-zinc-600'}`} />
+                      <div className={`w-3 h-3 rounded-full ${code.isActive ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-600'}`} />
                       <span className="text-xl font-bold text-white font-mono tracking-wider">
                         {code.code}
                       </span>
+                      {code.isActive && (
+                        <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 font-mono border border-amber-500/50">
+                          ⏰ {formatRemainingTime(code)}
+                        </span>
+                      )}
                       {!code.isActive && (
                         <span className="text-xs bg-zinc-700 text-zinc-400 px-2 py-1 font-mono">
                           INACTIVE

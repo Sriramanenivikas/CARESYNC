@@ -33,7 +33,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.frontend
+      dockerfile: Dockerfile
     container_name: caresync-frontend
     environment:
       REACT_APP_API_URL: http://localhost:8080/api

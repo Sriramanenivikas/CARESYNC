@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../common/Logo';
 import {
   FiHome,
   FiUsers,
@@ -80,15 +81,14 @@ const Sidebar = ({ collapsed, onToggle }) => {
       <div className="h-14 flex items-center justify-between px-4 border-b border-zinc-200 dark:border-zinc-800">
         {!collapsed && (
           <div className="flex items-center gap-2">
+            <Logo size={28} className="text-blue-500" />
             <span className="text-xl font-black tracking-tight text-zinc-900 dark:text-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
               Care<span className="text-blue-500">Sync</span>
             </span>
           </div>
         )}
         {collapsed && (
-          <span className="text-xl font-black text-blue-500 mx-auto" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-            C
-          </span>
+          <Logo size={28} className="text-blue-500 mx-auto" />
         )}
       </div>
 

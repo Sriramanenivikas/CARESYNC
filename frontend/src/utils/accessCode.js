@@ -1,4 +1,5 @@
 const ACCESS_CODES_STORAGE_KEY = 'caresync_access_codes';
+const ACCESS_CODE_EXPIRY_HOURS = 1; // Codes expire after 1 hour
 
 const getAdminCredentials = () => {
   return {
@@ -35,6 +36,15 @@ const saveAccessCodes = (codes) => {
   localStorage.setItem(ACCESS_CODES_STORAGE_KEY, JSON.stringify(codes));
 };
 
+// Check if a code has expired (1 hour expiry)
+const isCodeExpired = (code) => {
+  if (!code.createdAt) return true;
+  const createdTime = new Date(code.createdAt).getTime();
+  const now = Date.now();
+  const expiryTime = ACCESS_CODE_EXPIRY_HOURS * 60 * 60 * 1000; // 1 hour in ms
+  return (now - createdTime) > expiryTime;
+};
+
 export const createAccessCode = (createdBy, note = '') => {
   const code = generateAccessCode();
   const accessCode = {
@@ -42,6 +52,7 @@ export const createAccessCode = (createdBy, note = '') => {
     code,
     createdBy,
     createdAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + ACCESS_CODE_EXPIRY_HOURS * 60 * 60 * 1000).toISOString(),
     note,
     usageCount: 0,
     isActive: true,
@@ -64,7 +75,15 @@ export const validateAccessCode = (inputCode) => {
   const foundCode = codes.find(c => c.code === normalizedCode && c.isActive);
   
   if (!foundCode) {
-    return { valid: false, message: 'Invalid or expired access code' };
+    return { valid: false, message: 'Invalid access code. Contact administrator.' };
+  }
+
+  // Check if code has expired (1 hour expiry)
+  if (isCodeExpired(foundCode)) {
+    // Deactivate expired code
+    foundCode.isActive = false;
+    saveAccessCodes(codes);
+    return { valid: false, message: 'Access code has expired. Codes are valid for 1 hour only.' };
   }
   
   foundCode.usageCount += 1;
@@ -100,14 +119,43 @@ export const verifyAdminCredentials = (username, password) => {
   return normalizedUsername === credentials.username.toLowerCase() && password === credentials.password;
 };
 
+// No admin bypass - EVERYONE needs access code for write operations
+// This ensures hospital data security - only you can generate codes
 export const hasAdminBypass = (user) => {
-  return user?.role === 'ADMIN';
+  return false; // No bypass allowed - access codes are mandatory
 };
 
+// All write operations require access code - NO EXCEPTIONS
 export const requiresAccessCode = (user, operation) => {
   const writeOperations = ['CREATE', 'UPDATE', 'DELETE'];
-  if (writeOperations.includes(operation)) return true;
+  // Always require access code for write operations
+  // Even admins need access codes to modify hospital data
+  if (writeOperations.includes(operation)) {
+    return true;
+  }
   return false;
+};
+
+// Get remaining time for a code (for display purposes)
+export const getCodeRemainingTime = (code) => {
+  if (!code.createdAt) return 0;
+  const createdTime = new Date(code.createdAt).getTime();
+  const expiryTime = 1 * 60 * 60 * 1000; // 1 hour
+  const remaining = (createdTime + expiryTime) - Date.now();
+  return Math.max(0, remaining);
+};
+
+// Clean up expired codes
+export const cleanupExpiredCodes = () => {
+  const codes = getAccessCodes();
+  const now = Date.now();
+  const validCodes = codes.filter(code => {
+    const createdTime = new Date(code.createdAt).getTime();
+    const expiryTime = 1 * 60 * 60 * 1000;
+    return (now - createdTime) <= expiryTime && code.isActive;
+  });
+  saveAccessCodes(validCodes);
+  return validCodes;
 };
 
 export default {
@@ -119,5 +167,7 @@ export default {
   verifyAdminCredentials,
   getAccessCodes,
   hasAdminBypass,
-  requiresAccessCode
+  requiresAccessCode,
+  getCodeRemainingTime,
+  cleanupExpiredCodes
 };

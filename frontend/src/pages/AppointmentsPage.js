@@ -3,7 +3,7 @@ import { useNotification } from '../context/NotificationContext';
 import { useAuth } from '../context/AuthContext';
 import { appointmentService, patientService, doctorService } from '../services';
 import { validateAppointmentForm } from '../utils/validation';
-import { requiresAccessCode } from '../utils/accessCode';
+import { requiresAccessCode } from '../services/accessCodeService';
 import {
   Card,
   Button,

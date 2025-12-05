@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { validateLoginForm } from '../utils/validation';
 import { FiLock, FiEye, FiEyeOff, FiUser, FiArrowLeft } from 'react-icons/fi';
+import { Logo } from '../components/common';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -72,7 +73,10 @@ const LoginPage = () => {
           >
             <FiArrowLeft className="w-4 h-4" /> Back to home
           </button>
-          <div className="minecraft-heading text-2xl text-white">CareSync</div>
+          <div className="flex items-center gap-3">
+            <Logo size={36} className="text-blue-500" />
+            <div className="minecraft-heading text-2xl text-white">CareSync</div>
+          </div>
         </div>
 
         <div className="space-y-6">

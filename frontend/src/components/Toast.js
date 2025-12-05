@@ -53,7 +53,7 @@ const Toast = ({ id, type = 'info', title, message, onClose, duration = 5000 }) 
   return (
     <div
       className={`flex items-start gap-3 p-4 rounded-lg border shadow-lg ${config.bgColor} ${config.borderColor} 
-        animate-in slide-in-from-right-5 fade-in duration-300 max-w-sm`}
+        animate-slide-up max-w-sm`}
       role="alert"
     >
       <Icon className={`w-5 h-5 flex-shrink-0 mt-0.5 ${config.iconColor}`} />

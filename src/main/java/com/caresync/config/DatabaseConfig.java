@@ -31,10 +31,21 @@ public class DatabaseConfig {
             throw new IllegalStateException("DATABASE_URL environment variable is not set");
         }
 
-        URI dbUri = new URI(databaseUrl);
+        // Handle both postgres:// and postgresql:// schemes
+        String urlToParse = databaseUrl;
+        if (urlToParse.startsWith("postgres://")) {
+            urlToParse = urlToParse.replace("postgres://", "postgresql://");
+        }
 
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
+        URI dbUri = new URI(urlToParse);
+
+        String userInfo = dbUri.getUserInfo();
+        if (userInfo == null || !userInfo.contains(":")) {
+            throw new IllegalStateException("DATABASE_URL must contain username and password");
+        }
+
+        String username = userInfo.split(":")[0];
+        String password = userInfo.split(":")[1];
 
         // Handle port - use 5432 as default if not specified
         int port = dbUri.getPort();
@@ -44,6 +55,14 @@ public class DatabaseConfig {
 
         String jdbcUrl = "jdbc:postgresql://" + dbUri.getHost() + ":" + port + dbUri.getPath();
 
+        // Handle query parameters (e.g., sslmode)
+        if (dbUri.getQuery() != null) {
+            jdbcUrl += "?" + dbUri.getQuery();
+        } else {
+            // Add SSL requirement for Render
+            jdbcUrl += "?sslmode=require";
+        }
+
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(jdbcUrl);
         dataSource.setUsername(username);
@@ -52,6 +71,7 @@ public class DatabaseConfig {
         dataSource.setMaximumPoolSize(10);
         dataSource.setIdleTimeout(30000);
         dataSource.setConnectionTimeout(20000);
+        dataSource.setMaxLifetime(1800000);
         dataSource.setDriverClassName("org.postgresql.Driver");
 
         return dataSource;

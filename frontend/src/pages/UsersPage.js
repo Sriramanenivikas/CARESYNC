@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNotification } from '../context/NotificationContext';
 import { useAuth } from '../context/AuthContext';
 import { adminService } from '../services';
-import { requiresAccessCode } from '../utils/accessCode';
+import { requiresAccessCode } from '../services/accessCodeService';
 import {
   Card,
   Button,

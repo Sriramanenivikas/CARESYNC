@@ -11,6 +11,7 @@ import {
   FiCheck,
   FiLock,
 } from 'react-icons/fi';
+import { Logo } from '../components/common';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -64,7 +65,10 @@ const LandingPage = () => {
     <div className="min-h-screen dot-grid">
       {/* Header */}
       <header className="flex justify-between items-center px-[5%] py-5 border-b border-black/5 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="minecraft-heading text-xl">CareSync</div>
+        <div className="flex items-center gap-2">
+          <Logo size={28} className="text-blue-500" />
+          <div className="minecraft-heading text-xl">CareSync</div>
+        </div>
         <nav className="hidden md:flex gap-8">
           <a href="#features" className="text-gray-600 text-sm font-medium hover:text-black transition-colors">Features</a>
           <a href="#roles" className="text-gray-600 text-sm font-medium hover:text-black transition-colors">Roles</a>

@@ -15,3 +15,4 @@ export { default as Textarea } from './Textarea';
 export { Dropdown, DropdownItem } from './Dropdown';
 export { default as GlobalSearch } from './GlobalSearch';
 export { default as AccessCodeModal } from './AccessCodeModal';
+export { default as Logo } from './Logo';
