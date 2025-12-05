@@ -41,7 +41,7 @@ A full-stack hospital management system with role-based access control for admin
 ### DevOps
 - Docker - Containerization
 - Maven - Build tool
-- GitHub Actions - CI/CD (optional)
+- GitHub Actions - CI/CD 
 
 ## Prerequisites
 
@@ -164,13 +164,7 @@ jwt.expiration=86400000
 # Server
 server.port=8080
 ```
- 
-### API Testing with Postman
-1. Import collection from postman/ folder
-2. Set environment variables (base_url, token)
-3. Run collection
-
-## API Endpoints
+  
 
 ### Authentication
 | Method | Endpoint | Description |
