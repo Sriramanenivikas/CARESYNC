@@ -1,20 +1,5 @@
 services:
-  # Backend - Java Spring Boot using Docker
-  - type: web
-    name: caresync-backend
-    runtime: docker
-    dockerfilePath: ./Dockerfile.backend
-    envVars:
-      - key: SPRING_PROFILES_ACTIVE
-        value: prod
-      - key: DATABASE_URL
-        fromDatabase:
-          name: caresync-db
-          property: connectionString
-      - key: JWT_SECRET
-        generateValue: true
-
-  # Frontend - React Static Site
+  # Frontend - React Static Site (FREE, no card needed)
   - type: web
     name: caresync-frontend
     runtime: static
