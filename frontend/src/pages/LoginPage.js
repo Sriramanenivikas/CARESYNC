@@ -75,14 +75,14 @@ const LoginPage = () => {
           </button>
           <div className="flex items-center gap-3">
             <Logo size={36} className="text-blue-500" />
-            <div className="minecraft-heading text-2xl text-white">Hospital</div>
+            <div className="minecraft-heading text-2xl text-white">CareSync</div>
           </div>
         </div>
 
         <div className="space-y-6">
           <span className="monospace-label bg-gray-800 text-white">{"// SIGN IN"}</span>
           <h1 className="text-4xl text-white leading-tight" style={{fontFamily: '"Times New Roman", Times, serif', fontWeight: 500}}>
-            Hospital Management<br />
+            CareSync Management<br />
             <span className="highlight-green">System</span>
           </h1>
           <p className="text-gray-400 max-w-md text-base leading-relaxed">
@@ -110,7 +110,7 @@ const LoginPage = () => {
         <div className="w-full max-w-sm">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <span className="minecraft-heading text-xl text-black dark:text-white">Hospital</span>
+            <span className="minecraft-heading text-xl text-black dark:text-white">CareSync</span>
           </div>
 
           <div className="text-center mb-8">
@@ -207,7 +207,7 @@ const LoginPage = () => {
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-6">
-            © {new Date().getFullYear()} Hospital. All rights reserved.
+            © {new Date().getFullYear()} CareSync. All rights reserved.
           </p>
         </div>
       </div>
